@@ -23,7 +23,14 @@ const routes = [
         icon: "ni ni-circle-08 text-pink",
         component: Signup,
         layout: "/auth"
+    },
+    {
+        path: "/signupss",
+        name: "Register",
+        icon: "ni ni-circle-08 text-pink",
+        component: Signup,
+        layout: "/auth"
     }
 ];
 
-export default routes;
+export routes;
