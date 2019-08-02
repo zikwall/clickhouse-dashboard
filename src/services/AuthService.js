@@ -1,31 +1,40 @@
 import decode from "jwt-decode";
 
 export default class AuthService {
-    constructor(domain) {
-        this.domain = domain || "http://clh.limehd.tv";
-    }
+
+    accessTokenKey = 'access_token';
+    authorizationDomain = "http://account.limehd.local";
 
     login = (username, password, rememberMe = true) => {
-        return this.fetch('/auth/login', {
+        return this.fetch('/api/v1/auth/login', {
             method: "POST",
+            mode: 'cors',
             headers: {
                 'Content-Type': 'application/json',
             },
+            withCredentials: true,
             body: JSON.stringify({
                 username,
                 password
             })
         }).then(res => {
+            /**
+             * TODO Тут кака-нибудь логика для Remember Me
+             */
             if(rememberMe) {
-                this.setToken(res.token); // Setting the token in localStorage
+                this.setToken(res.token);
             }
             return Promise.resolve(res);
         });
     };
 
+    logout = () => {
+        localStorage.removeItem(this.accessTokenKey);
+    };
+
     loggedIn = () => {
-        const token = this.getToken(); // Getting token from localstorage
-        return !!token && !this.isTokenExpired(token); // handwaiving here
+        const token = this.getToken();
+        return !!token && !this.isTokenExpired(token);
     };
 
     isTokenExpired = token => {
@@ -40,20 +49,16 @@ export default class AuthService {
         }
     };
 
-    getUrl = (url) => {
-        return this.domain + url;
+    getAuthorizationUrl = (url) => {
+        return this.authorizationDomain + url;
     }
 
     setToken = idToken => {
-        localStorage.setItem("id_token", idToken);
+        localStorage.setItem(this.accessTokenKey, idToken);
     };
 
     getToken = () => {
-        return localStorage.getItem("id_token");
-    };
-
-    logout = () => {
-        localStorage.removeItem("id_token");
+        return localStorage.getItem(this.accessTokenKey);
     };
 
     getConfirm = () => {
@@ -64,15 +69,15 @@ export default class AuthService {
 
     fetch = (url, options) => {
         const headers = {
-            Accept: "application/json",
+            'Accept': "application/json",
             "Content-Type": "application/json"
         };
 
         if (this.loggedIn()) {
-            headers["Authorization"] = this.getToken();
+            headers["Authorization"] = 'Bearer ' + this.getToken();
         }
 
-        return fetch(this.getUrl(url), {
+        return fetch(this.getAuthorizationUrl(url), {
             headers,
             ...options
         })

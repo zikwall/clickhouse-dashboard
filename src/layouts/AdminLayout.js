@@ -10,7 +10,7 @@ import { Profile } from "../screens/profile";
 class AdminLayout extends React.Component {
     componentDidUpdate (e) {}
     componentWillMount () {
-        window.ShardsDashboards = window.ShardsDashboards ? window.ShardsDashboards : {};
+        window.ClickHouseDashboard = window.ClickHouseDashboard ? window.ClickHouseDashboard : {};
     }
 
     render() {
@@ -19,15 +19,15 @@ class AdminLayout extends React.Component {
                 <div className="container-fluid">
                     <div className="row">
                         <main className="main-content col-lg-12 col-md-12 col-sm-12 p-0">
-                            <Header />
+                            <Header { ...this.props }/>
 
                             <div className="main-content-container container">
                                 <Switch>
                                     <Route path="/dashboard" component={ Dashboard } />
                                     <Route path="/profile" component={ Profile } />
 
-                                    <Route exact path="/" render={() => (<Redirect to="/dashboard" />)} />
-                                    <Route render={(props)=><ErrorLayout errorCode={404} {...props}/>}  />
+                                    <Route exact path="/" render ={ () => ( <Redirect to="/dashboard" /> ) } />
+                                    <Route render={ ( props ) => <ErrorLayout errorCode={404} {...props}/> }  />
                                 </Switch>
                             </div>
                         </main>

@@ -1,6 +1,17 @@
 import React from "react";
+import AuthService from "../../services/AuthService";
 
 class Navbar extends React.Component {
+    Auth = new AuthService();
+
+    logout = (e) => {
+        const { history } = this.props;
+
+        e.preventDefault();
+        this.Auth.logout();
+        history.replace("/auth/login");
+    }
+
     render() {
         return (
             <div className="main-navbar bg-white">
@@ -87,7 +98,7 @@ class Navbar extends React.Component {
                                         className="material-icons"></i> Edit Profile
                                     </a>
                                     <div className="dropdown-divider"></div>
-                                    <a className="dropdown-item text-danger" href="#">
+                                    <a className="dropdown-item text-danger" onClick={ this.logout }>
                                         <i className="material-icons text-danger"></i> Logout
                                     </a>
                                 </div>
