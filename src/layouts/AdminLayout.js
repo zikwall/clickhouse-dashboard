@@ -11,6 +11,18 @@ class AdminLayout extends React.Component {
     componentDidUpdate (e) {}
     componentWillMount () {
         window.ClickHouseDashboard = window.ClickHouseDashboard ? window.ClickHouseDashboard : {};
+
+        const adminPermissions = [
+            'CanManageUsers', 'CanManageStatistic'
+        ];
+
+        const userPermissions = [
+            'CanManageOwn', 'CanViewStatistic'
+        ];
+
+        window.is = (username) => {
+            return username === 'zikwall' ? adminPermissions : userPermissions;
+        }
     }
 
     render() {

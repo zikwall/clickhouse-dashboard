@@ -1,5 +1,7 @@
 import React from 'react';
 import { Bar, Line, Doughnut } from 'react-chartjs-2';
+import { Requirement, guardFactory, CredentialProvider } from "./../../components/rbac";
+import AuthService from "../../services/AuthService";
 
 const data = {
     labels:["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Nov", "Dec"],
@@ -86,202 +88,219 @@ const dongiutData = {
     }]
 };
 
+class Need extends Requirement {
+    constructor(credentials) {
+        super();
+        this.credentials = credentials;
+    }
+
+    isSatisfied(credentials) {
+        return this.credentials === credentials;
+    }
+}
+
+const NeedAdmin = new Need('zikwall');
+const Admin = guardFactory(NeedAdmin);
 
 export default class Dahboard extends React.Component {
     render() {
         return (
             <>
-                <div className="page-header row no-gutters py-4">
+                <CredentialProvider value={(new AuthService).getUser().username}>
+                    <div className="page-header row no-gutters py-4">
 
-                    <div className="col-12 col-sm-4 text-center text-sm-left mb-4 mb-sm-0">
-                        <span className="text-uppercase page-subtitle">Обзор</span>
-                        <h3 className="page-title">Аналитика</h3>
-                    </div>
-
-                    <div className="col-12 col-sm-4 d-flex align-items-center">
-                        <div className="btn-group btn-group-sm btn-group-toggle d-inline-flex mb-4 mb-sm-0 mx-auto"
-                             role="group" aria-label="Page actions">
-                            <a href="?index" className="btn btn-white active"> Трафик </a>
-                            <a href="?online" className="btn btn-white"> Онлайн </a>
+                        <div className="col-12 col-sm-4 text-center text-sm-left mb-4 mb-sm-0">
+                            <span className="text-uppercase page-subtitle">Обзор</span>
+                            <h3 className="page-title">Аналитика</h3>
                         </div>
-                    </div>
 
-                    <div className="col-12 col-sm-4 d-flex align-items-center">
-                        <div id="analytics-overview-date-range"
-                             className="input-daterange input-group input-group-sm ml-auto">
-                            <input type="text" className="input-sm form-control" name="start" placeholder="Start Date"
-                                   id="analytics-overview-date-range-1"
-                            />
-                            <input type="text" className="input-sm form-control" name="end" placeholder="End Date"
-                                   id="analytics-overview-date-range-2"
-                            />
+                        <div className="col-12 col-sm-4 d-flex align-items-center">
+                            <div className="btn-group btn-group-sm btn-group-toggle d-inline-flex mb-4 mb-sm-0 mx-auto"
+                                 role="group" aria-label="Page actions">
+                                <a href="?index" className="btn btn-white active"> Трафик </a>
+                                <a href="?online" className="btn btn-white"> Онлайн </a>
+                            </div>
+                        </div>
 
-                            <span className="input-group-append">
+                        <div className="col-12 col-sm-4 d-flex align-items-center">
+                            <div id="analytics-overview-date-range"
+                                 className="input-daterange input-group input-group-sm ml-auto">
+                                <input type="text" className="input-sm form-control" name="start" placeholder="Start Date"
+                                       id="analytics-overview-date-range-1"
+                                />
+                                <input type="text" className="input-sm form-control" name="end" placeholder="End Date"
+                                       id="analytics-overview-date-range-2"
+                                />
+
+                                <span className="input-group-append">
                                 <span className="input-group-text">
                                     <i className="material-icons"></i>
                                 </span>
                             </span>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <div className="row">
-                    <div className="col col-lg-8 col-md-12 col-sm-12 mb-4">
-                        <div className="card card-small h-100">
-                            <div className="card-header border-bottom">
-                                <h6 className="m-0">Sessions</h6>
-                                <div className="block-handle"></div>
-                            </div>
-                            <div className="card-body pt-0">
-                                <div className="row border-bottom py-2 bg-light">
-                                    <div className="col-12 col-sm-6 d-flex mb-2 mb-sm-0">
-                                        <div
-                                            className="btn-group btn-group-sm btn-group-toggle d-flex my-auto mx-auto mx-sm-0"
-                                            data-toggle="buttons">
-                                            <label className="btn btn-white active">
-                                                <input type="radio" name="options" id="option1" autoComplete="off"/> Hour
-                                            </label>
-                                            <label className="btn btn-white">
-                                                <input type="radio" name="options" id="option2" autoComplete="off"/> Day
-                                            </label>
-                                            <label className="btn btn-white">
-                                                <input type="radio" name="options" id="option3" autoComplete="off"/> Week
-                                            </label>
-                                            <label className="btn btn-white">
-                                                <input type="radio" name="options" id="option4"
-                                                       autoComplete="off"
-                                                />
-
-                                                Month
-                                            </label>
-                                        </div>
+                    <Admin>
+                        <div className="row">
+                            <div className="col col-lg-8 col-md-12 col-sm-12 mb-4">
+                                <div className="card card-small h-100">
+                                    <div className="card-header border-bottom">
+                                        <h6 className="m-0">Sessions</h6>
+                                        <div className="block-handle"></div>
                                     </div>
-                                    <div className="col-12 col-sm-6">
-                                        <div id="sessions-overview-date-range"
-                                             className="input-daterange input-group input-group-sm my-auto ml-auto mr-auto ml-sm-auto mr-sm-0">
-                                            <input type="text" className="input-sm form-control" name="start"
-                                                   placeholder="Start Date"
-                                                   id="analytics-overview-sessions-date-range-1"
-                                            />
-                                            <input type="text" className="input-sm form-control" name="end"
-                                                   placeholder="End Date"
-                                                   id="analytics-overview-sessions-date-range-2"
-                                            />
-                                            <span className="input-group-append">
+                                    <div className="card-body pt-0">
+                                        <div className="row border-bottom py-2 bg-light">
+                                            <div className="col-12 col-sm-6 d-flex mb-2 mb-sm-0">
+                                                <div
+                                                    className="btn-group btn-group-sm btn-group-toggle d-flex my-auto mx-auto mx-sm-0"
+                                                    data-toggle="buttons">
+                                                    <label className="btn btn-white active">
+                                                        <input type="radio" name="options" id="option1" autoComplete="off"/> Hour
+                                                    </label>
+                                                    <label className="btn btn-white">
+                                                        <input type="radio" name="options" id="option2" autoComplete="off"/> Day
+                                                    </label>
+                                                    <label className="btn btn-white">
+                                                        <input type="radio" name="options" id="option3" autoComplete="off"/> Week
+                                                    </label>
+                                                    <label className="btn btn-white">
+                                                        <input type="radio" name="options" id="option4"
+                                                               autoComplete="off"
+                                                        />
+
+                                                        Month
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div className="col-12 col-sm-6">
+                                                <div id="sessions-overview-date-range"
+                                                     className="input-daterange input-group input-group-sm my-auto ml-auto mr-auto ml-sm-auto mr-sm-0">
+                                                    <input type="text" className="input-sm form-control" name="start"
+                                                           placeholder="Start Date"
+                                                           id="analytics-overview-sessions-date-range-1"
+                                                    />
+                                                    <input type="text" className="input-sm form-control" name="end"
+                                                           placeholder="End Date"
+                                                           id="analytics-overview-sessions-date-range-2"
+                                                    />
+                                                    <span className="input-group-append">
                                                 <span className="input-group-text">
                                                     <i className="material-icons"></i>
                                                 </span>
                                             </span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <Line data={sessionData} />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="col-lg-4 col-md-6 col-sm-6 mb-4">
+                                <div className="card ubd-stats card-small h-100">
+                                    <div className="card-header border-bottom">
+                                        <h6 className="m-0">Users by device</h6>
+                                        <div className="block-handle"></div>
+                                    </div>
+
+                                    <div className="card-body d-flex flex-column">
+                                        <div style={{ marginTop: "20px" }}>
+                                            <Doughnut data={dongiutData} options={{
+                                                cutoutPercentage: 80, tooltips: { mode: "index", position: "nearest"}
+                                            }} />
+                                        </div>
+
+                                        <div className="ubd-stats__legend w-75 m-auto pb-4">
+                                            <div className="ubd-stats__item">
+                                                <i className="material-icons" style={{color: "rgba(1, 123 ,255, 0.9)"}}></i>
+                                                <span className="ubd-stats__category">Desktop</span>
+                                                <span className="ubd-stats__value">68.3%</span>
+                                            </div>
+                                            <div className="ubd-stats__item">
+                                                <i className="material-icons" style={{color: "rgba(1, 123 ,255, 0.5)"}}></i>
+                                                <span className="ubd-stats__category">Tablet</span>
+                                                <span className="ubd-stats__value">24.2%</span>
+                                            </div>
+                                            <div className="ubd-stats__item">
+                                                <i className="material-icons" style={{color: " rgba(1, 123, 255, 0.3)"}}></i>
+                                                <span className="ubd-stats__category">Mobile</span>
+                                                <span className="ubd-stats__value">7.5%</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className="card-footer border-top">
+                                        <div className="row">
+                                            <div className="col">
+                                                <select className="custom-select custom-select-sm">
+                                                    <option selected="">Last Week</option>
+                                                    <option value="1">Today</option>
+                                                    <option value="2">Last Month</option>
+                                                    <option value="3">Last Year</option>
+                                                </select>
+                                            </div>
+                                            <div className="col text-right view-report">
+                                                <a href="#">View full report →</a>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-
-                                <Line data={sessionData} />
                             </div>
                         </div>
-                    </div>
+                    </Admin>
 
-                    <div className="col-lg-4 col-md-6 col-sm-6 mb-4">
-                        <div className="card ubd-stats card-small h-100">
-                            <div className="card-header border-bottom">
-                                <h6 className="m-0">Users by device</h6>
-                                <div className="block-handle"></div>
-                            </div>
-
-                            <div className="card-body d-flex flex-column">
-                                <div style={{ marginTop: "20px" }}>
-                                    <Doughnut data={dongiutData} options={{
-                                        cutoutPercentage: 80, tooltips: { mode: "index", position: "nearest"}
-                                    }} />
+                    <div className="row">
+                        <div className="col col-lg-12 col-md-12 mb-4">
+                            <div className="card card-small h-100">
+                                <div className="card-header border-bottom">
+                                    <h6 className="m-0">Sales report</h6>
+                                    <div className="block-handle"></div>
                                 </div>
+                                <div className="card-body pt-0">
 
-                                <div className="ubd-stats__legend w-75 m-auto pb-4">
-                                    <div className="ubd-stats__item">
-                                        <i className="material-icons" style={{color: "rgba(1, 123 ,255, 0.9)"}}></i>
-                                        <span className="ubd-stats__category">Desktop</span>
-                                        <span className="ubd-stats__value">68.3%</span>
-                                    </div>
-                                    <div className="ubd-stats__item">
-                                        <i className="material-icons" style={{color: "rgba(1, 123 ,255, 0.5)"}}></i>
-                                        <span className="ubd-stats__category">Tablet</span>
-                                        <span className="ubd-stats__value">24.2%</span>
-                                    </div>
-                                    <div className="ubd-stats__item">
-                                        <i className="material-icons" style={{color: " rgba(1, 123, 255, 0.3)"}}></i>
-                                        <span className="ubd-stats__category">Mobile</span>
-                                        <span className="ubd-stats__value">7.5%</span>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div className="card-footer border-top">
-                                <div className="row">
-                                    <div className="col">
-                                        <select className="custom-select custom-select-sm">
-                                            <option selected="">Last Week</option>
-                                            <option value="1">Today</option>
-                                            <option value="2">Last Month</option>
-                                            <option value="3">Last Year</option>
-                                        </select>
-                                    </div>
-                                    <div className="col text-right view-report">
-                                        <a href="#">View full report →</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div className="row">
-                    <div className="col col-lg-12 col-md-12 mb-4">
-                        <div className="card card-small h-100">
-                            <div className="card-header border-bottom">
-                                <h6 className="m-0">Sales report</h6>
-                                <div className="block-handle"></div>
-                            </div>
-                            <div className="card-body pt-0">
-
-                                <div className="row border-bottom py-2 bg-light">
-                                    <div className="col-12 col-sm-6 d-flex mb-2 mb-sm-0">
-                                        <div
-                                            className="btn-group btn-group-sm btn-group-toggle d-flex my-auto mx-auto mx-sm-0"
-                                            data-toggle="buttons">
-                                            <label className="btn btn-white">
-                                                <input type="radio" name="options" id="option1" autoComplete="off" /> Hour
-                                            </label>
-                                            <label className="btn btn-white">
-                                                <input type="radio" name="options" id="option2" autoComplete="off" /> Day
-                                            </label>
-                                            <label className="btn btn-white">
-                                                <input type="radio" name="options" id="option2" autoComplete="off" /> Week
-                                            </label>
-                                            <label className="btn btn-white active">
-                                                <input type="radio" name="options" id="option2" autoComplete="off" />
-                                                Month
-                                            </label>
+                                    <div className="row border-bottom py-2 bg-light">
+                                        <div className="col-12 col-sm-6 d-flex mb-2 mb-sm-0">
+                                            <div
+                                                className="btn-group btn-group-sm btn-group-toggle d-flex my-auto mx-auto mx-sm-0"
+                                                data-toggle="buttons">
+                                                <label className="btn btn-white">
+                                                    <input type="radio" name="options" id="option1" autoComplete="off" /> Hour
+                                                </label>
+                                                <label className="btn btn-white">
+                                                    <input type="radio" name="options" id="option2" autoComplete="off" /> Day
+                                                </label>
+                                                <label className="btn btn-white">
+                                                    <input type="radio" name="options" id="option2" autoComplete="off" /> Week
+                                                </label>
+                                                <label className="btn btn-white active">
+                                                    <input type="radio" name="options" id="option2" autoComplete="off" />
+                                                    Month
+                                                </label>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div className="col-12 col-sm-6">
-                                        <div id="sales-report-date-range" className="input-daterange input-group input-group-sm my-auto ml-auto mr-auto ml-sm-auto mr-sm-0">
-                                            <input type="text" className="input-sm form-control" name="start"
-                                                   placeholder="Start Date" id="analytics-overview-date-range-1"
-                                            />
-                                            <input type="text" className="input-sm form-control" name="end"
-                                                   placeholder="End Date" id="analytics-overview-date-range-2"
-                                            />
-                                            <span className="input-group-text">
+                                        <div className="col-12 col-sm-6">
+                                            <div id="sales-report-date-range" className="input-daterange input-group input-group-sm my-auto ml-auto mr-auto ml-sm-auto mr-sm-0">
+                                                <input type="text" className="input-sm form-control" name="start"
+                                                       placeholder="Start Date" id="analytics-overview-date-range-1"
+                                                />
+                                                <input type="text" className="input-sm form-control" name="end"
+                                                       placeholder="End Date" id="analytics-overview-date-range-2"
+                                                />
+                                                <span className="input-group-text">
                                             <i className="material-icons"></i>
                                         </span>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
 
-                                <Bar data={data}/>
+                                    <Bar data={data}/>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                </CredentialProvider>
             </>
         );
     }

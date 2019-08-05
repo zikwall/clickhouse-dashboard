@@ -23,6 +23,7 @@ export default class AuthService {
              */
             if(rememberMe) {
                 this.setToken(res.token);
+                this.setUser(res.user);
             }
             return Promise.resolve(res);
         });
@@ -30,6 +31,7 @@ export default class AuthService {
 
     logout = () => {
         localStorage.removeItem(this.accessTokenKey);
+        localStorage.removeItem('user');
     };
 
     loggedIn = () => {
@@ -53,12 +55,20 @@ export default class AuthService {
         return this.authorizationDomain + url;
     }
 
-    setToken = idToken => {
+    setToken = (idToken) => {
         localStorage.setItem(this.accessTokenKey, idToken);
+    };
+
+    setUser = (user) => {
+        localStorage.setItem('user', JSON.stringify(user));
     };
 
     getToken = () => {
         return localStorage.getItem(this.accessTokenKey);
+    };
+
+    getUser = () => {
+        return JSON.parse(localStorage.getItem('user'));
     };
 
     getConfirm = () => {
