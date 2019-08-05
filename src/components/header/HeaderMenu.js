@@ -10,7 +10,9 @@ class HeaderMenu extends React.Component {
                             <ul className="nav nav-tabs border-0 flex-column flex-lg-row">
                                 <li className="nav-item dropdown">
                                     <a className="nav-link active" data-toggle="dropdown"><i
-                                        className="material-icons"></i> Dashboards</a>
+                                        className="material-icons"></i> Dashboards
+                                    </a>
+
                                     <div className="dropdown-menu dropdown-menu-small">
                                         <a href="/dashboard" className="dropdown-item">Analytics</a>
                                         <a href="/dashboard/store" className="dropdown-item">Store</a>
