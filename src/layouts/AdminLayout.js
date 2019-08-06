@@ -5,13 +5,12 @@ import withAuth from "../components/protected/WithAuth";
 import Header from "../components/header";
 import ErrorLayout from "./ErrorLayout";
 import { Dashboard } from "../screens/dashboard";
-import { Profile } from "../screens/profile";
+import { ProfileSubLayout } from "../screens/profile";
 
 class AdminLayout extends React.Component {
     componentDidUpdate (e) {}
-    componentWillMount () {
-        window.ShardsDashboards = window.ShardsDashboards ? window.ShardsDashboards : {};
-    }
+    componentWillMount () {}
+
 
     render() {
         return (
@@ -19,15 +18,15 @@ class AdminLayout extends React.Component {
                 <div className="container-fluid">
                     <div className="row">
                         <main className="main-content col-lg-12 col-md-12 col-sm-12 p-0">
-                            <Header />
+                            <Header { ...this.props }/>
 
                             <div className="main-content-container container">
                                 <Switch>
                                     <Route path="/dashboard" component={ Dashboard } />
-                                    <Route path="/profile" component={ Profile } />
+                                    <Route path="/profile" component={ ProfileSubLayout } />
 
-                                    <Route exact path="/" render={() => (<Redirect to="/dashboard" />)} />
-                                    <Route render={(props)=><ErrorLayout errorCode={404} {...props}/>}  />
+                                    <Route exact path="/" render ={ () => ( <Redirect to="/dashboard" /> ) } />
+                                    <Route render={ ( props ) => <ErrorLayout errorCode={404} {...props}/> }  />
                                 </Switch>
                             </div>
                         </main>

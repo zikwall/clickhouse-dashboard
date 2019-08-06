@@ -33,7 +33,7 @@ class Signup extends React.Component {
                     <div className="card">
                         <div className="card-body">
                             <img className="auth-form__logo d-table mx-auto mb-3"
-                                 src={require("./../../assets/images/shards-dashboards-logo.svg")}
+                                 src={require("./../../assets/images/logo.png")}
                                  alt="Shards Dashboards - Register Template" />
                             <h5 className="auth-form__title text-center mb-4">Create New Account</h5>
                             <form>

@@ -1,62 +1,87 @@
 import decode from "jwt-decode";
+import UserService from "./UserService";
 
 export default class AuthService {
-    constructor(domain) {
-        this.domain = domain || "http://clh.limehd.tv";
-    }
+
+    accessTokenKey = 'access_token';
+    authorizationDomain = "http://clh.limehd.tv";
 
     login = (username, password, rememberMe = true) => {
-        return this.fetch('/auth/login', {
+        return this.authFetch('/api/v1/auth/login', {
             method: "POST",
+            mode: 'cors',
             headers: {
                 'Content-Type': 'application/json',
             },
+            withCredentials: true,
             body: JSON.stringify({
                 username,
                 password
             })
         }).then(res => {
+            /**
+             * TODO Тут кака-нибудь логика для Remember Me
+             */
             if(rememberMe) {
-                this.setToken(res.token); // Setting the token in localStorage
+                this.setToken(res.token);
+                UserService.setUser(res.user);
             }
             return Promise.resolve(res);
         });
     };
 
-    loggedIn = () => {
-        const token = this.getToken(); // Getting token from localstorage
-        return !!token && !this.isTokenExpired(token); // handwaiving here
+    permissions = () => {
+        return this.authFetch('/api/v1/auth/permissions', {
+            method: "POST",
+            mode: 'cors',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            withCredentials: true,
+        }).then(res => {
+            return res;
+        });
     };
 
-    isTokenExpired = token => {
+    logout = () => {
+        localStorage.removeItem(this.accessTokenKey);
+        UserService.removeUser();
+    };
+
+    loggedIn = () => {
+        const token = this.getToken();
+        return !!token && !this.isTokenExpired(token);
+    };
+
+    isTokenExpired = (token) => {
         try {
             const decoded = decode(token);
             if (decoded.exp < Date.now() / 1000) {
                 return true;
             } else return false;
         } catch (err) {
-            console.log("expired check failed! Line 42: AuthService.js");
+            console.log('Expired token! Logout...');
             return false;
         }
     };
 
-    getUrl = (url) => {
-        return this.domain + url;
-    }
+    getAuthorizationUrl = (url) => {
+        return this.authorizationDomain + url;
+    };
 
-    setToken = idToken => {
-        localStorage.setItem("id_token", idToken);
+    setToken = (idToken) => {
+        localStorage.setItem(this.accessTokenKey, idToken);
     };
 
     getToken = () => {
-        return localStorage.getItem("id_token");
-    };
-
-    logout = () => {
-        localStorage.removeItem("id_token");
+        return localStorage.getItem(this.accessTokenKey);
     };
 
     getConfirm = () => {
+        /*if (this.getToken() === null) {
+            return false
+        }*/
+
         let answer = decode(this.getToken());
         console.log("Recieved answer!");
         return answer;
@@ -64,15 +89,15 @@ export default class AuthService {
 
     fetch = (url, options) => {
         const headers = {
-            Accept: "application/json",
+            'Accept': "application/json",
             "Content-Type": "application/json"
         };
 
         if (this.loggedIn()) {
-            headers["Authorization"] = this.getToken();
+            headers["Authorization"] = 'Bearer ' + this.getToken();
         }
 
-        return fetch(this.getUrl(url), {
+        return fetch(url, {
             headers,
             ...options
         })
@@ -80,7 +105,11 @@ export default class AuthService {
             .then(response => response.json());
     };
 
-    _checkStatus = response => {
+    authFetch = (url, options) => {
+        return this.fetch(this.getAuthorizationUrl(url), options);
+    };
+
+    _checkStatus = (response) => {
         if (response.status >= 200 && response.status < 300) {
             return response;
         } else {
