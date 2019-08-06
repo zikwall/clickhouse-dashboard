@@ -4,10 +4,10 @@ import UserService from "./UserService";
 export default class AuthService {
 
     accessTokenKey = 'access_token';
-    authorizationDomain = "http://account.limehd.local";
+    authorizationDomain = "http://clh.limehd.tv";
 
     login = (username, password, rememberMe = true) => {
-        return this.fetch('/api/v1/auth/login', {
+        return this.authFetch('/api/v1/auth/login', {
             method: "POST",
             mode: 'cors',
             headers: {
@@ -27,6 +27,19 @@ export default class AuthService {
                 UserService.setUser(res.user);
             }
             return Promise.resolve(res);
+        });
+    };
+
+    permissions = () => {
+        return this.authFetch('/api/v1/auth/permissions', {
+            method: "POST",
+            mode: 'cors',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            withCredentials: true,
+        }).then(res => {
+            return res;
         });
     };
 
@@ -65,6 +78,10 @@ export default class AuthService {
     };
 
     getConfirm = () => {
+        /*if (this.getToken() === null) {
+            return false
+        }*/
+
         let answer = decode(this.getToken());
         console.log("Recieved answer!");
         return answer;
@@ -80,12 +97,16 @@ export default class AuthService {
             headers["Authorization"] = 'Bearer ' + this.getToken();
         }
 
-        return fetch(this.getAuthorizationUrl(url), {
+        return fetch(url, {
             headers,
             ...options
         })
             .then(this._checkStatus)
             .then(response => response.json());
+    };
+
+    authFetch = (url, options) => {
+        return this.fetch(this.getAuthorizationUrl(url), options);
     };
 
     _checkStatus = (response) => {

@@ -15,11 +15,16 @@ class Need extends Requirement {
     }
 
     isSatisfied(credentials) {
-        return this.credentials === credentials;
+        /**
+         * Разумеется можно делать более сложные манипуляции
+         *
+         * */
+        return Array.isArray(this.credentials) && this.credentials.includes(credentials);
     }
 }
 
-const NeedAdmin = new Need('zikwall');
+// в качестве требований передаются username-ы
+const NeedAdmin = new Need(['zikwall', 'administrator']);
 const Admin = guardFactory(NeedAdmin);
 
 export default class Dahboard extends React.Component {

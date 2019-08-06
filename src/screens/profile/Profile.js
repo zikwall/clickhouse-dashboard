@@ -1,5 +1,6 @@
 import React from 'react';
 import {Bar} from 'react-chartjs-2';
+import UserService from "../../services/UserService";
 
 const Profile = () => {
     const data = {
@@ -50,10 +51,10 @@ const Profile = () => {
                         </div>
                         <div className="card-body p-0">
                             <div className="user-details__avatar mx-auto">
-                                <img src={require("./../../assets/images/avatars/0.jpg")} alt="User Avatar" />
+                                <img src={require("./../../assets/images/avatars/vk.jpeg")} alt="User Avatar" />
                             </div>
-                            <h4 className="text-center m-0 mt-2">Sierra Brooks</h4>
-                            <p className="text-center text-light m-0 mb-2">I'm a design focused engineer.</p>
+                            <h4 className="text-center m-0 mt-2">{ UserService.getUser().username() }</h4>
+                            <p className="text-center text-light m-0 mb-2">{ UserService.getUser().email() }</p>
                             <ul className="user-details__social user-details__social--primary d-table mx-auto mb-4">
                                 <li className="mx-1"><a href="#"><i className="fab fa-facebook-f"></i></a></li>
                                 <li className="mx-1"><a href="#"><i className="fab fa-twitter"></i></a></li>

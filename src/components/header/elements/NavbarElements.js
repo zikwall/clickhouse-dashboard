@@ -1,5 +1,6 @@
 import React from 'react';
 import AuthService from "../../../services/AuthService";
+import UserService from "../../../services/UserService";
 
 const Brand = () => {
     return  (
@@ -97,10 +98,10 @@ const ProfileMenu = (props) => {
         <li className="nav-item dropdown">
             <a className="nav-link dropdown-toggle text-nowrap px-3" data-toggle="dropdown" href="#"
                role="button" aria-haspopup="true" aria-expanded="false">
-                <img className="user-avatar rounded-circle mr-2" src={require("./../../../assets/images/avatars/0.jpg")}
+                <img className="user-avatar rounded-circle mr-2" src={require("./../../../assets/images/avatars/vk.jpeg")}
                      alt="User Avatar"
                 />
-                <span className="d-none d-md-inline-block">Sierra Brooks</span>
+                <span className="d-none d-md-inline-block">{ UserService.getUser().username() }</span>
             </a>
             <div className="dropdown-menu dropdown-menu-small">
                 <a className="dropdown-item" href="/profile"><i
