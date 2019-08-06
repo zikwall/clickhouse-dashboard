@@ -5,25 +5,12 @@ import withAuth from "../components/protected/WithAuth";
 import Header from "../components/header";
 import ErrorLayout from "./ErrorLayout";
 import { Dashboard } from "../screens/dashboard";
-import { Profile } from "../screens/profile";
+import { ProfileSubLayout } from "../screens/profile";
 
 class AdminLayout extends React.Component {
     componentDidUpdate (e) {}
-    componentWillMount () {
-        window.ClickHouseDashboard = window.ClickHouseDashboard ? window.ClickHouseDashboard : {};
+    componentWillMount () {}
 
-        const adminPermissions = [
-            'CanManageUsers', 'CanManageStatistic'
-        ];
-
-        const userPermissions = [
-            'CanManageOwn', 'CanViewStatistic'
-        ];
-
-        window.is = (username) => {
-            return username === 'zikwall' ? adminPermissions : userPermissions;
-        }
-    }
 
     render() {
         return (
@@ -36,7 +23,7 @@ class AdminLayout extends React.Component {
                             <div className="main-content-container container">
                                 <Switch>
                                     <Route path="/dashboard" component={ Dashboard } />
-                                    <Route path="/profile" component={ Profile } />
+                                    <Route path="/profile" component={ ProfileSubLayout } />
 
                                     <Route exact path="/" render ={ () => ( <Redirect to="/dashboard" /> ) } />
                                     <Route render={ ( props ) => <ErrorLayout errorCode={404} {...props}/> }  />

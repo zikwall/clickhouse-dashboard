@@ -1,93 +1,13 @@
 import React from 'react';
-import { Bar, Line, Doughnut } from 'react-chartjs-2';
 import { Requirement, guardFactory, CredentialProvider } from "./../../components/rbac";
-import AuthService from "../../services/AuthService";
+import UserService from "../../services/UserService";
+import {DasboardThree, DasboardTwo, DashboardOne} from "../../components/charts";
 
-const data = {
-    labels:["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Nov", "Dec"],
-    datasets:[{
-        label: "Profit",
-        fill: "start",
-        data: [28922, 25317, 23182, 32119, 11291, 8199, 25182, 22120, 10219, 8771, 12992, 8221],
-        backgroundColor: "rgba(0, 123, 255, 1)",
-        borderColor: "rgba(0, 123, 255, 1)",
-        pointBackgroundColor: "#FFFFFF",
-        pointHoverBackgroundColor: "rgba(0, 123, 255, 1)",
-        borderWidth: 1.5
-    }, {
-        label: "Shipping",
-        fill: "start",
-        data: [2892, 2531, 2318, 3211, 1129, 819, 2518, 2212, 1021, 8771, 1299, 820],
-        backgroundColor: "rgba(72, 160, 255, 1)",
-        borderColor: "rgba(72, 160, 255, 1)",
-        pointBackgroundColor: "#FFFFFF",
-        pointHoverBackgroundColor: "rgba(0, 123, 255, 1)",
-        borderWidth: 1.5
-    }, {
-        label: "Tax",
-        fill: "start",
-        data: [1400, 1250, 1150, 1600, 500, 400, 1250, 1100, 500, 4e3, 600, 500],
-        backgroundColor: "rgba(153, 202, 255, 1)",
-        borderColor: "rgba(153, 202, 255, 1)",
-        pointBackgroundColor: "#FFFFFF",
-        pointHoverBackgroundColor: "rgba(0, 123, 255, 1)",
-        borderWidth: 1.5
-    }
-    ]
-};
 
-const options = {
-    legend:!1, tooltips: {
-        enabled: !1, mode: "index", position: "nearest"
-    },
-    scales: {
-        xAxes:[ {
-            stacked: !0, gridLines: !1
-        }],
-        yAxes:[ {
-            stacked:!0, ticks: {
-                userCallback:function(o, a, e) {
-                    return o>999?(o/1e3).toFixed(0)+"k": o
-                }
-            }
-        }]
-    }
-};
-
-const sessionData = {
-    labels:[
-        "09:00 PM", "10:00 PM", "11:00 PM", "12:00 PM", "13:00 PM", "14:00 PM", "15:00 PM", "16:00 PM", "17:00 PM"
-    ],
-    datasets:[{
-        label: "Today", fill: "start", data: [5, 5, 10, 30, 10, 42, 5, 15, 5],
-        backgroundColor: 'rgba(0, 184, 216, 0.1)', borderColor: 'rgb(0, 184, 216)',
-        pointBackgroundColor: '#ffffff', pointHoverBackgroundColor: 'rgba(0, 184, 216, 0.1)',
-        borderWidth: 1.5
-    }, {
-        label: "Yesterday", fill: "start", data: ["", 23, 5, 10, 5, 5, 30, 2, 10],
-        backgroundColor: 'rgba(23,198,113,0.1)', borderColor: 'rgba(23,198,113,0.1)',
-        pointBackgroundColor: '#ffffff', pointHoverBackgroundColor: 'rgba(23,198,113,0.1)',
-        borderDash: [5, 5], borderWidth: 1.5, pointRadius: 0, pointBorderColor: 'rgba(23,198,113,0.1)'
-    }]
-};
-
-const dongiutData = {
-    labels:["Desktop", "Tablet", "Mobile"],
-    datasets:[{
-        data: [68.3, 24.2, 7.5],
-        backgroundColor: [
-            '#FF6384',
-            '#36A2EB',
-            '#FFCE56'
-        ],
-        hoverBackgroundColor: [
-            '#FF6384',
-            '#36A2EB',
-            '#FFCE56'
-        ]
-    }]
-};
-
+/**
+ * Example simple RBAC, пока что сравнивается username пользователя,
+ * а так думается передавать role или permissions array
+ */
 class Need extends Requirement {
     constructor(credentials) {
         super();
@@ -106,7 +26,12 @@ export default class Dahboard extends React.Component {
     render() {
         return (
             <>
-                <CredentialProvider value={(new AuthService).getUser().username}>
+                {
+                    /**
+                     * Возможно CredentialProvider стоит вынести выше, например в Dashboard Layout, пока тут для примера
+                     */
+                }
+                <CredentialProvider value={UserService.getUser().username()}>
                     <div className="page-header row no-gutters py-4">
 
                         <div className="col-12 col-sm-4 text-center text-sm-left mb-4 mb-sm-0">
@@ -141,6 +66,11 @@ export default class Dahboard extends React.Component {
                         </div>
                     </div>
 
+                    {
+                        /**
+                         * Вот так вот легко использовать, просто обернуть
+                         */
+                    }
                     <Admin>
                         <div className="row">
                             <div className="col col-lg-8 col-md-12 col-sm-12 mb-4">
@@ -193,7 +123,7 @@ export default class Dahboard extends React.Component {
                                             </div>
                                         </div>
 
-                                        <Line data={sessionData} />
+                                        <DasboardTwo />
                                     </div>
                                 </div>
                             </div>
@@ -206,29 +136,7 @@ export default class Dahboard extends React.Component {
                                     </div>
 
                                     <div className="card-body d-flex flex-column">
-                                        <div style={{ marginTop: "20px" }}>
-                                            <Doughnut data={dongiutData} options={{
-                                                cutoutPercentage: 80, tooltips: { mode: "index", position: "nearest"}
-                                            }} />
-                                        </div>
-
-                                        <div className="ubd-stats__legend w-75 m-auto pb-4">
-                                            <div className="ubd-stats__item">
-                                                <i className="material-icons" style={{color: "rgba(1, 123 ,255, 0.9)"}}></i>
-                                                <span className="ubd-stats__category">Desktop</span>
-                                                <span className="ubd-stats__value">68.3%</span>
-                                            </div>
-                                            <div className="ubd-stats__item">
-                                                <i className="material-icons" style={{color: "rgba(1, 123 ,255, 0.5)"}}></i>
-                                                <span className="ubd-stats__category">Tablet</span>
-                                                <span className="ubd-stats__value">24.2%</span>
-                                            </div>
-                                            <div className="ubd-stats__item">
-                                                <i className="material-icons" style={{color: " rgba(1, 123, 255, 0.3)"}}></i>
-                                                <span className="ubd-stats__category">Mobile</span>
-                                                <span className="ubd-stats__value">7.5%</span>
-                                            </div>
-                                        </div>
+                                        <DasboardThree />
                                     </div>
 
                                     <div className="card-footer border-top">
@@ -295,7 +203,7 @@ export default class Dahboard extends React.Component {
                                         </div>
                                     </div>
 
-                                    <Bar data={data}/>
+                                    <DashboardOne />
                                 </div>
                             </div>
                         </div>

@@ -1,4 +1,5 @@
 import decode from "jwt-decode";
+import UserService from "./UserService";
 
 export default class AuthService {
 
@@ -23,7 +24,7 @@ export default class AuthService {
              */
             if(rememberMe) {
                 this.setToken(res.token);
-                this.setUser(res.user);
+                UserService.setUser(res.user);
             }
             return Promise.resolve(res);
         });
@@ -31,7 +32,7 @@ export default class AuthService {
 
     logout = () => {
         localStorage.removeItem(this.accessTokenKey);
-        localStorage.removeItem('user');
+        UserService.removeUser();
     };
 
     loggedIn = () => {
@@ -39,36 +40,28 @@ export default class AuthService {
         return !!token && !this.isTokenExpired(token);
     };
 
-    isTokenExpired = token => {
+    isTokenExpired = (token) => {
         try {
             const decoded = decode(token);
             if (decoded.exp < Date.now() / 1000) {
                 return true;
             } else return false;
         } catch (err) {
-            console.log("expired check failed! Line 42: AuthService.js");
+            console.log('Expired token! Logout...');
             return false;
         }
     };
 
     getAuthorizationUrl = (url) => {
         return this.authorizationDomain + url;
-    }
+    };
 
     setToken = (idToken) => {
         localStorage.setItem(this.accessTokenKey, idToken);
     };
 
-    setUser = (user) => {
-        localStorage.setItem('user', JSON.stringify(user));
-    };
-
     getToken = () => {
         return localStorage.getItem(this.accessTokenKey);
-    };
-
-    getUser = () => {
-        return JSON.parse(localStorage.getItem('user'));
     };
 
     getConfirm = () => {
@@ -95,7 +88,7 @@ export default class AuthService {
             .then(response => response.json());
     };
 
-    _checkStatus = response => {
+    _checkStatus = (response) => {
         if (response.status >= 200 && response.status < 300) {
             return response;
         } else {
