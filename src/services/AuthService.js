@@ -32,12 +32,10 @@ export default class AuthService {
 
     permissions = () => {
         return this.authFetch('/api/v1/auth/permissions', {
-            method: "POST",
-            mode: 'cors',
+            method: "GET",
             headers: {
                 'Content-Type': 'application/json',
             },
-            withCredentials: true,
         }).then(res => {
             return res;
         });
