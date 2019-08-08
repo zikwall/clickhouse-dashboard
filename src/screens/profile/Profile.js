@@ -1,6 +1,6 @@
 import React from 'react';
 import {Bar} from 'react-chartjs-2';
-import UserService from "../../services/UserService";
+import UserService from "../../services/auth/deprecated/UserService";
 
 const Profile = () => {
     const data = {

@@ -1,6 +1,6 @@
 import React from 'react';
-import AuthService from "../../../services/AuthService";
-import UserService from "../../../services/UserService";
+import AuthService from "../../../services/auth/AuthService";
+import Identity from "../../../services/auth/Identity";
 
 const Brand = () => {
     return  (
@@ -84,13 +84,11 @@ const Notification = () => {
 };
 
 const ProfileMenu = (props) => {
-    const Auth = new AuthService();
-
     const logout = (e) => {
         const { history } = props;
 
         e.preventDefault();
-        Auth.logout();
+        Identity.logout();
         history.replace("/auth/login");
     };
 
@@ -101,7 +99,7 @@ const ProfileMenu = (props) => {
                 <img className="user-avatar rounded-circle mr-2" src={require("./../../../assets/images/avatars/vk.jpeg")}
                      alt="User Avatar"
                 />
-                <span className="d-none d-md-inline-block">{ UserService.getUser().username() }</span>
+                <span className="d-none d-md-inline-block">{ Identity.getUser().field('username') }</span>
             </a>
             <div className="dropdown-menu dropdown-menu-small">
                 <a className="dropdown-item" href="/profile"><i

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Requirement, guardFactory, CredentialProvider } from "./../../components/rbac";
-import UserService from "../../services/UserService";
 import {DasboardThree, DasboardTwo, DashboardOne} from "../../components/charts";
+import { Identity } from "../../services/auth";
 
 
 /**
@@ -36,7 +36,7 @@ export default class Dahboard extends React.Component {
                      * Возможно CredentialProvider стоит вынести выше, например в Dashboard Layout, пока тут для примера
                      */
                 }
-                <CredentialProvider value={UserService.getUser().username()}>
+                <CredentialProvider value={Identity.getUser().field('username')}>
                     <div className="page-header row no-gutters py-4">
 
                         <div className="col-12 col-sm-4 text-center text-sm-left mb-4 mb-sm-0">

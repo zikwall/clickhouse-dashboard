@@ -1,6 +1,5 @@
-
 import React from "react";
-import AuthService from "../../services/AuthService";
+import { AuthService, Identity } from "../../services/auth";
 
 class Signup extends React.Component {
     Auth = new AuthService();
@@ -23,7 +22,9 @@ class Signup extends React.Component {
     };
 
     componentWillMount() {
-        if (this.Auth.loggedIn()) this.props.history.replace('/');
+        if (!Identity.isGuest()) {
+            this.props.history.replace('/');
+        }
     }
 
     render() {

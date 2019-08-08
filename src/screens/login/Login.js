@@ -1,5 +1,5 @@
 import React from "react";
-import AuthService from "../../services/AuthService";
+import { AuthService, Identity } from "../../services/auth";
 
 export default class Login extends React.Component {
     Auth = new AuthService();
@@ -33,7 +33,7 @@ export default class Login extends React.Component {
     };
 
     componentWillMount() {
-        if (this.Auth.loggedIn()) {
+        if (!Identity.isGuest()) {
             this.props.history.replace('/');
         }
     }

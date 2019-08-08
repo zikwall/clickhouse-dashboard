@@ -1,7 +1,7 @@
 import decode from "jwt-decode";
 import UserService from "./UserService";
 
-export default class AuthService {
+class AuthService2s {
 
     accessTokenKey = 'access_token';
     authorizationDomain = "http://clh.limehd.tv";
