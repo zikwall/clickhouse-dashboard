@@ -18,7 +18,7 @@ export default class Identity {
     }
 
     static getUser() {
-        if (Identity.identityInstance === null && Identity.identityInstance instanceof IdenityInterface) {
+        if (Identity.identityInstance !== null && Identity.identityInstance instanceof IdenityInterface) {
             return Identity.identityInstance;
         }
 
