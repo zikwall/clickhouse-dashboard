@@ -30,7 +30,7 @@ export default class AuthService {
     }
 
     permissions() {
-        return this.apiFetch('/api/v1/auth/permissions', {
+        return this.apiFetch('/api/v1/auth/access', {
             method: "GET",
             headers: {
                 'Content-Type': 'application/json',

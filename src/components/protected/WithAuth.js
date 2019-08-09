@@ -7,7 +7,7 @@ export default function withAuth(AuthComponent) {
     class AuthWrapped extends Component {
         state = {
             confirm: null,
-            loaded: false
+            loaded: false,
         };
 
         componentDidMount() {
@@ -18,17 +18,15 @@ export default function withAuth(AuthComponent) {
                     const confirm = Auth.getConfirm();
                     console.log("confirmation is:", confirm);
 
-                    this.setState({
-                        confirm: confirm,
-                        loaded: true
-                    });
-
                     /**
                      * todo Тут нужен REDUX или Context
                      */
                     Auth.permissions().then((response) => {
+                        Identity.setPermissions(response.access.permissions);
+
                         this.setState({
-                            userPermissions: response.permissions
+                            confirm: confirm,
+                            loaded: true,
                         });
                     });
 
@@ -54,8 +52,6 @@ export default function withAuth(AuthComponent) {
             return (
                 <AuthComponent
                     {...this.props}
-
-                    userPermissions={this.state.userPermissions}
                 />
             );
         }

@@ -8,24 +8,39 @@ import { Identity } from "../../services/auth";
  * Example simple RBAC, пока что сравнивается username пользователя,
  * а так думается передавать role или permissions array
  */
-class Need extends Requirement {
+class CheckPermissions extends Requirement {
     constructor(credentials) {
         super();
         this.credentials = credentials;
     }
 
     isSatisfied(credentials) {
+        if (Array.isArray(credentials)) {
+            for (let i = 0; i <= credentials.length; i++) {
+                if (Array.isArray(this.credentials)) {
+                    if (this.credentials.includes(credentials[i])) {
+                        return true;
+                    }
+
+                    continue;
+                }
+
+                if (this.credentials === credentials[i]) {
+                    return true;
+                }
+            }
+        }
+
         /**
-         * Разумеется можно делать более сложные манипуляции
-         *
-         * */
+         * Если переданный credentials - это одиночное значение
+         */
         return Array.isArray(this.credentials) && this.credentials.includes(credentials);
     }
 }
 
 // в качестве требований передаются username-ы
-const NeedAdmin = new Need(['zikwall', 'administrator']);
-const Admin = guardFactory(NeedAdmin);
+const NeedViewDashboard = new CheckPermissions(['canViewDashboard']);
+const CanViewDashboard = guardFactory(NeedViewDashboard);
 
 export default class Dahboard extends React.Component {
     render() {
@@ -36,7 +51,7 @@ export default class Dahboard extends React.Component {
                      * Возможно CredentialProvider стоит вынести выше, например в Dashboard Layout, пока тут для примера
                      */
                 }
-                <CredentialProvider value={Identity.getUser().field('username')}>
+                <CredentialProvider value={Identity.getUser().getPermissions()}>
                     <div className="page-header row no-gutters py-4">
 
                         <div className="col-12 col-sm-4 text-center text-sm-left mb-4 mb-sm-0">
@@ -76,7 +91,7 @@ export default class Dahboard extends React.Component {
                          * Вот так вот легко использовать, просто обернуть
                          */
                     }
-                    <Admin>
+                    <CanViewDashboard>
                         <div className="row">
                             <div className="col col-lg-8 col-md-12 col-sm-12 mb-4">
                                 <div className="card card-small h-100">
@@ -162,7 +177,7 @@ export default class Dahboard extends React.Component {
                                 </div>
                             </div>
                         </div>
-                    </Admin>
+                    </CanViewDashboard>
 
                     <div className="row">
                         <div className="col col-lg-12 col-md-12 mb-4">

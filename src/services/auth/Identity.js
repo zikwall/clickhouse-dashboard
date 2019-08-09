@@ -4,6 +4,7 @@ import Session from "./Session";
 export default class Identity {
 
     static identityInstance = null;
+    static permissions = [];
 
     static getIdentity() {
         return Session.getSession();
@@ -37,6 +38,17 @@ export default class Identity {
         Identity.identityInstance = null;
     };
 
+    static setPermissions = (permissions) => {
+        Identity.getUser().setPermissions(permissions);
+    };
+
+    static getPermissions = () => {
+        return Identity.getUser().getPermissions();
+    };
+
+    static can = (permission) => {
+        return Identity.getUser().getPermissionInstance().can(permission);
+    }
 }
 
 /**
@@ -65,13 +77,36 @@ class JSONSerizlizer {
     }
 }
 
-class IdenityInterface {
+class PermissionsInterface {
+    constructor() {
+        this.permissions = [];
+    }
 
+    get = () => {
+        return this.permissions;
+    };
+
+    set = (permissions) => {
+        if (!Array.isArray(permissions)) {
+            this.permissions.append(permissions);
+        } else {
+            this.permissions = permissions;
+        }
+    };
+
+    can = (permission) => {
+        return this.permissions.includes(permission);
+    };
+}
+
+class IdenityInterface {
     constructor(userProps, options) {
         let defaultOptions = {
             serializer: JSONSerizlizer,
             ...options
         };
+
+        this.permissionInstance = null;
 
         this.userProps = userProps;
         this.serializer = defaultOptions.serializer;
@@ -89,5 +124,21 @@ class IdenityInterface {
         return [
             'username', 'email', 'avatar'
         ];
-    }
+    };
+
+    getPermissionInstance = () => {
+        if (this.permissionInstance !== null && this.permissionInstance instanceof PermissionsInterface) {
+            return this.permissionInstance;
+        }
+
+        return this.permissionInstance = new PermissionsInterface();
+    };
+
+    setPermissions = (permissions) => {
+        this.getPermissionInstance().set(permissions);
+    };
+
+    getPermissions = () => {
+        return this.getPermissionInstance().get();
+    };
 }
