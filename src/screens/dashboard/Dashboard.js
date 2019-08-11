@@ -48,8 +48,8 @@ export default class Dasboard extends React.Component {
         return (
             <div className="row">
                 <div className="col">
-                    <select className="custom-select custom-select-sm">
-                        <option selected="">Last Week</option>
+                    <select defaultValue="0" className="custom-select custom-select-sm">
+                        <option value="0">Last Week</option>
                         <option value="1">Today</option>
                         <option value="2">Last Month</option>
                         <option value="3">Last Year</option>
