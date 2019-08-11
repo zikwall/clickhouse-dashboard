@@ -1,6 +1,6 @@
 import React from 'react';
 
-import AdminLayout from "./layouts/AdminLayout";
+import ProtectedLayout from "./layouts/ProtectedLayout";
 import AuthLayout from "./layouts/AuthLayout";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import ErrorLayout from "./layouts/ErrorLayout"; //
@@ -11,7 +11,7 @@ const App = () =>  {
         <BrowserRouter>
           <Switch>
             <Route path="/auth" render={props => <AuthLayout {...props} />} />
-            <Route path="/" render={props => <AdminLayout {...props} />} />
+            <Route path="/" render={props => <ProtectedLayout {...props} />} />
 
             <Route render={(props)=><ErrorLayout errorCode={404} {...props}/>}  />
           </Switch>

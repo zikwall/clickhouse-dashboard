@@ -1,4 +1,3 @@
-import React from 'react';
 import Session from "./Session";
 
 export default class Identity {

@@ -4,8 +4,9 @@ import ReactDOM from 'react-dom';
 import App from './App';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './assets/styles/shards-dashboards.1.3.1.min.css';
-import './assets/styles/extras.1.3.1.min.css';
-import './assets/styles/accents/success.1.3.1.css';
+import './assets/styles/base.css';
+import './assets/styles/extra.css';
+import './assets/styles/themes/success.css';
+import './assets/styles/utility.css';
 
 ReactDOM.render(<App />, document.getElementById('root'));

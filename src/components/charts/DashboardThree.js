@@ -1,7 +1,6 @@
 import React from 'react';
 import {Doughnut} from "react-chartjs-2";
-import Loader from 'react-loader-spinner'
-import {Center} from "../utility";
+import Preloader from "../preloader/Preloader";
 
 export default class DasboardThree extends React.Component {
 
@@ -31,26 +30,12 @@ export default class DasboardThree extends React.Component {
             this.setState({
                 loaded: true
             });
-        }, 5000)
+        }, 45000)
     }
 
     render () {
         if (this.state.loaded === false) {
-
-            // examples
-            let types = [
-                'Watch', 'None', 'Audio', 'Triangle', 'BallTriangle'
-            ];
-            let type = types[Math.floor(Math.random()*types.length)];
-
-            return <Center>
-                <Loader
-                    type={type}
-                    color="#00BFFF"
-                    height="200"
-                    width="200"
-                />
-            </Center>
+            return <Preloader />
         }
 
         return (

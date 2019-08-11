@@ -7,7 +7,7 @@ class Header extends React.Component {
         return (
             <>
                 <Navbar { ...this.props }/>
-                <HeaderMenu/>
+                <HeaderMenu {...this.props}/>
             </>
         );
     }

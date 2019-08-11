@@ -1,0 +1,18 @@
+/**
+ * Utility stylesheet's
+ */
+
+.absolute-center {
+    margin: 0 auto;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    height: 200px;
+    width: 200px;
+}
+
+.dropdown-item.active, .dropdown-item:active {
+    color: #fff;
+    background-color: #17c671!important;
+}

@@ -1,6 +1,6 @@
 import React from 'react';
 import {Bar} from 'react-chartjs-2';
-import UserService from "../../services/auth/deprecated/UserService";
+import { Identity } from "../../services/auth";
 
 const Profile = () => {
     const data = {
@@ -45,16 +45,16 @@ const Profile = () => {
                     <div className="card card-small user-details mb-4">
                         <div className="card-header p-0">
                             <div className="user-details__bg">
-                                <img src={require("./../../assets/images/user-profile/up-user-details-background.jpg")}
+                                <img src={require("../../assets/images/user/up-user-details-background.jpg")}
                                      alt="User Details Background Image" />
                             </div>
                         </div>
                         <div className="card-body p-0">
                             <div className="user-details__avatar mx-auto">
-                                <img src={require("./../../assets/images/avatars/vk.jpeg")} alt="User Avatar" />
+                                <img src={require("../../assets/images/user/avatars/vk.jpeg")} alt="User Avatar" />
                             </div>
-                            <h4 className="text-center m-0 mt-2">{ UserService.getUser().username() }</h4>
-                            <p className="text-center text-light m-0 mb-2">{ UserService.getUser().email() }</p>
+                            <h4 className="text-center m-0 mt-2">{ Identity.getUser().field('username') }</h4>
+                            <p className="text-center text-light m-0 mb-2">{ Identity.getUser().field('email') }</p>
                             <ul className="user-details__social user-details__social--primary d-table mx-auto mb-4">
                                 <li className="mx-1"><a href="#"><i className="fab fa-facebook-f"></i></a></li>
                                 <li className="mx-1"><a href="#"><i className="fab fa-twitter"></i></a></li>
@@ -124,7 +124,7 @@ const Profile = () => {
                                 <div className="row px-3">
                                     <div className="user-teams__image col-2 col-sm-1 col-lg-2 p-0 my-auto">
                                         <img className="rounded"
-                                             src={require("./../.../../../assets/images/user-profile/team-thumb-1.png")}
+                                             src={require("../../assets/images/user/avatars/team-thumb-1.png")}
                                         />
                                     </div>
                                     <div className="col user-teams__info pl-3">
@@ -136,7 +136,7 @@ const Profile = () => {
                                 <div className="row px-3">
                                     <div className="user-teams__image col-2 col-sm-1 col-lg-2 p-0 my-auto">
                                         <img className="rounded"
-                                             src={require("./../../assets/images/user-profile/team-thumb-2.png")}
+                                             src={require("../../assets/images/user/avatars/team-thumb-2.png")}
                                         />
                                     </div>
                                     <div className="col user-teams__info pl-3">
@@ -148,7 +148,7 @@ const Profile = () => {
                                 <div className="row px-3">
                                     <div className="user-teams__image col-2 col-sm-1 col-lg-2 p-0 my-auto">
                                         <img className="rounded"
-                                             src={require("./../../assets/images/user-profile/team-thumb-3.png")}
+                                             src={require("../../assets/images/user/avatars/team-thumb-3.png")}
                                         />
                                     </div>
                                     <div className="col user-teams__info pl-3">

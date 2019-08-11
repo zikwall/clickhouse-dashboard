@@ -12,7 +12,7 @@ const Brand = () => {
                          alt="Shards Dashboard"
                     />
 
-                <span className="d-none d-md-inline ml-1">ClickHouse Analitycs</span>
+                <span className="d-none d-md-inline ml-1">LimeHD Analitycs</span>
             </div>
         </a>
     );
@@ -96,7 +96,7 @@ const ProfileMenu = (props) => {
         <li className="nav-item dropdown">
             <a className="nav-link dropdown-toggle text-nowrap px-3" data-toggle="dropdown" href="#"
                role="button" aria-haspopup="true" aria-expanded="false">
-                <img className="user-avatar rounded-circle mr-2" src={require("./../../../assets/images/avatars/vk.jpeg")}
+                <img className="user-avatar rounded-circle mr-2" src={require("../../../assets/images/user/avatars/team-thumb-1.png")}
                      alt="User Avatar"
                 />
                 <span className="d-none d-md-inline-block">{ Identity.getUser().field('username') }</span>

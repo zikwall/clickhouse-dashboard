@@ -1,9 +1,9 @@
 import DashboardOne from "./DashboardOne";
-import DasboardTwo from "./DashboardTwo";
 import DasboardThree from "./DashboardThree";
+import DashboardTwo from './DashboardTwo';
 
 export {
     DashboardOne,
-    DasboardTwo,
+    DashboardTwo,
     DasboardThree
 }
