@@ -1,3 +1,4 @@
 .js linguist-detectable=true
 .xml linguist-detectable=false
 .json linguist-detectable=false
+.css linguist-detectable=false
