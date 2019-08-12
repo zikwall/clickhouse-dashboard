@@ -4,7 +4,7 @@ import { Route, Switch, Redirect } from "react-router-dom";
 import withAuth from "../components/protected/WithAuth";
 import Header from "../components/header";
 import ErrorLayout from "./ErrorLayout";
-import { Dashboard } from "../screens/dashboard";
+import { DashboardSubLayout } from "../screens/dashboard";
 import { ProfileSubLayout } from "../screens/profile";
 
 class ProtectedLayout extends React.Component {
@@ -22,7 +22,7 @@ class ProtectedLayout extends React.Component {
 
                             <div className="main-content-container container">
                                 <Switch>
-                                    <Route path="/dashboard" component={ Dashboard } />
+                                    <Route path="/dashboard" component={ DashboardSubLayout } />
                                     <Route path="/profile" component={ ProfileSubLayout } />
 
                                     <Route exact path="/" render ={ () => ( <Redirect to="/dashboard" /> ) } />

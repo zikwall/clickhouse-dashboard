@@ -1,142 +1,77 @@
 import React from "react";
 import PropTypes from 'prop-types';
-import {NavLink, Link} from "react-router-dom";
+import ActiveNavigation from "../navigation/ActiveNavigation";
+import {Identity} from "../../services/auth";
 
 class HeaderMenu extends React.Component {
     // потом поменяю
-    items = {
-        'dashboard': {
+    items = [
+        {
             url: '/dashboard',
-            title: 'Dashboard',
+            title: 'Домашняя панель',
             icon: '',
-            childs: {
-                'analytics': {
-                    title: 'Analytics',
-                    url: '/analitycs'
+            childs: [
+               {
+                    title: 'Аналитика',
+                    url: '/analitycs',
+                    sort: 1
                 },
-                'store': {
-                    title: 'Store',
-                    url: '/store'
+                {
+                    title: 'Статистика',
+                    url: '/statistic',
+                    sort: 2
                 },
-                'blog-overview': {
-                    title: 'Blog',
-                    url: '/blog-overview'
+                {
+                    title: 'Реклама',
+                    url: '/ads',
+                    sort: 3
                 }
-            },
+            ],
+            sort: 1
         },
-        'icon-sidebar-nav': {
-            title: 'Menu Item',
-            url: '/menu-tem',
-            icon: '',
-        },
-        'components': {
-            title: 'Components',
-            url: '/components',
+        {
+            title: 'AS Провайдеры',
+            url: '/asn',
             icon: 'view_module',
-            childs: {
-                'overview': {
-                    title: 'Overview',
-                    url: '/overview'
+            childs: [
+                {
+                    title: 'Уникальные IP',
+                    url: '/ip',
+                    sort: 1
                 },
-            },
+                {
+                    title: 'Абонентский трафик',
+                    url: '/trafic',
+                    sort: 2
+                },
+                {
+                    title: 'Звеньевые структуры',
+                    url: '/chain-structure',
+                    sort: 3
+                }
+            ],
+            sort: 2
         },
-        'tables': {
+        {
             title: 'Table',
             url: '/table',
             icon: '',
+            sort: 3
         },
-        'user-account': {
-            title: 'User Account',
-            url: '/user-account',
-            icon: '',
-            childs: {
-                'login': {
-                    title: 'Login',
-                    url: '/login',
-                    root: true
-                },
-                'signup': {
-                    title: 'Signup',
-                    url: '/signup',
-                    root: true
-                },
-                'forgot-password': {
-                    title: 'Forgot Password :)',
-                    url: '/forgot-password',
-                    root: true
-                },
-                'change-password': {
-                    title: 'Change Password :)',
-                    url: '/change-password',
-                    root: true
-                },
-            },
-        },
-        'error': {
-            title: 'Errors',
-            url: '/errors',
+        {
+            title: 'Общая информация',
+            url: '/generally',
             icon: 'error',
+            sort: 4
+        },
+        {
+            title: 'ClickHouse Dashboard',
+            url: '/dashboard/clickhouse',
+            icon: 'extension',
+            sort: 5,
+            isVisible: Identity.can('canViewDashboard')
         }
-    };
-
-    renderItems = () => {
-        let items = [];
-
-        for (let currentItem in this.items) {
-            if (!this.items.hasOwnProperty(currentItem)) {
-                continue;
-            }
-
-            let item = this.items[currentItem];
-
-            let isDropdown = item.hasOwnProperty('childs');
-            var isActive = false;
-
-            items.push(
-                <li key={currentItem} className={ 'nav-item' + (isActive ? 'active' : '') + (isDropdown ? ' dropdown' : '') }>
-                    <NavLink className="nav-link" data-toggle={ isDropdown ? "dropdown" : ''} to={!isDropdown ? item.url : ''}><i
-                        className="material-icons">{ item.icon }</i> { item.title }
-                    </NavLink>
-
-                    {
-                        isDropdown ? this.renderSubItems(item.childs, item) : null
-                    }
-                </li>
-            );
-        }
-
-        return items;
-    };
-
-    renderSubItems = (items, parent) => {
-        let subItems = [];
-
-        let getUrl = ({ url, root = false}, parentUrl) => {
-            if (root) {
-                return url;
-            }
-
-            return parentUrl + url;
-        };
-
-        for (let currentItem in items) {
-            if (!items.hasOwnProperty(currentItem)) {
-                continue;
-            }
-
-            let item = items[currentItem];
-
-            subItems.push(
-                <NavLink key={currentItem} to={getUrl(item, parent.url)} className="dropdown-item">{ item.title }</NavLink>
-            );
-        }
-
-        return (
-            <div className="dropdown-menu dropdown-menu-small">
-                { subItems }
-            </div>
-        );
-    };
+    ];
 
     render() {
         return (
@@ -145,7 +80,7 @@ class HeaderMenu extends React.Component {
                     <div className="row">
                         <div className="col">
                             <ul className="nav nav-tabs border-0 flex-column flex-lg-row">
-                                { this.renderItems() }
+                                <ActiveNavigation items={ this.items }/>
                             </ul>
                         </div>
                     </div>
