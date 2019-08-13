@@ -1,6 +1,7 @@
 import React from 'react';
-import { Requirement, guardFactory, CredentialProvider } from "../../containers/rbac";
-import {DasboardThree, DashboardTwo, DashboardOne} from "../../containers/charts";
+import { Requirement, guardFactory, CredentialProvider } from "../../containers/protected";
+import {Bar, Line, Doughnut} from "../../containers/charts/dashboard";
+
 import { Identity } from "../../services/auth";
 
 /**
@@ -46,11 +47,6 @@ export default class Dasboard extends React.Component {
     render() {
         return (
             <>
-                {
-                    /**
-                     * Возможно CredentialProvider стоит вынести выше, например в Dashboard Layout, пока тут для примера
-                     */
-                }
                 <CredentialProvider value={Identity.getUser().getPermissions()}>
                     <div className="page-header row no-gutters py-4">
 
@@ -86,11 +82,6 @@ export default class Dasboard extends React.Component {
                         </div>
                     </div>
 
-                    {
-                        /**
-                         * Вот так вот легко использовать, просто обернуть
-                         */
-                    }
                     <CanViewDashboard>
                         <div className="row">
                             <div className="col col-lg-8 col-md-12 col-sm-12 mb-4">
@@ -99,7 +90,7 @@ export default class Dasboard extends React.Component {
                                         <h6 className="m-0">Sessions</h6>
                                     </div>
                                     <div className="card-body pt-0">
-                                        <DashboardTwo />
+                                        <Line />
                                     </div>
                                 </div>
                             </div>
@@ -111,7 +102,7 @@ export default class Dasboard extends React.Component {
                                         <h6 className="m-0">Users by device</h6>
                                     </div>
                                     <div className="card-body d-flex flex-column">
-                                        <DasboardThree />
+                                        <Doughnut />
                                     </div>
 
                                     <div className="card-footer border-top">
@@ -142,7 +133,7 @@ export default class Dasboard extends React.Component {
                                     <h6 className="m-0">Sales report</h6>
                                 </div>
                                 <div className="card-body pt-0">
-                                    <DashboardOne />
+                                    <Bar />
                                 </div>
                             </div>
                         </div>

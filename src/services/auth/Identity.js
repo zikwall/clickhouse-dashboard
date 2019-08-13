@@ -1,9 +1,10 @@
 import Session from "./Session";
+import { PermissionsInterface } from "./Permission";
+import { JSONSerialize } from "./Serialize";
 
 export default class Identity {
 
     static identityInstance = null;
-    static permissions = [];
 
     static getIdentity() {
         return Session.getSession();
@@ -18,14 +19,18 @@ export default class Identity {
     }
 
     static getUser() {
-        if (Identity.identityInstance !== null && Identity.identityInstance instanceof IdenityInterface) {
+        if (Identity.identityInstance !== null && Identity.identityInstance instanceof IdentityInterface) {
             return Identity.identityInstance;
         }
 
-        return Identity.identityInstance = new IdenityInterface(JSONSerizlizer.unpack(Identity.getIdentity().user));
+        return Identity.identityInstance = new IdentityInterface(JSONSerialize.unpack(Identity.getIdentity().user));
     }
 
     static login = (newSession) => {
+        if (Session.isSessionExist()) {
+            Session.flushSession();
+        }
+
         Session.setSession({
             user: JSON.stringify(newSession.user),
             accessToken: newSession.token
@@ -50,62 +55,14 @@ export default class Identity {
     }
 }
 
-/**
- * todo Создать общий интерфес для хранения данных с возможностью выбора провайдера для сериализации данных
- *
- *  - Identity
- *  - SessionStorange
- */
-class IdentitySerialize {
-    constructor(serializeInterface) {
-        this.serializeInterface = serializeInterface;
-    }
-
-    getSerializer() {
-        return this.serializeInterface;
-    }
-}
-
-class JSONSerizlizer {
-    static unpack(data) {
-        return JSON.parse(data);
-    }
-
-    static pack(data) {
-        return JSON.stringify(data);
-    }
-}
-
-class PermissionsInterface {
-    constructor() {
-        this.permissions = [];
-    }
-
-    get = () => {
-        return this.permissions;
-    };
-
-    set = (permissions) => {
-        if (!Array.isArray(permissions)) {
-            this.permissions.append(permissions);
-        } else {
-            this.permissions = permissions;
-        }
-    };
-
-    can = (permission) => {
-        return this.permissions.includes(permission);
-    };
-}
-
-class IdenityInterface {
+class IdentityInterface {
     constructor(userProps, options) {
         let defaultOptions = {
-            serializer: JSONSerizlizer,
+            serializer: JSONSerialize,
             ...options
         };
 
-        this.permissionInstance = null;
+        this.permissionInstance = new PermissionsInterface();
 
         this.userProps = userProps;
         this.serializer = defaultOptions.serializer;
@@ -130,7 +87,7 @@ class IdenityInterface {
             return this.permissionInstance;
         }
 
-        return this.permissionInstance = new PermissionsInterface();
+        return null;
     };
 
     setPermissions = (permissions) => {
