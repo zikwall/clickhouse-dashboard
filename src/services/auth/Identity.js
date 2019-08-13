@@ -32,7 +32,7 @@ export default class Identity {
         }
 
         Session.setSession({
-            user: JSON.stringify(newSession.user),
+            user: JSONSerialize.pack(newSession.user),
             accessToken: newSession.token
         });
     };
