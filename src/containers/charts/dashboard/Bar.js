@@ -1,6 +1,6 @@
 import React from  'react';
 import { Bar } from 'react-chartjs-2';
-import Preloader from "../../components/content-loader/ContentLoader";
+import Preloader from "../../../components/content-loader/ContentLoader";
 
 export default class extends React.Component {
     data = {

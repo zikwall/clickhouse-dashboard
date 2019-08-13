@@ -1,8 +1,8 @@
 import React from 'react';
 import {Doughnut} from "react-chartjs-2";
-import Preloader from "../../components/content-loader/ContentLoader";
+import Preloader from "../../../components/content-loader/ContentLoader";
 
-export default class DasboardThree extends React.Component {
+export default class extends React.Component {
 
     dongiutData = {
         labels:["Desktop", "Tablet", "Mobile"],
