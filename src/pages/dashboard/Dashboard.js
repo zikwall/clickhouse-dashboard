@@ -47,7 +47,7 @@ export default class Dasboard extends React.Component {
     render() {
         return (
             <>
-                <CredentialProvider value={Identity.getUser().getPermissions()}>
+                <CredentialProvider value={ Identity.getPermissions() }>
                     <div className="page-header row no-gutters py-4">
 
                         <div className="col-12 col-sm-4 text-center text-sm-left mb-4 mb-sm-0">
