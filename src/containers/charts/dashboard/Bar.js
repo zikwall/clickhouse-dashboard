@@ -1,6 +1,6 @@
 import React from  'react';
 import { Bar } from 'react-chartjs-2';
-import Preloader from "../../../components/content-loader/ContentLoader";
+import ContentLoader from "../../../components/content-loader/ContentLoader";
 
 export default class extends React.Component {
     data = {
@@ -51,7 +51,7 @@ export default class extends React.Component {
     render() {
 
         if (this.state.loaded === false) {
-            return <Preloader useHolders={false}/>
+            return <ContentLoader useHolders={false}/>
         }
 
         return (

@@ -1,6 +1,6 @@
 import React from 'react';
 import {Line} from "react-chartjs-2";
-import Preloader from "../../../components/content-loader/ContentLoader";
+import ContentLoader from "../../../components/content-loader/ContentLoader";
 
 export default class extends React.Component {
     sessionData = {
@@ -34,7 +34,7 @@ export default class extends React.Component {
 
     render() {
         if (this.state.loaded === false) {
-            return <Preloader big={true}/>
+            return <ContentLoader big={true}/>
         }
 
         return (
