@@ -1,13 +1,13 @@
 import React from "react";
-import Navbar from "./Navbar";
-import HeaderMenu from "./HeaderMenu";
+import NavigationHeader from "./NavigationHeader";
+import Navigation from "./Navigation";
 
 class Header extends React.Component {
     render() {
         return (
             <>
-                <Navbar { ...this.props }/>
-                <HeaderMenu {...this.props}/>
+                <NavigationHeader { ...this.props }/>
+                <Navigation {...this.props}/>
             </>
         );
     }

@@ -1,18 +1,18 @@
 import React from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
 
-import withAuth from "../components/protected/WithAuth";
+import withAuth from "../containers/protected/WithAuth";
 import Header from "../components/header";
 import ErrorLayout from "./ErrorLayout";
-import { DashboardSubLayout } from "../screens/dashboard";
-import { ProfileSubLayout } from "../screens/profile";
+
+import { ProfileSubLayout, DashboardSubLayout } from '../pages/layouts';
 
 class ProtectedLayout extends React.Component {
     componentDidUpdate (e) {}
     componentWillMount () {}
 
-
     render() {
+
         return (
             <>
                 <div className="container-fluid">
