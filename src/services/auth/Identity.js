@@ -27,6 +27,8 @@ export default class Identity {
     }
 
     static login = (newSession) => {
+        // Add Event before login
+
         if (Session.isSessionExist()) {
             Session.flushSession();
         }
@@ -35,11 +37,17 @@ export default class Identity {
             user: JSONSerialize.pack(newSession.user),
             accessToken: newSession.token
         });
+
+        // Add Event after login
     };
 
     static logout = () => {
+        // Add Event before logout
+
         Session.flushSession();
         Identity.identityInstance = null;
+
+        // Add Event after login
     };
 
     static setPermissions = (permissions) => {
