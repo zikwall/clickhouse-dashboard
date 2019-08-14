@@ -1,3 +1,5 @@
+import Identity from './Identity';
+
 export class PermissionsInterface {
     constructor() {
         this.permissions = [];
@@ -15,7 +17,11 @@ export class PermissionsInterface {
         }
     };
 
-    can = (permission) => {
+    can = (permission, callback = null, options = {}) => {
+        if (callback !== null) {
+            return callback(Identity.getUser(), options);
+        }
+
         return this.permissions.includes(permission);
     };
 }
