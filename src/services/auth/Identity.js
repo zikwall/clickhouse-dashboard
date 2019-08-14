@@ -27,7 +27,7 @@ export default class Identity {
     }
 
     static login = (newSession) => {
-        // Add Event before login
+        //Event.trigger('beforeLogin');
 
         if (Session.isSessionExist()) {
             Session.flushSession();
@@ -38,16 +38,12 @@ export default class Identity {
             accessToken: newSession.token
         });
 
-        // Add Event after login
+        ///Event.trigger('afterLogin');
     };
 
     static logout = () => {
-        // Add Event before logout
-
         Session.flushSession();
         Identity.identityInstance = null;
-
-        // Add Event after login
     };
 
     static setPermissions = (permissions) => {
