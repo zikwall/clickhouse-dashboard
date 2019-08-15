@@ -5,7 +5,7 @@ import { apiFetch } from "../../../services/api/Api";
 import { ContentLoader } from "../../../components/content-loader";
 import { abbreviateNumber } from "../../../utils";
 
-export default class  extends React.Component {
+export default class extends React.Component {
 
     state = {
         data: [],

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Line } from "react-chartjs-2";
 import { Total, Android, Ios, Smart } from "../../containers/charts/clickhouse";
-
+import { ErrorBoundary} from "../../components/error-boundary";
 
 export default class extends React.Component {
 
@@ -25,7 +25,9 @@ export default class extends React.Component {
 
                 <div className="row">
                     <div className="col-12 col-md-6 col-lg-3 mb-4">
-                        <Total />
+                        <ErrorBoundary>
+                            <Total />
+                        </ErrorBoundary>
                     </div>
                     <div className="col-12 col-md-6 col-lg-3 mb-4">
                         <div className="stats-small card card-small">
