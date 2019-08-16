@@ -4,6 +4,7 @@ import { Line } from "react-chartjs-2";
 import { apiFetch } from "../../../services/api/Api";
 import { ContentLoader } from "../../../components/content-loader";
 import { abbreviateNumber } from "../../../utils";
+import {UnathorizeException} from "../../../exceptions";
 
 export default class extends React.Component {
 
@@ -44,6 +45,10 @@ export default class extends React.Component {
                 totalSum: totalSum,
                 loaded: true
             })
+        }).catch((error) => {
+            if (error instanceof UnathorizeException) {
+                this.props.history.replace("/auth/login");
+            }
         });
     }
 

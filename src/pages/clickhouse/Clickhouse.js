@@ -26,7 +26,7 @@ export default class extends React.Component {
                 <div className="row">
                     <div className="col-12 col-md-6 col-lg-3 mb-4">
                         <ErrorBoundary>
-                            <Total />
+                            <Total {...this.props}/>
                         </ErrorBoundary>
                     </div>
                     <div className="col-12 col-md-6 col-lg-3 mb-4">
