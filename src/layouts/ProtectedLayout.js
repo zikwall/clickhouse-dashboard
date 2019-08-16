@@ -9,7 +9,6 @@ import { ProfileSubLayout, DashboardSubLayout } from '../pages/layouts';
 
 class ProtectedLayout extends React.Component {
     componentDidUpdate (e) {}
-    componentWillMount () {}
 
     render() {
 

@@ -8,7 +8,6 @@ import "react-loader-spinner/dist/loader/css/react-spinner-loader.css"
 
 class Auth extends React.Component {
     componentDidMount() {}
-    componentWillUnmount() {}
 
     render() {
         return (
