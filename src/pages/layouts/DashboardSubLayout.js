@@ -3,12 +3,15 @@ import {Route, Switch} from "react-router";
 import ErrorLayout from "../../layouts/ErrorLayout";
 import Dashboard from "../dashboard/Dashboard";
 import { Clickhouse } from "../clickhouse";
+import { Asn } from "../asn";
 
 const ProfileSubLayout = ({ match }) => {
     return (
         <Switch>
             <Route exact path={`${match.url}/`} component={ Dashboard } />
             <Route path={`${match.url}/analytics`} component={ Dashboard } />
+
+            <Route path={`${match.url}/asn/ip`} component={ Asn } />
 
             <Route path={`${match.url}/clickhouse`} component={ Clickhouse } />
 
