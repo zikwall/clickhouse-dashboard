@@ -27,10 +27,6 @@ export const apiFetch = (url, options) => {
         .then(response => response.json());
 };
 
-export const apiUrl = (url) => {
-    return API_DOMAIN + url;
-};
-
 export const handleAuntification = (response) => {
     try {
         return response;
@@ -63,6 +59,10 @@ export const handleResponse = (response) => {
     }
 
     throw (new Exception('Server request execution error.'));
+};
+
+export const apiUrl = (url) => {
+    return API_DOMAIN + url;
 };
 
 export const getAuthorizationHeader = () => {
