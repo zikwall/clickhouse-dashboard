@@ -31,6 +31,16 @@ export const apiUrl = (url) => {
     return API_DOMAIN + url;
 };
 
+export const handleAuntification = (response) => {
+    try {
+        return response;
+    } catch (e) {
+        if (e instanceof UnathorizeException) {
+            this.props.router.push('/foo')
+        }
+    }
+};
+
 export const handleResponse = (response) => {
     if (response.status >= 200 && response.status < 300) {
         return response;
