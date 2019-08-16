@@ -45,11 +45,14 @@ export default class extends React.Component {
                 totalSum: totalSum,
                 loaded: true
             })
-        }).catch((error) => {
+        });
+
+        // надо что-то делать с этим catch-ем, вы понимаете?
+        /*.catch((error) => {
             if (error instanceof UnathorizeException) {
                 this.props.history.replace("/auth/login");
             }
-        });
+        })*/
     }
 
     render() {
