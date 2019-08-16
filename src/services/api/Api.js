@@ -1,6 +1,12 @@
 import Identity from "../auth/Identity";
 import {API_DOMAIN} from "../../constants";
-
+import {
+    UnathorizeException,
+    ForbiddenHttpException,
+    InternalServerErrorException,
+    NotFoundHttpException,
+    Exception
+} from "../../exceptions";
 
 export const apiFetch = (url, options) => {
 
@@ -17,7 +23,7 @@ export const apiFetch = (url, options) => {
         headers: headers,
         ...options
     })
-        .then(isSuccess)
+        .then(handleResponse)
         .then(response => response.json());
 };
 
@@ -25,14 +31,28 @@ export const apiUrl = (url) => {
     return API_DOMAIN + url;
 };
 
-export const isSuccess = (response) => {
+export const handleResponse = (response) => {
     if (response.status >= 200 && response.status < 300) {
         return response;
     }
 
-    let error = new Error(response.statusText);
-    error.response = response;
-    throw error;
+    if (response.status === 401) {
+        throw (new UnathorizeException(response));
+    }
+
+    if (response.status === 403) {
+        throw (new ForbiddenHttpException(response));
+    }
+
+    if (response.status === 404) {
+        throw (new NotFoundHttpException(response));
+    }
+
+    if (response.status === 500) {
+        throw (new InternalServerErrorException(response));
+    }
+
+    throw (new Exception('Server request execution error.'));
 };
 
 export const getAuthorizationHeader = () => {
