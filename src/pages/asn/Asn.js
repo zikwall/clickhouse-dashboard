@@ -1,49 +1,58 @@
 import React from 'react';
 import {apiFetch} from "../../services/api/Api";
-import AsnTable from "./AsnTable";
-import AsnCountryPie from "./AsnCountryPie";
+import AsnTable from "./widgets/AsnTable";
+import AsnCountryPie from "./widgets/AsnCountryPie";
+import { ContentLoaderWrapper } from "../../components/content-loader";
+import AsnList from "./widgets/AsnList";
 
 export default class extends React.Component {
     state = {
         data: [],
+        countIp: 0,
         loaded: false,
         loadedPie: false
     };
 
-    componentDidMount() {
-        apiFetch('/api/v1/asn2').then((asnResult) => {
-            console.log(asnResult);
+    async componentDidMount() {
+        let asnResult = await apiFetch('/api/v1/asn2');
+        let count = await this.calculateUniqueIp(asnResult.data);
 
-            this.setState({
-                data: asnResult.data,
-                loaded: true
-            });
+        this.setState({
+            data: asnResult.data.slice(0, 10),
+            countIp: count,
+            loaded: true
+        });
 
-            this.loadPie().then((data) => {
-                setTimeout(() => {
-                    this.setState({
-                        loadedPie: true
-                    })
-                }, 2000);
-            });
-
+        await this.loadPie();
+        this.setState({
+            loadedPie: true
         });
     }
 
-    loadPie = async () => {
-        const { data } = this.state;
+    calculateUniqueIp = async (data) => {
+        let count = 0;
 
-        const newArray = [];
+        //count = data.reduce((a, b) => parseInt(a.countIP) + parseInt(b.countIP));
 
         for await (let item of data) {
-            if (!data.hasOwnProperty(item)) {
-                continue;
-            }
+            count += parseInt(item.countIP);
+        }
+
+        console.log(count);
+
+        return count;
+    };
+
+    loadPie = async () => {
+        const { data } = this.state;
+        const newArray = [];
+        let counter = 0;
+
+        for await (let item of data) {
+            //console.log(item);
+            continue;
 
             for await (let subItems of data[item]) {
-                if (!data[item].hasOwnProperty('gr')) {
-                    continue
-                }
 
                 let gr = data[item].gr;
                 /**
@@ -56,8 +65,6 @@ export default class extends React.Component {
                 newArray[gr[2]]++;
             }
         }
-
-        console.log(newArray);
 
         return true;
     };
@@ -73,24 +80,30 @@ export default class extends React.Component {
                 </div>
 
                 <div className="row">
-                    <div className="col-lg-8 col-md-12 col-sm-12 mb-4">
+                    <div className="col-md-12">
                         <div className="card card-small mb-4">
                             <div className="card-header border-bottom">
                                 <h6 className="m-0">AS Networks</h6>
                             </div>
-                            <div className="card-body p-0 pb-3 text-center">
-                                <AsnTable data={this.state.data} loaded={this.state.loaded} />
+                            <div className="card-body">
+                                <ContentLoaderWrapper loaded={this.state.loaded}>
+                                    <AsnList data={this.state.data} count={this.state.countIp}/>
+                                </ContentLoaderWrapper>
                             </div>
                         </div>
                     </div>
+                </div>
 
-                    <div className="col-lg-4 col-md-6 col-sm-6 mb-4">
+                <div className="row">
+                    <div className="col-lg-8 col-md-6 col-sm-6 mb-4">
                         <div className="card card-small mb-4">
                             <div className="card-header border-bottom">
                                 <h6 className="m-0">AS Networks Pie</h6>
                             </div>
                             <div className="card-body p-0 pb-3 text-center">
-                                <AsnCountryPie data={this.state.data} loaded={this.state.loadedPie} />
+                                <ContentLoaderWrapper loaded={this.state.loadedPie} countPlaceholders={2}>
+                                    <AsnCountryPie data={this.state.data} />
+                                </ContentLoaderWrapper>
                             </div>
                         </div>
                     </div>

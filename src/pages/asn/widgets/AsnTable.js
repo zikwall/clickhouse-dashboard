@@ -1,6 +1,4 @@
 import React from "react";
-import {apiFetch} from "../../services/api/Api";
-import {ContentLoader} from "../../components/content-loader";
 
 export default class AsnTable extends React.Component {
     renderTBody = (data) => {
@@ -18,15 +16,8 @@ export default class AsnTable extends React.Component {
     };
 
     render() {
-
-        if (this.props.loaded === false) {
-            return (
-                <ContentLoader countPlaceholders={4}/>
-            );
-        }
-
         return (
-            <div style={{overflowY: 'scroll', maxHeight: '500px'}}>
+            <div style={{overflowY: 'scroll', maxHeight: '570px'}}>
                 <table className="table mb-0">
                     <thead className="bg-light">
                     <tr>
