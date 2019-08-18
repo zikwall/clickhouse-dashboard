@@ -21,10 +21,11 @@ class ProtectedLayout extends React.Component {
 
                             <div className="main-content-container container">
                                 <Switch>
+                                    <Route exact path="/" component={DashboardSubLayout} />
+
                                     <Route path="/dashboard" component={ DashboardSubLayout } />
                                     <Route path="/profile" component={ ProfileSubLayout } />
 
-                                    <Route exact path="/" render ={ () => ( <Redirect to="/dashboard" /> ) } />
                                     <Route render={ ( props ) => <ErrorLayout errorCode={404} {...props}/> }  />
                                 </Switch>
                             </div>
