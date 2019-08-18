@@ -31,7 +31,7 @@ class Navigation extends React.Component {
         },
         {
             title: 'AS Провайдеры',
-            url: '/dashboard/asn',
+            url: '/dashboard/autonomous-systems',
             icon: 'view_module',
             childs: [
                 {

@@ -41,7 +41,7 @@ const renderItems = (items, total) => {
     return liList;
 };
 
-const AsnList = (props) => {
+const ASList = (props) => {
     return (
         <Scrollbars style={{height: 570 }}>
             <ul className="list-group list-group-small list-group-flush">
@@ -51,4 +51,4 @@ const AsnList = (props) => {
     );
 };
 
-export default AsnList;
+export default ASList;

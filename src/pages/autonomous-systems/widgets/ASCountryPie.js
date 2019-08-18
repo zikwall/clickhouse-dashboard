@@ -25,7 +25,7 @@ const createDataset = (items) => {
     };
 };
 
-const AsnCountryPie = (props) => {
+const ASCountryPie = (props) => {
     return (
         <Pie data={createDataset(props.data)} options={{
             legend: {
@@ -42,4 +42,4 @@ const AsnCountryPie = (props) => {
     );
 };
 
-export default AsnCountryPie;
+export default ASCountryPie;

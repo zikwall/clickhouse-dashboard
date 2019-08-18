@@ -1,9 +1,9 @@
 import React from 'react';
 import {apiFetch} from "../../services/api/Api";
-import AsnTable from "./widgets/AsnTable";
-import AsnCountryPie from "./widgets/AsnCountryPie";
+import ASTable from "./widgets/ASTable";
+import ASCountryPie from "./widgets/ASCountryPie";
 import { ContentLoaderWrapper } from "../../components/content-loader";
-import AsnList from "./widgets/AsnList";
+import ASList from "./widgets/ASList";
 
 export default class extends React.Component {
     state = {
@@ -56,7 +56,7 @@ export default class extends React.Component {
 
                 let gr = data[item].gr;
                 /**
-                 * 0 - ip, 1 - asn 2 - ountry 3 - city
+                 * 0 - ip, 1 - autonomous-systems 2 - ountry 3 - city
                  */
                 if (typeof newArray[gr[2]] === 'undefined') {
                     newArray[gr[2]] = 0;
@@ -87,7 +87,7 @@ export default class extends React.Component {
                             </div>
                             <div className="card-body">
                                 <ContentLoaderWrapper loaded={this.state.loaded}>
-                                    <AsnList data={this.state.data} count={this.state.countIp}/>
+                                    <ASList data={this.state.data} count={this.state.countIp}/>
                                 </ContentLoaderWrapper>
                             </div>
                         </div>
@@ -102,7 +102,7 @@ export default class extends React.Component {
                             </div>
                             <div className="card-body p-0 pb-3 text-center">
                                 <ContentLoaderWrapper loaded={this.state.loadedPie} countPlaceholders={2}>
-                                    <AsnCountryPie data={this.state.data} />
+                                    <ASCountryPie data={this.state.data} />
                                 </ContentLoaderWrapper>
                             </div>
                         </div>

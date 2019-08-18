@@ -1,6 +1,6 @@
 import React from "react";
 
-export default class AsnTable extends React.Component {
+export default class ASTable extends React.Component {
     renderTBody = (data) => {
         const tbody = data.map((item, index) => {
             return (

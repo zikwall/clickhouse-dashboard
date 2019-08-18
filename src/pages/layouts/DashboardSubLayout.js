@@ -3,7 +3,7 @@ import {Route, Switch} from "react-router";
 import ErrorLayout from "../../layouts/ErrorLayout";
 import Dashboard from "../dashboard/Dashboard";
 import { Clickhouse } from "../clickhouse";
-import { Asn } from "../asn";
+import { AutonomousSystems } from "../autonomous-systems";
 
 const ProfileSubLayout = ({ match }) => {
     return (
@@ -11,7 +11,7 @@ const ProfileSubLayout = ({ match }) => {
             <Route exact path={`${match.url}/`} component={ Dashboard } />
             <Route path={`${match.url}/analytics`} component={ Dashboard } />
 
-            <Route path={`${match.url}/asn/ip`} component={ Asn } />
+            <Route path={`${match.url}/autonomous-systems/ip`} component={ AutonomousSystems } />
 
             <Route path={`${match.url}/clickhouse`} component={ Clickhouse } />
 
