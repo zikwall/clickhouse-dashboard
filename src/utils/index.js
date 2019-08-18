@@ -1,4 +1,4 @@
-import { abbreviateNumber } from "./Number";
+import { abbreviateNumber, percentage } from "./Number";
 import { getRGBColor } from "./Color";
 
 export {

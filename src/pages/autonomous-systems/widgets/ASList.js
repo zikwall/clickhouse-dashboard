@@ -1,9 +1,6 @@
 import React from 'react';
 import { Scrollbars } from 'react-custom-scrollbars';
-
-const percentage = (total, current) => {
-    return parseFloat((100 * current) / total).toFixed(2);
-};
+import { percentage } from "../../../utils/Number";
 
 const handleModalView = () => {
     console.log('okey');
