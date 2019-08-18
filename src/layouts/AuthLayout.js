@@ -4,7 +4,6 @@ import { Route, Switch } from "react-router-dom";
 import ErrorLayout from "./ErrorLayout";
 import { Login } from "../pages/login";
 import { Signup } from "../pages/signup";
-import "react-loader-spinner/dist/loader/css/react-spinner-loader.css"
 
 class Auth extends React.Component {
     componentDidMount() {}
