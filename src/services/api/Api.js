@@ -1,7 +1,7 @@
 import Identity from "../auth/Identity";
 import {API_DOMAIN} from "../../constants";
 import {
-    UnathorizeException,
+    UnauthorizedException,
     ForbiddenHttpException,
     InternalServerErrorException,
     NotFoundHttpException,
@@ -31,7 +31,7 @@ export const handleAuntification = (response) => {
     try {
         return response;
     } catch (e) {
-        if (e instanceof UnathorizeException) {
+        if (e instanceof UnauthorizedException) {
             this.props.router.push('/foo')
         }
     }
@@ -43,7 +43,7 @@ export const handleResponse = (response) => {
     }
 
     if (response.status === 401) {
-        throw (new UnathorizeException(response));
+        throw (new UnauthorizedException(response));
     }
 
     if (response.status === 403) {

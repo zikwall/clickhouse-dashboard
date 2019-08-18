@@ -1,9 +1,9 @@
-import UnathorizeException from "./UnathorizeException";
+import UnauthorizedException from "./UnauthorizedException";
 import ForbiddenHttpException from "./ForbiddenHttpException";
 import NotFoundHttpException from "./NotFoundHttpException";
 import InternalServerErrorException from "./InternalServerErrorException";
 import Exception from "./Exception";
 
 export {
-    UnathorizeException, ForbiddenHttpException, NotFoundHttpException, InternalServerErrorException, Exception
+    UnauthorizedException, ForbiddenHttpException, NotFoundHttpException, InternalServerErrorException, Exception
 }

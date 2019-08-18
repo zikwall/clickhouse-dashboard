@@ -4,7 +4,7 @@ import { Line } from "react-chartjs-2";
 import { apiFetch } from "../../../services/api/Api";
 import { ContentLoader } from "../../../components/content-loader";
 import { abbreviateNumber } from "../../../utils";
-import {UnathorizeException} from "../../../exceptions";
+import {UnauthorizedException} from "../../../exceptions";
 
 export default class extends React.Component {
 
@@ -49,7 +49,7 @@ export default class extends React.Component {
 
         // надо что-то делать с этим catch-ем, вы понимаете?
         /*.catch((error) => {
-            if (error instanceof UnathorizeException) {
+            if (error instanceof UnauthorizedException) {
                 this.props.history.replace("/auth/login");
             }
         })*/
