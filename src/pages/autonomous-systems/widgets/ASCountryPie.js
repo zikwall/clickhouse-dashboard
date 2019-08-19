@@ -5,14 +5,10 @@ import { getRGBColor} from "../../../utils";
 const createDataset = (items) => {
     const labels = [];
     const data = [];
-    const colors = {
-        back: [],
-        hover: []
-    };
 
-    for (let item of items) {
-        labels.push(item.autonomous_system_organization);
-        data.push(item.countIP);
+    for (let item in items) {
+        labels.push(item);
+        data.push(items[item]);
     }
 
     return {
@@ -28,6 +24,8 @@ const createDataset = (items) => {
 const ASCountryPie = (props) => {
     return (
         <Pie data={createDataset(props.data)} options={{
+            responsive: true,
+            maintainAspectRatio: false,
             legend: {
                 position:"bottom",
                 labels: {
