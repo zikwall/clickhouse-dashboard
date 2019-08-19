@@ -24,6 +24,8 @@ export default class extends React.Component {
             loaded: true
         });
 
+        console.log(this.state.data);
+
         let countryPieData = await this.loadPie();
         this.setState({
             loadedPie: true,
