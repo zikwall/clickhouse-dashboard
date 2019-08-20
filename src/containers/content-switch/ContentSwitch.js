@@ -1,5 +1,5 @@
 import React from 'react';
-import {SwithButton} from "./index";
+import { SwitchButton } from "./index";
 
 export default class extends React.Component {
     state = {
@@ -63,7 +63,7 @@ export default class extends React.Component {
                 isActive = true;
             }
 
-            return <SwithButton key={index} click={() => this.setActiveSheet(sheet.index)} isActive={isActive} name={sheet.name} />;
+            return <SwitchButton key={index} click={() => this.setActiveSheet(sheet.index)} isActive={isActive} name={sheet.name} />;
         });
 
         return buttons;

@@ -1,7 +1,7 @@
 import ContentSwitch from "./ContentSwitch";
 import ContentCase from "./ContentCase";
-import SwithButton from "./SwithButton";
+import SwitchButton from "./SwitchButton";
 
 export {
-    ContentSwitch, ContentCase, SwithButton
+    ContentSwitch, ContentCase, SwitchButton
 }
