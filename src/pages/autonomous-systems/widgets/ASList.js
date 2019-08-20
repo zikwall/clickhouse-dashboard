@@ -1,6 +1,8 @@
 import React from 'react';
 import { Scrollbars } from 'react-custom-scrollbars';
 import { percentage } from "../../../utils/Number";
+import {FilterPanel} from "../../../components/filter";
+import {ContentLoaderWrapper} from "../../../components/content-loader";
 
 const handleModalView = () => {
     console.log('okey');
@@ -40,11 +42,15 @@ const renderItems = (items, total) => {
 
 const ASList = (props) => {
     return (
-        <Scrollbars style={{height: 570 }}>
-            <ul className="list-group list-group-small list-group-flush">
-                { renderItems(props.data, props.count) }
-            </ul>
-        </Scrollbars>
+        <>
+            <FilterPanel />
+
+            <Scrollbars style={{height: 570 }}>
+                <ul className="list-group list-group-small list-group-flush">
+                    { renderItems(props.data, props.count) }
+                </ul>
+            </Scrollbars>
+        </>
     );
 };
 
