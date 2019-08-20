@@ -4,6 +4,7 @@ import ASPie from "./widgets/ASPie";
 import { ContentLoaderWrapper } from "../../components/content-loader";
 import ASList from "./widgets/ASList";
 import ASCountryPie from "./widgets/ASCountryPie";
+import { ContentSwitch, ContentCase } from "../../containers/content-switch";
 
 export default class extends React.Component {
     state = {
@@ -24,8 +25,6 @@ export default class extends React.Component {
             loaded: true
         });
 
-        console.log(this.state.data);
-
         let countryPieData = await this.loadPie();
         this.setState({
             loadedPie: true,
@@ -41,8 +40,6 @@ export default class extends React.Component {
         for await (let item of data) {
             count += parseInt(item.countIP);
         }
-
-        console.log(count);
 
         return count;
     };
@@ -80,47 +77,50 @@ export default class extends React.Component {
                     </div>
                 </div>
 
-                <div className="row">
-                    <div className="col-md-12">
-                        <div className="card card-small mb-4">
-                            <div className="card-header border-bottom">
-                                <h6 className="m-0">AS Networks</h6>
-                            </div>
-                            <div className="card-body">
-                                <ContentLoaderWrapper loaded={this.state.loaded}>
-                                    <ASList data={this.state.data} count={this.state.countIp}/>
-                                </ContentLoaderWrapper>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div className="row">
-                    <div className="col-lg-6 col-md-6 col-sm-6 mb-4">
-                        <div className="card card-small mb-4">
-                            <div className="card-header border-bottom">
-                                <h6 className="m-0">AS Networks Pie</h6>
-                            </div>
-                            <div className="card-body p-0 pb-3 text-center" style={{height: '450px'}}>
-                                <ContentLoaderWrapper loaded={this.state.loadedPie} countPlaceholders={4}>
-                                    <ASPie data={this.state.data} />
-                                </ContentLoaderWrapper>
+                <ContentSwitch>
+                    <ContentCase sheetIndex="networks" sheetName="Networks">
+                        <div className="col-md-12">
+                            <div className="card card-small mb-4">
+                                <div className="card-header border-bottom">
+                                    <h6 className="m-0">AS Networks</h6>
+                                </div>
+                                <div className="card-body">
+                                    <ContentLoaderWrapper loaded={this.state.loaded}>
+                                        <ASList data={this.state.data} count={this.state.countIp}/>
+                                    </ContentLoaderWrapper>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div className="col-lg-6 col-md-6 col-sm-6 mb-4">
-                        <div className="card card-small mb-4">
-                            <div className="card-header border-bottom">
-                                <h6 className="m-0">AS Country Pie</h6>
-                            </div>
-                            <div className="card-body p-0 pb-3 text-center" style={{height: '450px'}}>
-                                <ContentLoaderWrapper loaded={this.state.loadedPie} countPlaceholders={4}>
-                                    <ASCountryPie data={this.state.countryPieData} />
-                                </ContentLoaderWrapper>
+                    </ContentCase>
+                    <ContentCase sheetIndex="networks-pie" sheetName="Networks Pie">
+                        <div className="col-lg-12">
+                            <div className="card card-small mb-4">
+                                <div className="card-header border-bottom">
+                                    <h6 className="m-0">AS Networks Pie</h6>
+                                </div>
+                                <div className="card-body p-0 pb-3 text-center" style={{height: '450px'}}>
+                                    <ContentLoaderWrapper loaded={this.state.loadedPie} countPlaceholders={4}>
+                                        <ASPie data={this.state.data} />
+                                    </ContentLoaderWrapper>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </div>
+                    </ContentCase>
+                    <ContentCase sheetIndex="networks-country" sheetName="Country Pie">
+                        <div className="col-lg-12">
+                            <div className="card card-small mb-4">
+                                <div className="card-header border-bottom">
+                                    <h6 className="m-0">AS Country Pie</h6>
+                                </div>
+                                <div className="card-body p-0 pb-3 text-center" style={{height: '450px'}}>
+                                    <ContentLoaderWrapper loaded={this.state.loadedPie} countPlaceholders={4}>
+                                        <ASCountryPie data={this.state.countryPieData} />
+                                    </ContentLoaderWrapper>
+                                </div>
+                            </div>
+                        </div>
+                    </ContentCase>
+                </ContentSwitch>
             </>
         );
     }

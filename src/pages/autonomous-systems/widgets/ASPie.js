@@ -27,7 +27,8 @@ const ASPie = (props) => {
             responsive: true,
             maintainAspectRatio: false,
             legend: {
-                position:"bottom",
+                position:"left",
+                display: true,
                 labels: {
                     padding: 25, boxWidth: 20
                 }

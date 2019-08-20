@@ -27,7 +27,7 @@ const ASCountryPie = (props) => {
             responsive: true,
             maintainAspectRatio: false,
             legend: {
-                position:"bottom",
+                position:"left",
                 labels: {
                     padding: 25, boxWidth: 20
                 }
