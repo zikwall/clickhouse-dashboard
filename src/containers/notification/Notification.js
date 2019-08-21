@@ -34,9 +34,8 @@ export default (props) => {
                     </div>
                     <div className="notification__content">
                         <span className="notification__category">Sales</span>
-                        <p>Last week your store’s sales count decreased by <span
-                            className="text-danger text-semibold">5.52%</span>. It could have been
-                            worse!
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.
                         </p>
                     </div>
                 </a>

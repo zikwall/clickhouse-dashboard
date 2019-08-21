@@ -11,7 +11,7 @@ const ProfileSubLayout = ({ match }) => {
             <Route exact path={`${match.url}/`} component={ Dashboard } />
             <Route path={`${match.url}/analytics`} component={ Dashboard } />
 
-            <Route path={`${match.url}/autonomous-systems/ip`} component={ AutonomousSystems } />
+            <Route path={`${match.url}/autonomous-systems/general`} component={ AutonomousSystems } />
 
             <Route path={`${match.url}/clickhouse`} component={ Clickhouse } />
 

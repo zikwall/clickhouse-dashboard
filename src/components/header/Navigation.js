@@ -8,21 +8,21 @@ class Navigation extends React.Component {
     items = [
         {
             url: '/dashboard',
-            title: 'Домашняя панель',
+            title: 'Dashboard',
             icon: '',
             childs: [
                {
-                    title: 'Аналитика',
+                    title: 'Analytics',
                     url: '/analytics',
                     sort: 1
                 },
                 {
-                    title: 'Статистика',
+                    title: 'Statistic',
                     url: '/statistic',
                     sort: 2
                 },
                 {
-                    title: 'Реклама',
+                    title: 'Ads',
                     url: '/ads',
                     sort: 3
                 }
@@ -30,22 +30,22 @@ class Navigation extends React.Component {
             sort: 1
         },
         {
-            title: 'AS Провайдеры',
+            title: 'Autonomous Systems',
             url: '/dashboard/autonomous-systems',
             icon: 'view_module',
             childs: [
                 {
-                    title: 'Уникальные IP',
-                    url: '/ip',
+                    title: 'Generral Information',
+                    url: '/general',
                     sort: 1
                 },
                 {
-                    title: 'Абонентский трафик',
-                    url: '/trafic',
+                    title: 'Subscriber traffic',
+                    url: '/traffic',
                     sort: 2
                 },
                 {
-                    title: 'Звеньевые структуры',
+                    title: 'Link structures',
                     url: '/chain-structure',
                     sort: 3
                 }
@@ -59,8 +59,8 @@ class Navigation extends React.Component {
             sort: 3
         },
         {
-            title: 'Общая информация',
-            url: '/generally',
+            title: 'Technical information',
+            url: '/tech-information',
             icon: 'error',
             sort: 4
         },
