@@ -16,7 +16,7 @@ export default class extends React.Component {
     };
 
     async componentDidMount() {
-        let asnResult = await apiFetch('/api/v1/asn2');
+        let asnResult = await apiFetch('/api/v1/autonomous-system/general');
         let count = await this.calculateUniqueIp(asnResult.data);
 
         this.setState({
@@ -73,7 +73,7 @@ export default class extends React.Component {
                 <div className="page-header row no-gutters py-4">
                     <div className="col-12 col-sm-4 text-center text-sm-left mb-4 mb-sm-0">
                         <span className="text-uppercase page-subtitle">Обзор</span>
-                        <h3 className="page-title">ASN</h3>
+                        <h3 className="page-title">Autonomous Systems</h3>
                     </div>
                 </div>
 
