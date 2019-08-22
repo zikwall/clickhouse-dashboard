@@ -1,9 +1,9 @@
 import React from 'react';
 import {apiFetch} from "../../services/api/Api";
-import ASPie from "./widgets/ASPie";
+import ASPie from "./components/ASPie";
 import { ContentLoaderWrapper } from "../../components/content-loader";
-import ASList from "./widgets/ASList";
-import ASCountryPie from "./widgets/ASCountryPie";
+import ASList from "./components/ASList";
+import ASCountryPie from "./components/ASCountryPie";
 import { ContentSwitch, ContentCase } from "../../containers/content-switch";
 
 export default class extends React.Component {
