@@ -1,42 +1,57 @@
 import React from 'react';
-import {apiFetch} from "../../services/api/Api";
+import { apiFetch } from "../../services/api/Api";
 import ASPie from "./components/ASPie";
 import { ContentLoaderWrapper } from "../../components/content-loader";
 import ASList from "./components/ASList";
 import ASCountryPie from "./components/ASCountryPie";
 import { ContentSwitch, ContentCase } from "../../containers/content-switch";
+import { Panel } from "../../components/panel";
 
 export default class extends React.Component {
     state = {
         data: [],
         countIp: 0,
         loaded: false,
-        loadedPie: false,
+        chartsIsComposed: false,
         countryPieData: null
     };
 
     async componentDidMount() {
-        let asnResult = await apiFetch('/api/v1/autonomous-system/general');
-        let count = await this.calculateUniqueIp(asnResult.data);
+        let asResult = await apiFetch('/api/v1/autonomous-system/general');
+        await this.initPage(asResult);
+    }
+
+    initPage = async (asResult) => {
+        let count = await this.calculateUniqueIp(asResult.data);
 
         this.setState({
-            data: asnResult.data.slice(0, 20),
+            data: asResult.data.slice(0, 20),
             countIp: count,
             loaded: true
         });
 
-        let countryPieData = await this.loadPie();
+        let countryPieData = await this.chartDataComposition();
         this.setState({
-            loadedPie: true,
+            chartsIsComposed: true,
             countryPieData: countryPieData
         });
-    }
+    };
+
+    pageInitByTime = async (time = null) => {
+        this.setPageUnloadState();
+        let asResult = await apiFetch('/api/v1/autonomous-system/general?timeBy=' + time);
+        await this.initPage(asResult);
+    };
+
+    setPageUnloadState = () => {
+        this.setState({
+            loaded: false,
+            chartsIsComposed: false,
+        });
+    };
 
     calculateUniqueIp = async (data) => {
         let count = 0;
-
-        //count = data.reduce((a, b) => parseInt(a.countIP) + parseInt(b.countIP));
-
         for await (let item of data) {
             count += parseInt(item.countIP);
         }
@@ -44,7 +59,7 @@ export default class extends React.Component {
         return count;
     };
 
-    loadPie = async () => {
+    chartDataComposition = async () => {
         const { data } = this.state;
         const newArray = [];
 
@@ -67,12 +82,20 @@ export default class extends React.Component {
         return newArray;
     };
 
+    getFilterButtons = () => {
+        return {
+            day: this.pageInitByTime,
+            week: this.pageInitByTime,
+            month: this.pageInitByTime,
+        };
+    };
+
     render () {
         return (
             <>
                 <div className="page-header row no-gutters py-4">
                     <div className="col-12 col-sm-4 text-center text-sm-left mb-4 mb-sm-0">
-                        <span className="text-uppercase page-subtitle">Обзор</span>
+                        <span className="text-uppercase page-subtitle">Overview autonomous system total information</span>
                         <h3 className="page-title">Autonomous Systems</h3>
                     </div>
                 </div>
@@ -85,9 +108,11 @@ export default class extends React.Component {
                                     <h6 className="m-0">AS Networks</h6>
                                 </div>
                                 <div className="card-body">
-                                    <ContentLoaderWrapper loaded={this.state.loaded}>
-                                        <ASList data={this.state.data} count={this.state.countIp}/>
-                                    </ContentLoaderWrapper>
+                                    <Panel filterButtons={this.getFilterButtons()}>
+                                        <ContentLoaderWrapper loaded={this.state.loaded} countPlaceholders={5}>
+                                            <ASList data={this.state.data} count={this.state.countIp} />
+                                        </ContentLoaderWrapper>
+                                    </Panel>
                                 </div>
                             </div>
                         </div>
@@ -99,7 +124,7 @@ export default class extends React.Component {
                                     <h6 className="m-0">AS Networks Pie</h6>
                                 </div>
                                 <div className="card-body p-0 pb-3 text-center" style={{height: '450px'}}>
-                                    <ContentLoaderWrapper loaded={this.state.loadedPie} countPlaceholders={4}>
+                                    <ContentLoaderWrapper loaded={this.state.chartsIsComposed} countPlaceholders={4}>
                                         <ASPie data={this.state.data} />
                                     </ContentLoaderWrapper>
                                 </div>
@@ -113,7 +138,7 @@ export default class extends React.Component {
                                     <h6 className="m-0">AS Country Pie</h6>
                                 </div>
                                 <div className="card-body p-0 pb-3 text-center" style={{height: '450px'}}>
-                                    <ContentLoaderWrapper loaded={this.state.loadedPie} countPlaceholders={4}>
+                                    <ContentLoaderWrapper loaded={this.state.chartsIsComposed} countPlaceholders={4}>
                                         <ASCountryPie data={this.state.countryPieData} />
                                     </ContentLoaderWrapper>
                                 </div>
