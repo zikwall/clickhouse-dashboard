@@ -1,9 +1,7 @@
 import React from 'react';
 
-export default (props) => {
-    const {click, name, isActive} = props;
-
+export default ({click, name, isActive}) => {
     return (
-        <a onClick={ click } className={"btn btn-white" + (isActive ? ' active' : '')}> { name } </a>
+        <a href="#" onClick={ click } className={"btn btn-white" + (isActive ? ' active' : '')}> { name } </a>
     );
 };

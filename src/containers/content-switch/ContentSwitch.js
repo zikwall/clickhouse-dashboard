@@ -63,7 +63,9 @@ export default class extends React.Component {
                 isActive = true;
             }
 
-            return <SwitchButton key={index} click={() => this.setActiveSheet(sheet.index)} isActive={isActive} name={sheet.name} />;
+            return <SwitchButton key={index}
+                                 click={(e) => { e.preventDefault(); this.setActiveSheet(sheet.index); }}
+                                 isActive={isActive} name={sheet.name} />;
         });
 
         return buttons;
