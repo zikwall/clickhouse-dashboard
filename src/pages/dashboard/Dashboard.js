@@ -3,6 +3,7 @@ import { Requirement, guardFactory, CredentialProvider } from "../../containers/
 import {Bar, Line, Doughnut} from "../../containers/charts/dashboard";
 
 import { Identity } from "../../services/auth";
+import { withTitle } from "../../components/document-title";
 
 /**
  * Example simple RBAC, пока что сравнивается username пользователя,
@@ -42,7 +43,7 @@ class CheckPermissions extends Requirement {
 const NeedViewDashboard = new CheckPermissions(['canViewDashboard']);
 const CanViewDashboard = guardFactory(NeedViewDashboard);
 
-export default class Dasboard extends React.Component {
+class DasboardPage extends React.Component {
 
     render() {
         return (
@@ -143,3 +144,5 @@ export default class Dasboard extends React.Component {
         );
     }
 }
+
+export default withTitle({component: DasboardPage, title: 'Dashboard'})

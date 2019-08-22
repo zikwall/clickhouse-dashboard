@@ -6,8 +6,9 @@ import ASList from "./components/ASList";
 import ASCountryPie from "./components/ASCountryPie";
 import { ContentSwitch, ContentCase } from "../../containers/content-switch";
 import { Panel } from "../../components/panel";
+import { withTitle } from "../../components/document-title";
 
-export default class extends React.Component {
+class AutonomousSystemsPage extends React.Component {
     state = {
         data: [],
         countIp: 0,
@@ -150,3 +151,5 @@ export default class extends React.Component {
         );
     }
 }
+
+export default withTitle({ component: AutonomousSystemsPage, title: 'Autonomous Systems' });
