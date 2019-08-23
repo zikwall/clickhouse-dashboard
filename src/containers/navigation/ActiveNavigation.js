@@ -11,7 +11,6 @@ export default class extends React.Component {
         const { items } = this.props;
 
         this.addItems(items);
-        this.sortItems(this.getItems());
     }
 
     addItems = (items) => {
@@ -76,7 +75,7 @@ export default class extends React.Component {
 
     renderItems = () => {
         let items = [];
-        let itemsState = this.getItems();
+        let itemsState = this.sortItems(this.getItems());
         for (let currentItem in itemsState) {
             if (!itemsState.hasOwnProperty(currentItem)) {
                 continue;

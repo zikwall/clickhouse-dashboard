@@ -53,10 +53,10 @@ class Navigation extends React.Component {
             sort: 2
         },
         {
-            title: 'Table',
-            url: '/table',
+            title: 'Monit Old Statistic',
+            url: '/dashboard/monit-old-statisitc',
             icon: '',
-            sort: 3
+            sort: 5
         },
         {
             title: 'Technical information',
@@ -68,7 +68,7 @@ class Navigation extends React.Component {
             title: 'ClickHouse Dashboard',
             url: '/dashboard/clickhouse',
             icon: 'extension',
-            sort: 5,
+            sort: 3,
             isVisible: Identity.can('canViewDashboard')
         }
     ];
