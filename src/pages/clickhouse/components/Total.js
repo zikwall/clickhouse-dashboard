@@ -21,30 +21,29 @@ export default class extends React.Component {
 
     options = merge(this.optData.data);
 
-    componentDidMount() {
-        apiFetch('/api/v1/clickhouse/total').then((total) => {
-            let labels = total.data.map((i) => {
-                return i.date;
-            });
+    async componentDidMount() {
+        const total = await apiFetch('/api/v1/clickhouse/total');
+        let labels = total.data.map((i) => {
+            return i.date;
+        });
 
-            let data = total.data.map((i) => {
-                return i.ctn;
-            });
+        let data = total.data.map((i) => {
+            return i.ctn;
+        });
 
-            let totalSum = abbreviateNumber(data.reduce((a, b) => parseInt(a) + parseInt(b), 0), 0);
+        let totalSum = abbreviateNumber(data.reduce((a, b) => parseInt(a) + parseInt(b), 0), 0);
 
-            this.setState({
-                data: {
-                    labels: labels,
-                    datasets: [{
-                        label: "Today",
-                        fill: "start",
-                        data: data, backgroundColor: this.optData.backgroundColor, borderColor: this.optData.borderColor, borderWidth: 1.5
-                    }]
-                },
-                totalSum: totalSum,
-                loaded: true
-            })
+        this.setState({
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: "Today",
+                    fill: "start",
+                    data: data, backgroundColor: this.optData.backgroundColor, borderColor: this.optData.borderColor, borderWidth: 1.5
+                }]
+            },
+            totalSum: totalSum,
+            loaded: true
         });
 
         // надо что-то делать с этим catch-ем, вы понимаете?

@@ -1,9 +1,9 @@
 import React from 'react';
-import { Line } from "react-chartjs-2";
-import { Total, Android, Ios, Smart } from "../../containers/charts/clickhouse";
+import { Total, Android, Ios, Smart } from "./components";
 import { ErrorBoundary} from "../../components/error-boundary";
+import { withTitle } from "../../components/document-title";
 
-export default class extends React.Component {
+class ClickHousePage extends React.Component {
 
     render() {
         return (
@@ -91,3 +91,5 @@ export default class extends React.Component {
         );
     }
 }
+
+export default withTitle({component: ClickHousePage, title: 'ClickHouse infromation'});

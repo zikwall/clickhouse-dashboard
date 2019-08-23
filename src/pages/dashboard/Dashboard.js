@@ -1,9 +1,10 @@
 import React from 'react';
 import { Requirement, guardFactory, CredentialProvider } from "../../containers/protected";
-import {Bar, Line, Doughnut} from "../../containers/charts/dashboard";
+import {Bar, Line, Doughnut} from "./components";
 
 import { Identity } from "../../services/auth";
 import { withTitle } from "../../components/document-title";
+import { Col, Row } from "../../components/bootstrap/container";
 
 /**
  * Example simple RBAC, пока что сравнивается username пользователя,
@@ -44,8 +45,8 @@ const NeedViewDashboard = new CheckPermissions(['canViewDashboard']);
 const CanViewDashboard = guardFactory(NeedViewDashboard);
 
 class DasboardPage extends React.Component {
-
     render() {
+
         return (
             <>
                 <CredentialProvider value={ Identity.getPermissions() }>
@@ -84,8 +85,8 @@ class DasboardPage extends React.Component {
                     </div>
 
                     <CanViewDashboard>
-                        <div className="row">
-                            <div className="col col-lg-8 col-md-12 col-sm-12 mb-4">
+                        <Row>
+                            <Col className="col col-lg-8 col-md-12 col-sm-12 mb-4">
                                 <div className="card card-small h-100">
                                     <div className="card-header border-bottom">
                                         <h6 className="m-0">Sessions</h6>
@@ -94,10 +95,8 @@ class DasboardPage extends React.Component {
                                         <Line />
                                     </div>
                                 </div>
-                            </div>
-
-                            <div className="col-lg-4 col-md-6 col-sm-6 mb-4">
-
+                            </Col>
+                            <Col className="col-lg-4 col-md-6 col-sm-6 mb-4">
                                 <div className="card card-small h-100">
                                     <div className="card-header border-bottom">
                                         <h6 className="m-0">Users by device</h6>
@@ -122,9 +121,8 @@ class DasboardPage extends React.Component {
                                         </div>
                                     </div>
                                 </div>
-
-                            </div>
-                        </div>
+                            </Col>
+                        </Row>
                     </CanViewDashboard>
 
                     <div className="row">
