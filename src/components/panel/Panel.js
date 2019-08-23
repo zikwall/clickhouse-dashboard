@@ -1,23 +1,33 @@
 import React from 'react';
 import { FilterPanel } from "../filter";
 import { Scrollbars } from "react-custom-scrollbars";
+import PropTypes from 'prop-types';
 
-export default class extends React.Component {
-    static defaultProps = {
-        filterButtons: {},
-        everyOneCallback: null,
-        height: 570,
-    };
+const Panel = ({useButtons, useRange, filterButtons, everyOneCallback, children, height}) => {
+    return (
+        <>
+            <FilterPanel buttons={filterButtons} useButtons={useButtons} useRange={useRange}/>
 
-    render () {
-        return (
-            <>
-                <FilterPanel buttons={this.props.filterButtons}/>
+            <Scrollbars style={{height: height }}>
+                {children }
+            </Scrollbars>
+        </>
+    );
+};
 
-                <Scrollbars style={{height: this.props.height }}>
-                    { this.props.children }
-                </Scrollbars>
-            </>
-        );
-    }
-}
+export default Panel;
+
+Panel.defaultProps = {
+    filterButtons: {},
+    useButtons: true,
+    useRange: false,
+    everyOneCallback: null,
+    height: 570,
+};
+
+Panel.propTypes = {
+    filterButtons: PropTypes.array,
+    useButtons: PropTypes.bool,
+    useRange: PropTypes.bool,
+    everyOneCallback: PropTypes.oneOfType([PropTypes.node, PropTypes.func])
+};

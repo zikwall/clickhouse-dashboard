@@ -1,6 +1,7 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
-export default class extends React.Component {
+class Filter extends React.Component {
 
     state = {
         activeButtonIndex: 'day'
@@ -87,3 +88,12 @@ export default class extends React.Component {
         );
     }
 }
+
+export default Filter;
+
+Filter.propTypes = {
+    buttons: PropTypes.object,
+    useRange: PropTypes.bool,
+    useButtons: PropTypes.bool,
+    everyOneCallback: PropTypes.oneOfType([PropTypes.node, PropTypes.func])
+};
