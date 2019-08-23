@@ -21,9 +21,9 @@ const createDataset = (items) => {
     };
 };
 
-const ASPie = (props) => {
+const ASPie = ({ data }) => {
     return (
-        <Pie data={createDataset(props.data)} options={{
+        <Pie data={createDataset(data)} options={{
             responsive: true,
             maintainAspectRatio: false,
             legend: {
