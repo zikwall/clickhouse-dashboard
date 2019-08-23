@@ -54,9 +54,9 @@ class Navigation extends React.Component {
         },
         {
             title: 'Monit Old Statistic',
-            url: '/dashboard/monit-old-statisitc',
+            url: '/dashboard/ads',
             icon: '',
-            sort: 5
+            sort: 3
         },
         {
             title: 'Technical information',
@@ -68,7 +68,7 @@ class Navigation extends React.Component {
             title: 'ClickHouse Dashboard',
             url: '/dashboard/clickhouse',
             icon: 'extension',
-            sort: 3,
+            sort: 5,
             isVisible: Identity.can('canViewDashboard')
         }
     ];
