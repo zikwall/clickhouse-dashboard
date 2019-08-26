@@ -90,6 +90,10 @@ class AutonomousSystemsPage extends React.Component {
             day: this.pageInitByTime,
             week: this.pageInitByTime,
             month: this.pageInitByTime,
+
+            yesterday: this.pageInitByTime,
+            lastWeek: this.pageInitByTime,
+            lastMonth: this.pageInitByTime,
         };
     };
 
