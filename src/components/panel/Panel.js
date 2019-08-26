@@ -26,7 +26,7 @@ Panel.defaultProps = {
 };
 
 Panel.propTypes = {
-    filterButtons: PropTypes.array,
+    filterButtons: PropTypes.object,
     useButtons: PropTypes.bool,
     useRange: PropTypes.bool,
     everyOneCallback: PropTypes.oneOfType([PropTypes.node, PropTypes.func])
