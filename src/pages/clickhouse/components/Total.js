@@ -3,8 +3,7 @@ import { merge } from "./Common";
 import { Line } from "react-chartjs-2";
 import { apiFetch } from "../../../services/api/Api";
 import { ContentLoader } from "../../../components/content-loader";
-import { abbreviateNumber } from "../../../utils";
-import {UnauthorizedException} from "../../../exceptions";
+import { Number } from "../../../utils";
 
 export default class extends React.Component {
 
@@ -31,7 +30,7 @@ export default class extends React.Component {
             return i.ctn;
         });
 
-        let totalSum = abbreviateNumber(data.reduce((a, b) => parseInt(a) + parseInt(b), 0), 0);
+        let totalSum = Number.abbreviateNumber(data.reduce((a, b) => parseInt(a) + parseInt(b), 0), 0);
 
         this.setState({
             data: {
