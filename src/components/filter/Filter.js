@@ -10,7 +10,11 @@ class Filter extends React.Component {
     availableButtons = {
         day: {name: 'Day', index: 'day'},
         week: {name: 'Week', index: 'week'},
-        month: {name: 'Month', index: 'month'}
+        month: {name: 'Month', index: 'month'},
+
+        yesterday: {name: 'Yesterday', index: 'yesterday'},
+        lastWeek: {name: 'Last Week', index: 'last-week'},
+        lastMonth: {name: 'Last Month', index: 'last-month'}
     };
 
     renderButtons = (buttons = null, everyOneCallback = null) => {
@@ -28,7 +32,7 @@ class Filter extends React.Component {
             let callback = buttons[key];
 
             return (
-                <label onClick={ () => this.handleButtonClick(callback, key) }
+                <label onClick={ () => this.handleButtonClick(callback, this.availableButtons[key].index) }
                        key={index}
                        className={"btn btn-white" + (isActive ? ' active' : '')}>
 
