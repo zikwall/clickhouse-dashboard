@@ -17,7 +17,3 @@ export const abbreviateNumber = (num, fixed) => {
         e = d + ['', 'K', 'M', 'B', 'T'][k];
     return e;
 };
-
-export const percentage = (total, current) => {
-    return parseFloat((100 * current) / total).toFixed(2);
-};
