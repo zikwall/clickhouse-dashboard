@@ -1,6 +1,6 @@
 import React from 'react';
 import { Pie } from "react-chartjs-2";
-import { getRGBColor} from "../../../utils";
+import { Color } from "../../../utils";
 
 const createDataset = (items) => {
     const labels = [];
@@ -15,15 +15,15 @@ const createDataset = (items) => {
         labels: labels,
         datasets: [{
             data: data,
-            backgroundColor: getRGBColor(data.length),
-            hoverBackgroundColor: getRGBColor(data.length)
+            backgroundColor: Color.getRGB(data.length),
+            hoverBackgroundColor: Color.getRGB(data.length)
         }],
     };
 };
 
-const ASPie = (props) => {
+const ASPie = ({ data }) => {
     return (
-        <Pie data={createDataset(props.data)} options={{
+        <Pie data={createDataset(data)} options={{
             responsive: true,
             maintainAspectRatio: false,
             legend: {

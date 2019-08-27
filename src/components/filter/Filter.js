@@ -1,6 +1,7 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
-export default class extends React.Component {
+class Filter extends React.Component {
 
     state = {
         activeButtonIndex: 'day'
@@ -9,7 +10,11 @@ export default class extends React.Component {
     availableButtons = {
         day: {name: 'Day', index: 'day'},
         week: {name: 'Week', index: 'week'},
-        month: {name: 'Month', index: 'month'}
+        month: {name: 'Month', index: 'month'},
+
+        yesterday: {name: 'Yesterday', index: 'yesterday'},
+        lastWeek: {name: 'Last Week', index: 'last-week'},
+        lastMonth: {name: 'Last Month', index: 'last-month'}
     };
 
     renderButtons = (buttons = null, everyOneCallback = null) => {
@@ -27,7 +32,7 @@ export default class extends React.Component {
             let callback = buttons[key];
 
             return (
-                <label onClick={ () => this.handleButtonClick(callback, key) }
+                <label onClick={ () => this.handleButtonClick(callback, this.availableButtons[key].index) }
                        key={index}
                        className={"btn btn-white" + (isActive ? ' active' : '')}>
 
@@ -87,3 +92,12 @@ export default class extends React.Component {
         );
     }
 }
+
+export default Filter;
+
+Filter.propTypes = {
+    buttons: PropTypes.object,
+    useRange: PropTypes.bool,
+    useButtons: PropTypes.bool,
+    everyOneCallback: PropTypes.oneOfType([PropTypes.node, PropTypes.func])
+};

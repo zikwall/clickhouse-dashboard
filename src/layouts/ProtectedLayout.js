@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Switch, Redirect } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 
 import withAuth from "../containers/protected/WithAuth";
 import Header from "../components/header";

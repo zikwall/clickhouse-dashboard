@@ -1,4 +1,4 @@
-export const getRGBColor = (fixedCount = 0) => {
+export const getRGB = (fixedCount = 0) => {
     const letters = '0123456789ABCDEF'.split('');
     let color = '#';
 

@@ -1,9 +1,9 @@
-import { abbreviateNumber, percentage } from "./Number";
-import { getRGBColor } from "./Color";
-import { uniqueId } from "./Unique";
+import * as Number from "./Number";
+import * as Color from "./Color";
+import * as Math from "./Math";
 
 export {
-    abbreviateNumber,
-    getRGBColor,
-    uniqueId
+    Color,
+    Number,
+    Math
 }

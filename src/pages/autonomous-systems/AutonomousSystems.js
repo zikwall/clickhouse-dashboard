@@ -1,12 +1,14 @@
 import React from 'react';
-import { apiFetch } from "../../services/api/Api";
 import ASPie from "./components/ASPie";
-import { ContentLoaderWrapper } from "../../components/content-loader";
 import ASList from "./components/ASList";
 import ASCountryPie from "./components/ASCountryPie";
+import { apiFetch } from "../../services/api/Api";
+import { ContentLoaderWrapper } from "../../components/content-loader";
 import { ContentSwitch, ContentCase } from "../../containers/content-switch";
 import { Panel } from "../../components/panel";
 import { withTitle } from "../../components/document-title";
+import { Card, CardBody, CardFooter, CardHeader } from "../../components/bootstrap/card";
+import { Col } from "../../components/bootstrap/container";
 
 class AutonomousSystemsPage extends React.Component {
     state = {
@@ -88,6 +90,10 @@ class AutonomousSystemsPage extends React.Component {
             day: this.pageInitByTime,
             week: this.pageInitByTime,
             month: this.pageInitByTime,
+
+            yesterday: this.pageInitByTime,
+            lastWeek: this.pageInitByTime,
+            lastMonth: this.pageInitByTime,
         };
     };
 
@@ -103,48 +109,49 @@ class AutonomousSystemsPage extends React.Component {
 
                 <ContentSwitch>
                     <ContentCase sheetIndex="networks" sheetName="Networks">
-                        <div className="col-md-12">
-                            <div className="card card-small mb-4">
-                                <div className="card-header border-bottom">
-                                    <h6 className="m-0">AS Networks</h6>
-                                </div>
-                                <div className="card-body">
-                                    <Panel filterButtons={this.getFilterButtons()}>
+                        <Col className="col-md-12">
+                            <Card className="card card-small mb-4">
+                                <CardHeader className="card-header border-bottom">AS Networks</CardHeader>
+                                <CardBody>
+                                    <Panel filterButtons={this.getFilterButtons()} useRange={false}>
                                         <ContentLoaderWrapper loaded={this.state.loaded} countPlaceholders={5}>
                                             <ASList data={this.state.data} count={this.state.countIp} />
                                         </ContentLoaderWrapper>
                                     </Panel>
-                                </div>
-                            </div>
-                        </div>
+                                </CardBody>
+                                <CardFooter />
+                            </Card>
+                        </Col>
                     </ContentCase>
                     <ContentCase sheetIndex="networks-pie" sheetName="Networks Pie">
-                        <div className="col-lg-12">
-                            <div className="card card-small mb-4">
-                                <div className="card-header border-bottom">
+                        <Col className="col-md-12">
+                            <Card className="card card-small mb-4">
+                                <CardHeader className="card-header border-bottom">
                                     <h6 className="m-0">AS Networks Pie</h6>
-                                </div>
-                                <div className="card-body p-0 pb-3 text-center" style={{height: '450px'}}>
+                                </CardHeader>
+                                <CardBody style={{height: 450}}>
                                     <ContentLoaderWrapper loaded={this.state.chartsIsComposed} countPlaceholders={4}>
                                         <ASPie data={this.state.data} />
                                     </ContentLoaderWrapper>
-                                </div>
-                            </div>
-                        </div>
+                                </CardBody>
+                                <CardFooter />
+                            </Card>
+                        </Col>
                     </ContentCase>
                     <ContentCase sheetIndex="networks-country" sheetName="Country Pie">
-                        <div className="col-lg-12">
-                            <div className="card card-small mb-4">
-                                <div className="card-header border-bottom">
+                        <Col className="col-md-12">
+                            <Card className="card card-small mb-4">
+                                <CardHeader className="card-header border-bottom">
                                     <h6 className="m-0">AS Country Pie</h6>
-                                </div>
-                                <div className="card-body p-0 pb-3 text-center" style={{height: '450px'}}>
+                                </CardHeader>
+                                <CardBody style={{height: 450}}>
                                     <ContentLoaderWrapper loaded={this.state.chartsIsComposed} countPlaceholders={4}>
                                         <ASCountryPie data={this.state.countryPieData} />
                                     </ContentLoaderWrapper>
-                                </div>
-                            </div>
-                        </div>
+                                </CardBody>
+                                <CardFooter />
+                            </Card>
+                        </Col>
                     </ContentCase>
                 </ContentSwitch>
             </>

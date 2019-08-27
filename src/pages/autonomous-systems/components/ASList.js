@@ -1,5 +1,6 @@
 import React from 'react';
-import { percentage } from "../../../utils/Number";
+import Progress from "../../../components/bootstrap/progress";
+import { Math } from '../../../utils';
 
 const handleModalView = () => {
     console.log('okey');
@@ -26,8 +27,8 @@ const renderItems = (items, total) => {
                 </div>
                 <div className="col-lg-6 col-md-4 col-sm-4 col-6 d-flex">
                     <div className="go-stats__value text-right ml-auto">
-                        <h6 className="go-stats__label mb-1">{percentage(total, item.countIP)} % </h6>
-                        <span className="go-stats__meta">Процентное соотношение</span>
+                        <Progress value={item.countIP} max={total} />
+                        <span className="go-stats__meta">( {Math.percentage(total, item.countIP)} %)</span>
                     </div>
                 </div>
             </li>
@@ -37,11 +38,11 @@ const renderItems = (items, total) => {
     return liList;
 };
 
-const ASList = (props) => {
+const ASList = ({ data, count }) => {
     return (
         <>
             <ul className="list-group list-group-small list-group-flush">
-                { renderItems(props.data, props.count) }
+                { renderItems(data, count) }
             </ul>
         </>
     );
