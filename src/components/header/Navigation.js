@@ -53,10 +53,17 @@ class Navigation extends React.Component {
             sort: 2
         },
         {
-            title: 'Monit Old Statistic',
-            url: '/dashboard/ads',
+            title: 'Monit',
+            url: '/dashboard',
             icon: '',
-            sort: 3
+            sort: 3,
+            childs: [
+                {
+                    title: 'Рекламные площадки',
+                    url: '/ads',
+                    sort: 1
+                }
+            ],
         },
         {
             title: 'Technical information',

@@ -24,8 +24,9 @@ const DropDownList = ({label, options, isValid, isTouch, changeInput}) => {
                 <select
                     id="feInputState"
                     className={ classes.join(' ') }
-                    onChange={(e) => changeInput(e.target.value)}>
-                    <option value="" disabled selected hidden>Выбрать приложение</option>
+                    onChange={(e) => changeInput(e.target.value)}
+                    defaultValue="">
+                    <option value="" disabled hidden>Выбрать приложение</option>
                     { elements }
                 </select>
             </div>

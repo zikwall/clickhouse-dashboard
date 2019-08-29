@@ -26,11 +26,16 @@ export default class extends React.Component {
     };
 
     componentDidMount() {
-        setTimeout(() => {
+        this.timerId = setTimeout(() => {
             this.setState({
                 loaded: true
             });
         }, 45000)
+
+    }
+
+    componentWillUnmount() {
+        clearTimeout(this.timerId);
     }
 
     render () {

@@ -1,8 +1,34 @@
 import React, { Component } from 'react';
-import DropDownList from "../../components/drop-down-list";
+import DropDownList from "./components/drop-down-list";
 import { apiFetch } from "../../services/api/Api";
-import CustomDatePicker from "../../components/custom-date-picker";
-import AdsButtons from "../../components/ads-buttons";
+import CustomDatePicker from "./components/custom-date-picker";
+import AdsTable from "./components/ads-table";
+import AdsButtons from "./components/ads-buttons";
+
+const sortAdsst = (adsData) => {
+    const adstp = {
+        request: 0,
+        answer: 1,
+        show: 2,
+        skip: 3,
+        complete: 4,
+        complete_url: 5
+    };
+
+    for (let index = 0; index < adsData.adsData.length; ++index) {
+        const arr = adsData.adsData[index].groupData;
+        let newArr = [];
+
+        arr.forEach((element) => {
+            newArr[adstp[element[0]]] = element;
+        });
+
+        newArr = newArr.filter(val => val);
+        adsData.adsData[index].groupData = newArr;
+    }
+
+    return adsData
+};
 
 export default class Ads extends Component{
     state = {
@@ -30,13 +56,15 @@ export default class Ads extends Component{
                 minDate: null,
                 maxDate: null
             },
-            buttons: [
+            /*buttons: [
                 {label: 'all', active: true},
                 {label: 'online', active: false},
                 {label: 'archive', active: false},
-            ]
+            ]*/
         },
-        formValid: false
+        formValid: false,
+        adsData:null,
+        isDataLoading: false,
     };
 
     async componentDidMount() {
@@ -101,7 +129,7 @@ export default class Ads extends Component{
         });
     };
 
-    onClickButtonsHandler = async (label) => {
+    /*onClickButtonsHandler = async (label) => {
         const newFields = Object.assign({}, this.state.fields);
         const newButtons = newFields.buttons.map((item) => {
 
@@ -122,7 +150,7 @@ export default class Ads extends Component{
             fields: newFields
         });
 
-    };
+    };*/
 
     checkFields = async () => {
         const newFields = Object.assign({}, this.state.fields);
@@ -159,15 +187,28 @@ export default class Ads extends Component{
             const app = this.state.fields.dropDownList.value;
             const dayBegin = this.state.fields.datePicker1.value;
             const dayEnd = this.state.fields.datePicker2.value;
-            const eventType = this.state.fields.buttons.filter((item) => item.active === true)[0].label;
+            /*const eventType = this.state.fields.buttons.filter((item) => item.active === true)[0].label;*/
 
-            const adsData =  await apiFetch('/api/v1/general/get-ads-data', {
-                method: 'POST',
-                body: JSON.stringify({app, dayBegin, dayEnd, eventType})
+            await this.setState({
+                adsData: null,
+                isDataLoading: true
             });
 
-            console.log(adsData);
+            let adsData =  await apiFetch('/api/v1/general/get-ads-data', {
+                method: 'POST',
+                body: JSON.stringify({app, dayBegin, dayEnd/*, eventType*/})
+            });
 
+            if (adsData.adsData.length === 0) {
+                adsData = null;
+            } else {
+                adsData = sortAdsst(adsData);
+            }
+
+            await this.setState({
+                adsData,
+                isDataLoading: false
+            });
         }
     };
 
@@ -185,10 +226,13 @@ export default class Ads extends Component{
                         <DropDownList changeInput={ this.onChangeDropDownListHandler } { ...this.state.fields.dropDownList }/>
                         <CustomDatePicker changeDatePicker={ this.onChangeDatePickerHandler } name={ 'datePicker1' } { ...this.state.fields.datePicker1 }/>
                         <CustomDatePicker changeDatePicker={ this.onChangeDatePickerHandler } name={ 'datePicker2' } { ...this.state.fields.datePicker2 }/>
-                        <AdsButtons clickButtons={ this.onClickButtonsHandler } buttons={ this.state.fields.buttons } />
+                        {/*<AdsButtons clickButtons={ this.onClickButtonsHandler } buttons={ this.state.fields.buttons } />*/}
                     </div>
                     <button type="submit" className="mb-2 btn btn-sm btn-success mr-1">Применить</button>
                 </form>
+                <div className="row no-gutters">
+                    <AdsTable adsData={this.state.adsData} isDataLoading={this.state.isDataLoading}/>
+                </div>
             </>
         )
     }

@@ -16,7 +16,6 @@ export default function withAuth(AuthComponent) {
             } else {
                 try {
                     const confirm = Auth.getConfirm();
-                    console.log("confirmation is:", confirm);
 
                     /**
                      * todo Тут нужен REDUX или Context
@@ -48,7 +47,6 @@ export default function withAuth(AuthComponent) {
                 return null;
             }
 
-            console.log("confirmed!");
             return (
                 <AuthComponent
                     {...this.props}

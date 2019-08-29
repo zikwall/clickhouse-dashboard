@@ -41,7 +41,6 @@ export default class AuthService {
 
     getConfirm = () => {
         let answer = decode(Identity.getAccessToken());
-        console.log("Recieved answer!");
         return answer;
     };
 }
