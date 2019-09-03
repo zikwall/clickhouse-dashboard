@@ -62,6 +62,11 @@ class Navigation extends React.Component {
                     title: 'Рекламные площадки',
                     url: '/ads',
                     sort: 1
+                },
+                {
+                    title: 'Пользователи',
+                    url: '/users',
+                    sort: 2
                 }
             ],
         },

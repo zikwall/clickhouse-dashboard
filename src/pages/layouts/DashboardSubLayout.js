@@ -5,6 +5,7 @@ import Dashboard from "../dashboard/Dashboard";
 import { Clickhouse } from "../clickhouse";
 import { AutonomousSystems } from "../autonomous-systems";
 import Ads from "../ads";
+import Users from "../users";
 
 const ProfileSubLayout = ({ match }) => {
     return (
@@ -17,6 +18,8 @@ const ProfileSubLayout = ({ match }) => {
             <Route path={`${match.url}/clickhouse`} component={ Clickhouse } />
 
             <Route path={`${match.url}/ads`} component={ Ads }/>
+
+            <Route path={`${match.url}/users`} component={ Users }/>
 
             <Route render={ ( props ) => <ErrorLayout errorCode={404} {...props}/> }  />
         </Switch>
