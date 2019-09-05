@@ -3,7 +3,7 @@ import { FilterPanel } from "../filter";
 import { Scrollbars } from "react-custom-scrollbars";
 import PropTypes from 'prop-types';
 
-const Panel = ({useButtons, useRange, filterButtons, everyOneCallback, children, height}) => {
+const Toolbar = ({useButtons, useRange, filterButtons, everyOneCallback, children, height}) => {
     return (
         <>
             <FilterPanel buttons={filterButtons} useButtons={useButtons} useRange={useRange}/>
@@ -15,9 +15,9 @@ const Panel = ({useButtons, useRange, filterButtons, everyOneCallback, children,
     );
 };
 
-export default Panel;
+export default Toolbar;
 
-Panel.defaultProps = {
+Toolbar.defaultProps = {
     filterButtons: {},
     useButtons: true,
     useRange: false,
@@ -25,7 +25,7 @@ Panel.defaultProps = {
     height: 570,
 };
 
-Panel.propTypes = {
+Toolbar.propTypes = {
     filterButtons: PropTypes.object,
     useButtons: PropTypes.bool,
     useRange: PropTypes.bool,
