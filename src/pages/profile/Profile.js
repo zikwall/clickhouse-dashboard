@@ -234,7 +234,7 @@ const Profile = () => {
                                 </div>
                                 <div className="user-activity__item__content">
                                     <span className="text-light">23 Minutes ago</span>
-                                    <p>Assigned himself to the <a href="#">Shards Dashboards</a> project.</p>
+                                    <p>Assigned himself to the <a href="#">React Dashboards</a> project.</p>
                                 </div>
                                 <div className="user-activity__item__action ml-auto">
                                     <button className="ml-auto btn btn-sm btn-white">View Project</button>
@@ -311,7 +311,7 @@ const Profile = () => {
                                     <span className="text-light">2 Days ago</span>
                                     <p>Marked <a href="#">3 tasks</a> as <span
                                         className="badge badge-pill badge-outline-danger">Invalid</span> inside
-                                        the <a href="#">Shards Dashboards</a> project.</p>
+                                        the <a href="#">React Dashboards</a> project.</p>
                                 </div>
                             </div>
                         </div>
