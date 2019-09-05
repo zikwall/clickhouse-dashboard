@@ -11,7 +11,7 @@ const Brand = (props) => {
 
                 <img id="main-logo" className="d-inline-block align-top mr-1 ml-3"
                      style={{maxWidth: "35px"}} src={require("./../../assets/images/logo.png")}
-                     alt="Shards Dashboard"
+                     alt="React Dashboard"
                 />
 
                 <span className="d-none d-md-inline ml-1">LimeHD Analitycs</span>
