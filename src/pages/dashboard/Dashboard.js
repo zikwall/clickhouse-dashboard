@@ -4,7 +4,7 @@ import {Bar, Line, Doughnut} from "./components";
 
 import { Identity } from "../../services/auth";
 import { withTitle } from "../../components/document-title";
-import { Col, Row } from "../../components/bootstrap/container";
+import { Col, Row } from "../../components/ui/container";
 
 /**
  * Example simple RBAC, пока что сравнивается username пользователя,

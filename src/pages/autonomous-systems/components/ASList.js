@@ -1,5 +1,5 @@
 import React from 'react';
-import Progress from "../../../components/bootstrap/progress";
+import Progress from "../../../components/ui/progress";
 import { Math } from '../../../utils';
 
 const handleModalView = () => {
