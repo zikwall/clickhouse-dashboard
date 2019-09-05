@@ -1,13 +1,17 @@
 {
-  "name": "shards",
+  "name": "react-dashboard",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.22",
+    "@fortawesome/free-solid-svg-icons": "^5.10.2",
     "@fortawesome/react-fontawesome": "^0.1.4",
     "bootstrap": "^4.3.1",
     "chart.js": "^2.8.0",
     "classnames": "^2.2.6",
     "jwt-decode": "^2.2.0",
+    "lodash.omit": "^4.5.0",
+    "lodash.pick": "^4.4.0",
     "node-sass": "^4.12.0",
     "react": "^16.9.0",
     "react-chartjs": "^1.2.0",
