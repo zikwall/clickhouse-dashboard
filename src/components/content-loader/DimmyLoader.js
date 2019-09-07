@@ -1,8 +1,7 @@
 import React from 'react';
 import { Placeholder } from './Placeholder';
 
-const LoaderSvg = (props) => {
-    const {type, color} = props;
+export const LoaderSvg = ({ type, color }) => {
     const availableTypes = ['audio', 'bar', 'oval', 'puff', 'spin'];
     const isAvailable = (type) => {
         return availableTypes.includes(type);
@@ -15,6 +14,10 @@ const LoaderSvg = (props) => {
     return (
         <img src={require(`./../../assets/svg/loaders/${type}.svg`)} />
     );
+};
+
+LoaderSvg.defaultProps = {
+    type: 'none'
 };
 
 export default (props) => {
