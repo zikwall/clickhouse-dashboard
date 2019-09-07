@@ -1,8 +1,8 @@
 import React from 'react';
-import DimmyLoader from "../../../../components/content-loader/DimmyLoader";
+import { DimmyLoader, EmptyContent } from "../../../../components/content-loader";
 
 const LoadORNotData = ({ isDataLoading }) => {
-    let content = 'Нет данных';
+    let content = <EmptyContent />;
     if (isDataLoading) {
         content = <DimmyLoader />;
     }
