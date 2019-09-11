@@ -134,7 +134,7 @@ export default class ChannelsDataTable extends Component{
 
     getData = (data) => {
         let tableData = [];
-
+        console.log(data);
         for (let key in data.durationChannelsData) {
             let obj = {
                 channelsName: "Нет данных",
@@ -150,6 +150,10 @@ export default class ChannelsDataTable extends Component{
 
             if (data.openChannelsData !== null) {
                 obj.openChannel = +data.openChannelsData.filter((item) => item.vcid === data.durationChannelsData[key].vcid)[0].ctn;
+            }
+
+            if (data.channelUsers !== null) {
+                obj.channelUsers = +data.channelUsers.filter((item) => item.vcid === data.durationChannelsData[key].vcid)[0].ctn;
             }
 
             tableData.push(obj);

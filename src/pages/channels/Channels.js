@@ -25,6 +25,7 @@ export default class Channels extends Component{
             durationChannelsData: null,
             openChannelsData: null,
             startAppData: null,
+            channelUsers: null,
             isLoad: true
         });
 
@@ -42,6 +43,17 @@ export default class Channels extends Component{
             method: 'POST',
             body: JSON.stringify({app, dayBegin, dayEnd})
         });
+
+        let channelUsers = await apiFetch('/api/v1/general/get-channels-uniq-users', {
+            method: 'POST',
+            body: JSON.stringify({app, dayBegin, dayEnd})
+        });
+
+        if(isEmpty(channelUsers.channelsUniqUsers)) {
+            channelUsers = null;
+        } else {
+            channelUsers = channelUsers.channelsUniqUsers;
+        }
 
         if(isEmpty(durationChannelsData.channelsViewDuration)) {
             durationChannelsData = null;
@@ -65,6 +77,7 @@ export default class Channels extends Component{
             durationChannelsData,
             openChannelsData,
             startAppData,
+            channelUsers,
             isLoad: false
         });
     };
