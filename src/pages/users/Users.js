@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import Form from "../../containers/form";
 import { apiFetch } from "../../services/api/Api";
-import DimmyLoader from "../../components/content-loader/DimmyLoader";
 import DataList from "./components/data-list";
 import UsersChart from "./components/users-chart";
+import { EmptyContent, DimmyLoader } from "../../components/content-loader";
 
 const isEmpty = (obj) => {
     for (let key in obj) {
@@ -69,11 +69,11 @@ export default class Users extends Component {
     };
 
     render() {
-        let usersContent = 'Нет данных';
-        let userTotalContent = 'Нет данных';
+        let usersContent = <EmptyContent />;
+        let userTotalContent = <EmptyContent />;
 
         if (this.state.usersData === null) {
-            usersContent = 'Нет данных';
+            usersContent = <EmptyContent />;
         } else {
             usersContent = <UsersChart data={ this.state.usersData.appUsers }/>;
         }
@@ -83,7 +83,7 @@ export default class Users extends Component {
         }
 
         if (this.state.totalUsersData === null || this.state.usersData === null) {
-            userTotalContent = 'Нет данных';
+            userTotalContent = <EmptyContent />;
         } else {
             userTotalContent = <DataList
                 totalUsersData={ this.state.totalUsersData.appUsersTotal[0].ctn }

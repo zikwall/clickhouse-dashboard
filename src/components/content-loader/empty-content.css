@@ -1,0 +1,20 @@
+.non-content {
+    margin-top: 0;
+    border-radius: 0 0 4px 4px;
+}
+
+.non-content {
+    padding: 36px 20px;
+    text-align: center;
+    line-height: 19px;
+}
+
+.non-content-cover {
+    height: 97px;
+    background: url(placeholders/data.svg) no-repeat 50% 50%;
+}
+
+.non--loaded-content-cover {
+    height: 97px;
+    background: url(placeholders/data.svg) no-repeat 50% 50%;
+}

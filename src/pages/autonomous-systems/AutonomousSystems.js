@@ -5,10 +5,10 @@ import ASCountryPie from "./components/ASCountryPie";
 import { apiFetch } from "../../services/api/Api";
 import { ContentLoaderWrapper } from "../../components/content-loader";
 import { ContentSwitch, ContentCase } from "../../containers/content-switch";
-import { Panel } from "../../components/panel";
+import { Toolbar } from "../../components/toolbar";
 import { withTitle } from "../../components/document-title";
-import { Card, CardBody, CardFooter, CardHeader } from "../../components/bootstrap/card";
-import { Col } from "../../components/bootstrap/container";
+import { Card, CardBody, CardFooter, CardHeader } from "../../components/ui/card";
+import { Col } from "../../components/ui/container";
 
 class AutonomousSystemsPage extends React.Component {
     state = {
@@ -113,11 +113,11 @@ class AutonomousSystemsPage extends React.Component {
                             <Card className="card card-small mb-4">
                                 <CardHeader className="card-header border-bottom">AS Networks</CardHeader>
                                 <CardBody>
-                                    <Panel filterButtons={this.getFilterButtons()} useRange={false}>
+                                    <Toolbar filterButtons={this.getFilterButtons()} useRange={false}>
                                         <ContentLoaderWrapper loaded={this.state.loaded} countPlaceholders={5}>
                                             <ASList data={this.state.data} count={this.state.countIp} />
                                         </ContentLoaderWrapper>
-                                    </Panel>
+                                    </Toolbar>
                                 </CardBody>
                                 <CardFooter />
                             </Card>
