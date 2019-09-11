@@ -1,6 +1,6 @@
 import React from 'react';
 
-const DataList = ({ totalUsersData, getDailyDverage }) => {
+const DataList = ({ totalUsersData, getDailyOverage }) => {
   return(
       <ul className="list-group list-group-small list-group-flush">
           <li className="list-group-item d-flex px-3">
@@ -12,7 +12,7 @@ const DataList = ({ totalUsersData, getDailyDverage }) => {
           <li className="list-group-item d-flex px-3">
               <span className="text-semibold text-fiord-blue">Среднедневная аудитория</span>
               <span className="ml-auto text-right text-semibold text-reagent-gray">
-                                        { getDailyDverage() }
+                                        { getDailyOverage() }
                                     </span>
           </li>
       </ul>

@@ -1,9 +1,16 @@
 import React, { Component } from 'react';
-import Form from "./components/form";
+import Form from "../../containers/form";
 import { apiFetch } from "../../services/api/Api";
 import DimmyLoader from "../../components/content-loader/DimmyLoader";
 import DataList from "./components/data-list";
 import UsersChart from "./components/users-chart";
+
+const isEmpty = (obj) => {
+    for (let key in obj) {
+        return false;
+    }
+    return true;
+};
 
 export default class Users extends Component {
     state = {
@@ -32,27 +39,23 @@ export default class Users extends Component {
             body: JSON.stringify({app, dayBegin, dayEnd, eventType})
         });
 
-
-        if (usersData.appUsers.length === 0) {
+        if (usersData.appUsers.length === 0 || isEmpty(usersData.appUsers)) {
             usersData = null;
-        } else {
-            await this.setState({
-                usersData,
-                isUserDataLoading: false
-            });
         }
 
         if (totalUsersData.appUsersTotal.length === 0) {
             totalUsersData = null;
-        } else {
-            await this.setState({
-                totalUsersData,
-                isTotalUserDataLoading: false
-            });
         }
+
+        await this.setState({
+            usersData,
+            totalUsersData,
+            isUserDataLoading: false,
+            isTotalUserDataLoading: false
+        });
     };
 
-    getDailyDverage = () => {
+    getDailyOverage = () => {
       let total = 0;
       let count = 0;
 
@@ -79,12 +82,12 @@ export default class Users extends Component {
             usersContent = <DimmyLoader />
         }
 
-        if (this.state.totalUsersData === null) {
+        if (this.state.totalUsersData === null || this.state.usersData === null) {
             userTotalContent = 'Нет данных';
         } else {
             userTotalContent = <DataList
                 totalUsersData={ this.state.totalUsersData.appUsersTotal[0].ctn }
-                getDailyDverage={ this.getDailyDverage }/>
+                getDailyOverage={ this.getDailyOverage }/>
         }
 
         if (this.state.isTotalUserDataLoading) {
@@ -93,7 +96,7 @@ export default class Users extends Component {
 
         return(
             <>
-                <Form loadUsersData={this.loadUsersData}/>
+                <Form loadData={this.loadUsersData}/>
                 <div className="row no-gutters">
                     <div className="col-md-8 col-sm-12 col mb-4" style={{padding: '5px'}}>
                         <div className="card card-small" style={{minHeight: '330px'}}>

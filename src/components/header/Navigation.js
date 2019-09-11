@@ -65,8 +65,13 @@ class Navigation extends React.Component {
                 },
                 {
                     title: 'Пользователи',
-                    url: '/users',
+                    url: '/user-statistics',
                     sort: 2
+                },
+                {
+                    title: 'Статистика по каналам',
+                    url: '/channels',
+                    sort: 3
                 }
             ],
         },

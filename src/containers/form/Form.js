@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import DropDownList from "../../../../components/drop-down-list";
-import CustomDatePicker from "../../../../components/custom-date-picker";
-import AdsButtons from "../../../../components/ads-buttons";
-import {apiFetch} from "../../../../services/api/Api";
+import DropDownList from "../../components/drop-down-list";
+import CustomDatePicker from "../../components/custom-date-picker";
+import AdsButtons from "../../components/ads-buttons";
+import {apiFetch} from "../../services/api/Api";
+import './Form.css';
 
 export default class Form extends Component {
     state = {
@@ -130,7 +131,7 @@ export default class Form extends Component {
 
     onClickButtonsHandler = async (label) => {
         const newFields = Object.assign({}, this.state.fields);
-        const newButtons = newFields.buttons.map((item) => {
+        newFields.buttons = newFields.buttons.map((item) => {
 
             if(item.label === label) {
                 item.active = true;
@@ -144,7 +145,6 @@ export default class Form extends Component {
 
         });
 
-        newFields.buttons = newButtons;
         await this.setState({
             fields: newFields
         });
@@ -165,7 +165,7 @@ export default class Form extends Component {
             const dayBegin = this.state.fields.datePicker1.value;
             const dayEnd = this.state.fields.datePicker2.value;
             const eventType = evtp[this.state.fields.buttons.filter((item) => item.active === true)[0].label];
-            this.props.loadUsersData(app, dayBegin, dayEnd, eventType);
+            this.props.withoutEvtp ? this.props.loadData(app, dayBegin, dayEnd) : this.props.loadData(app, dayBegin, dayEnd, eventType);
         }
     };
 
@@ -175,7 +175,7 @@ export default class Form extends Component {
                 <div className="page-header row no-gutters py-4">
                     <div className="col-12 col-sm-4 text-center text-sm-left mb-4 mb-sm-0">
                         <span className="text-uppercase page-subtitle">Обзор</span>
-                        <h3 className="page-title">Рекламная статистика</h3>
+                        <h3 className="page-title">Статистика по пользователям</h3>
                     </div>
                 </div>
                 <form onSubmit={ (e) => this.checkAndSubmit(e)}>
@@ -183,7 +183,9 @@ export default class Form extends Component {
                         <DropDownList changeInput={ this.onChangeDropDownListHandler } { ...this.state.fields.dropDownList }/>
                         <CustomDatePicker changeDatePicker={ this.onChangeDatePickerHandler } name={ 'datePicker1' } { ...this.state.fields.datePicker1 }/>
                         <CustomDatePicker changeDatePicker={ this.onChangeDatePickerHandler } name={ 'datePicker2' } { ...this.state.fields.datePicker2 }/>
-                        <AdsButtons clickButtons={ this.onClickButtonsHandler } buttons={ this.state.fields.buttons } />
+                        {
+                            !this.props.withoutEvtp ?  <AdsButtons clickButtons={ this.onClickButtonsHandler } buttons={ this.state.fields.buttons } /> : null
+                        }
                     </div>
                     <button type="submit" className="mb-2 btn btn-sm btn-success mr-1">Применить</button>
                 </form>
