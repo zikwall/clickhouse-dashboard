@@ -1,7 +1,37 @@
 import React, { Component } from 'react';
 import MUIDataTable from 'mui-datatables';
 
+/*function compareDesc( a, b ) {
+    let durationA = hmsToSecondsOnly(a.durationChannel.substring(0, a.durationChannel.indexOf('/')));
+    let durationB = hmsToSecondsOnly(b.durationChannel.substring(0, b.durationChannel.indexOf('/')));
 
+    if ( durationA > durationB ){
+        return -1;
+    }
+    if ( durationA < durationB ){
+        return 1;
+    }
+    return 0;
+}
+
+function compareAsc( a, b ) {
+    let durationA = hmsToSecondsOnly(a.durationChannel.substring(0, a.durationChannel.indexOf('/')));
+    let durationB = hmsToSecondsOnly(b.durationChannel.substring(0, b.durationChannel.indexOf('/')));
+
+    if ( durationA < durationB ){
+        return -1;
+    }
+    if ( durationA > durationB ){
+        return 1;
+    }
+    return 0;
+}
+
+function hmsToSecondsOnly(str) {
+    const a = str.split(':');
+
+    return (+a[0]) * 60 * 60 + (+a[1]) * 60 + (+a[2]);
+}*/
 
 export default class ChannelsDataTable extends Component{
 
@@ -27,8 +57,16 @@ export default class ChannelsDataTable extends Component{
             }
         },
         {
-            name: "durationChannel",
-            label: "Длительность просмотра онлайн/архив",
+            name: "durationChannelOnline",
+            label: "Длительность в часах (онлайн)",
+            options: {
+                filter: true,
+                sort: true,
+            }
+        },
+        {
+            name: "durationChannelArchive",
+            label: "Длительность в часах (архив)",
             options: {
                 filter: true,
                 sort: true,
@@ -52,9 +90,38 @@ export default class ChannelsDataTable extends Component{
         },
     ];
 
-    customSort = (changedColumn, direction) => {
-        console.log(changedColumn, direction);
-    };
+/*    customSort = async (changedColumn, direction) => {
+        console.log(direction);
+        if (changedColumn =='durationChannel') {
+            if (direction == 'descending') {
+                let data = this.state.data;
+                data = data.sort(compareDesc);
+
+                await this.setState({
+                    data: []
+                });
+
+                await this.setState({
+                    data
+                });
+            }
+
+            if (direction == 'ascending') {
+                let data = this.state.data;
+                data = data.sort(compareAsc);
+
+                await this.setState({
+                    data: []
+                });
+
+                await this.setState({
+                    data
+                });
+
+                console.log(this.state.data);
+            }
+        }
+    };*/
 
     options = {
         print: false,
@@ -62,7 +129,7 @@ export default class ChannelsDataTable extends Component{
         filter: false,
         responsive: "scrollFullHeight",
         rowsPerPage: 25,
-        onColumnSortChange: this.customSort
+        expandableRows: false
     };
 
     getData = (data) => {
@@ -71,13 +138,15 @@ export default class ChannelsDataTable extends Component{
         for (let key in data.durationChannelsData) {
             let obj = {
                 channelsName: "Нет данных",
-                durationChannel: "Нет данных",
+                durationChannelOnline: "Нет данных",
+                durationChannelArchive: "Нет данных",
                 openChannel: "Нет данных",
                 channelUsers: "Нет данных"
 
             };
             obj.channelsName = data.durationChannelsData[key].name;
-            obj.durationChannel = data.durationChannelsData[key].online + " / " + data.durationChannelsData[key].archive;
+            obj.durationChannelOnline = +(data.durationChannelsData[key].online/120).toFixed(2);
+            obj.durationChannelArchive = +(data.durationChannelsData[key].archive/120).toFixed(2);
 
             if (data.openChannelsData !== null) {
                 obj.openChannel = +data.openChannelsData.filter((item) => item.vcid === data.durationChannelsData[key].vcid)[0].ctn;

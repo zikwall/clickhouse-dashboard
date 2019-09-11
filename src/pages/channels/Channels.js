@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { apiFetch } from "../../services/api/Api";
 import Form from "../../containers/form";
 import ChannelsDataTable from "./components/channels-data-table";
+import { DimmyLoader } from "../../components/content-loader";
 
 const isEmpty = (obj) => {
     for (let key in obj) {
@@ -69,14 +70,22 @@ export default class Channels extends Component{
     };
 
     render() {
+        let content = (
+            <ChannelsDataTable
+                durationChannelsData={this.state.durationChannelsData}
+                openChannelsData={this.state.openChannelsData}
+                startAppData={this.state.startAppData}
+                channelUsers={this.state.channelUsers}/>
+        );
+
+        if (this.state.isLoad) {
+            content = <DimmyLoader />
+        }
+
         return(
             <>
-                <Form withoutEvtp={true} loadData={this.loadData}/>
-                <ChannelsDataTable
-                    durationChannelsData={this.state.durationChannelsData}
-                    openChannelsData={this.state.openChannelsData}
-                    startAppData={this.state.startAppData}
-                    channelUsers={this.state.channelUsers}/>
+                <Form withoutEvtp={true} loadData={this.loadData} title="Статистика по каналам"/>
+                { content }
                 <hr/>
             </>
         )

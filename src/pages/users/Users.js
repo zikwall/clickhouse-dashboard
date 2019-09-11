@@ -96,7 +96,7 @@ export default class Users extends Component {
 
         return(
             <>
-                <Form loadData={this.loadUsersData}/>
+                <Form loadData={this.loadUsersData} title="Статистика по пользователям"/>
                 <div className="row no-gutters">
                     <div className="col-md-8 col-sm-12 col mb-4" style={{padding: '5px'}}>
                         <div className="card card-small" style={{minHeight: '330px'}}>
