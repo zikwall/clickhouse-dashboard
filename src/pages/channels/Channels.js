@@ -97,7 +97,7 @@ export default class Channels extends Component{
 
         return(
             <>
-                <Form withoutEvtp={true} loadData={this.loadData} title="Статистика по каналам"/>
+                <Form withoutEvtp loadData={this.loadData} title="Статистика по каналам"/>
                 { content }
                 <hr/>
             </>

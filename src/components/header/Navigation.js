@@ -72,6 +72,11 @@ class Navigation extends React.Component {
                     title: 'Статистика по каналам',
                     url: '/channels',
                     sort: 3
+                },
+                {
+                    title: 'Запуски приложений',
+                    url: '/start-app',
+                    sort: 4
                 }
             ],
         },

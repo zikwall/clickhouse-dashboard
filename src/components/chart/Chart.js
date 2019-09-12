@@ -1,6 +1,6 @@
 import React from 'react';
 import { Line } from "react-chartjs-2";
-import {Color} from "../../../../utils";
+import {Color} from "../../utils";
 
 const formatDate = (str) => {
     const date = new Date(str * 1000);
@@ -34,7 +34,7 @@ const createDataset = (items) => {
     };
 };
 
-const UsersChart = ({ data }) => {
+const Chart = ({ data }) => {
     return(
         <Line data={ createDataset(data) }
               options={{
@@ -55,4 +55,4 @@ const UsersChart = ({ data }) => {
     )
 };
 
-export default UsersChart;
+export default Chart;

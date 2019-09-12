@@ -7,6 +7,7 @@ import { AutonomousSystems } from "../autonomous-systems";
 import Ads from "../ads";
 import Users from "../users";
 import Channels from "../channels";
+import StartApp from "../start-app";
 
 const ProfileSubLayout = ({ match }) => {
     return (
@@ -24,6 +25,8 @@ const ProfileSubLayout = ({ match }) => {
             <Route path={`${match.url}/user-statistics`} component={ Users }/>
 
             <Route path={`${match.url}/channels`} component={ Channels }/>
+
+            <Route path={`${match.url}/start-app`} component={ StartApp }/>
 
             <Route render={ ( props ) => <ErrorLayout errorCode={404} {...props}/> }  />
         </Switch>

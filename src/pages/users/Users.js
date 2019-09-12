@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Form from "../../containers/form";
 import { apiFetch } from "../../services/api/Api";
 import DataList from "./components/data-list";
-import UsersChart from "./components/users-chart";
+import Chart from "../../components/chart";
 import { EmptyContent, DimmyLoader } from "../../components/content-loader";
 
 const isEmpty = (obj) => {
@@ -75,7 +75,7 @@ export default class Users extends Component {
         if (this.state.usersData === null) {
             usersContent = <EmptyContent />;
         } else {
-            usersContent = <UsersChart data={ this.state.usersData.appUsers }/>;
+            usersContent = <Chart data={ this.state.usersData.appUsers }/>;
         }
 
         if (this.state.isUserDataLoading) {
