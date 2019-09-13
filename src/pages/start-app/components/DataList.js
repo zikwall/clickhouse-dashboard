@@ -3,7 +3,6 @@ import React from 'react';
 const DataList = ({ data }) => {
     let total = 0;
     let count = 0;
-    let chefIndicator = 0;
 
     data.forEach((item, i, arr) => {
         total += +item.ctn;

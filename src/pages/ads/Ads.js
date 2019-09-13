@@ -187,7 +187,15 @@ export default class Ads extends Component {
             const app = this.state.fields.dropDownList.value;
             const dayBegin = this.state.fields.datePicker1.value;
             const dayEnd = this.state.fields.datePicker2.value;
-            /*const eventType = this.state.fields.buttons.filter((item) => item.active === true)[0].label;*/
+            /*let eventType = this.state.fields.buttons.filter((item) => item.active === true)[0].label;
+
+            if (eventType === 'online') {
+                eventType = 0;
+            }
+
+            if (eventType === 'archive') {
+                eventType = 1;
+            }*/
 
             await this.setState({
                 adsData: null,
