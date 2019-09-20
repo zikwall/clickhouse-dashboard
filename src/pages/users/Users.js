@@ -23,10 +23,11 @@ export default class Users extends Component {
     loadUsersData = async (app, dayBegin, dayEnd, eventType) => {
 
         await this.setState({
-            usersData:null,
+            usersData: null,
             isUserDataLoading: true,
-            totalUsersData:null,
-            isTotalUserDataLoading: true
+            totalUsersData: null,
+            isTotalUserDataLoading: true,
+            timeZoneUsers: null
         });
 
         let usersData =  await apiFetch('/api/v1/general/get-app-users', {
@@ -39,6 +40,11 @@ export default class Users extends Component {
             body: JSON.stringify({app, dayBegin, dayEnd, eventType})
         });
 
+        let timeZoneUsers =  await apiFetch('/api/v1/general/get-time-zone-users', {
+            method: 'POST',
+            body: JSON.stringify({app, dayBegin, dayEnd, eventType})
+        });
+
         if (usersData.appUsers.length === 0 || isEmpty(usersData.appUsers)) {
             usersData = null;
         }
@@ -47,11 +53,16 @@ export default class Users extends Component {
             totalUsersData = null;
         }
 
+        if (timeZoneUsers.timeZoneUsers.length === 0 || isEmpty(timeZoneUsers.timeZoneUsers)) {
+            timeZoneUsers = null;
+        }
+
         await this.setState({
             usersData,
             totalUsersData,
             isUserDataLoading: false,
-            isTotalUserDataLoading: false
+            isTotalUserDataLoading: false,
+            timeZoneUsers
         });
     };
 
@@ -87,7 +98,8 @@ export default class Users extends Component {
         } else {
             userTotalContent = <DataList
                 totalUsersData={ this.state.totalUsersData.appUsersTotal[0].ctn }
-                getDailyOverage={ this.getDailyOverage }/>
+                getDailyOverage={ this.getDailyOverage }
+                timeZoneUsers={ this.state.timeZoneUsers.timeZoneUsers }/>
         }
 
         if (this.state.isTotalUserDataLoading) {

@@ -12,7 +12,7 @@ const DataList = ({ data }) => {
     return(
         <ul className="list-group list-group-small list-group-flush">
             <li className="list-group-item d-flex px-3">
-                <span className="text-semibold text-fiord-blue">Общее количество запускоа приложения</span>
+                <span className="text-semibold text-fiord-blue">Общее количество запусков приложения</span>
                 <span className="ml-auto text-right text-semibold text-reagent-gray">
                     { total }
                 </span>
