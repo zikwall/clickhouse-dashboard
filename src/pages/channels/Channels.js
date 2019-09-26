@@ -15,7 +15,6 @@ export default class Channels extends Component{
     state = {
         durationChannelsData: null,
         openChannelsData: null,
-        //startAppData: null,
         channelUsers:null,
         isLoad: false
     };
@@ -24,7 +23,6 @@ export default class Channels extends Component{
         await this.setState({
             durationChannelsData: null,
             openChannelsData: null,
-            //startAppData: null,
             channelUsers: null,
             isLoad: true
         });
@@ -38,11 +36,6 @@ export default class Channels extends Component{
             method: 'POST',
             body: JSON.stringify({app, dayBegin, dayEnd})
         });
-
-        /*let startAppData = await apiFetch('/api/v1/general/get-start-app', {
-            method: 'POST',
-            body: JSON.stringify({app, dayBegin, dayEnd})
-        });*/
 
         let channelUsers = await apiFetch('/api/v1/general/get-channels-uniq-users', {
             method: 'POST',
@@ -67,16 +60,9 @@ export default class Channels extends Component{
             openChannelsData = openChannelsData.startChannels;
         }
 
-        /*if(isEmpty(startAppData.startApp)) {
-            startAppData = null;
-        } else {
-            startAppData = startAppData.startApp;
-        }*/
-
         await this.setState({
             durationChannelsData,
             openChannelsData,
-            //startAppData,
             channelUsers,
             isLoad: false
         });
@@ -87,7 +73,6 @@ export default class Channels extends Component{
             <ChannelsDataTable
                 durationChannelsData={this.state.durationChannelsData}
                 openChannelsData={this.state.openChannelsData}
-                //startAppData={this.state.startAppData}
                 channelUsers={this.state.channelUsers}/>
         );
 

@@ -1,38 +1,6 @@
 import React, { Component } from 'react';
 import MUIDataTable from 'mui-datatables';
 
-/*function compareDesc( a, b ) {
-    let durationA = hmsToSecondsOnly(a.durationChannel.substring(0, a.durationChannel.indexOf('/')));
-    let durationB = hmsToSecondsOnly(b.durationChannel.substring(0, b.durationChannel.indexOf('/')));
-
-    if ( durationA > durationB ){
-        return -1;
-    }
-    if ( durationA < durationB ){
-        return 1;
-    }
-    return 0;
-}
-
-function compareAsc( a, b ) {
-    let durationA = hmsToSecondsOnly(a.durationChannel.substring(0, a.durationChannel.indexOf('/')));
-    let durationB = hmsToSecondsOnly(b.durationChannel.substring(0, b.durationChannel.indexOf('/')));
-
-    if ( durationA < durationB ){
-        return -1;
-    }
-    if ( durationA > durationB ){
-        return 1;
-    }
-    return 0;
-}
-
-function hmsToSecondsOnly(str) {
-    const a = str.split(':');
-
-    return (+a[0]) * 60 * 60 + (+a[1]) * 60 + (+a[2]);
-}*/
-
 export default class ChannelsDataTable extends Component{
 
     state = {
@@ -90,39 +58,6 @@ export default class ChannelsDataTable extends Component{
         },
     ];
 
-/*    customSort = async (changedColumn, direction) => {
-        console.log(direction);
-        if (changedColumn =='durationChannel') {
-            if (direction == 'descending') {
-                let data = this.state.data;
-                data = data.sort(compareDesc);
-
-                await this.setState({
-                    data: []
-                });
-
-                await this.setState({
-                    data
-                });
-            }
-
-            if (direction == 'ascending') {
-                let data = this.state.data;
-                data = data.sort(compareAsc);
-
-                await this.setState({
-                    data: []
-                });
-
-                await this.setState({
-                    data
-                });
-
-                console.log(this.state.data);
-            }
-        }
-    };*/
-
     options = {
         print: false,
         download: false,
@@ -131,6 +66,9 @@ export default class ChannelsDataTable extends Component{
         rowsPerPage: 25,
         expandableRows: false
     };
+
+    //Берем за основу два разных массива поочередно.Это для того, чтобы дополнить данными tableData
+    //Т.к один из массивов может быть пустым или не полным.
 
     getData = (data) => {
         let tableData = [];
@@ -149,7 +87,7 @@ export default class ChannelsDataTable extends Component{
             obj.durationChannelArchive = +(data.durationChannelsData[key].archive/120).toFixed(2);
 
             if (data.openChannelsData !== null) {
-                const countOpenChannelObj = data.openChannelsData.filter((item) => item.vcid === data.durationChannelsData[key].vcid)[0];
+                const countOpenChannelObj = data.openChannelsData[key];
 
                 if (countOpenChannelObj !== undefined) {
                     obj.openChannel = +countOpenChannelObj.ctn;
@@ -158,6 +96,41 @@ export default class ChannelsDataTable extends Component{
             }
 
             if (data.channelUsers !== null) {
+                const countChannelUsers = data.channelUsers.filter((item) => item.vcid === data.durationChannelsData[key].vcid)[0];
+
+                if (countChannelUsers !== undefined) {
+                    obj.channelUsers = +countChannelUsers.ctn;
+                }
+            }
+
+            tableData.push(obj);
+        }
+
+        for (let key in data.openChannelsData) {
+            if (tableData.filter(item => item.channelsName === key)) {
+                continue;
+            }
+
+            let obj = {
+                channelsName: "Нет данных",
+                durationChannelOnline: "Нет данных",
+                durationChannelArchive: "Нет данных",
+                openChannel: "Нет данных",
+                channelUsers: "Нет данных"
+
+            };
+            obj.channelsName = data.openChannelsData[key].name;
+            obj.openChannel = +data.openChannelsData[key].ctn;
+
+            if (data.durationChannelsData[key] !== undefined) {
+                obj.durationChannelOnline = +(data.durationChannelsData[key].online/120).toFixed(2);
+            }
+
+            if (data.durationChannelsData[key] !== undefined) {
+                obj.durationChannelArchive = +(data.durationChannelsData[key].archive/120).toFixed(2);
+            }
+
+            if (data.channelUsers !== null && data.durationChannelsData[key]) {
                 const countChannelUsers = data.channelUsers.filter((item) => item.vcid === data.durationChannelsData[key].vcid)[0];
 
                 if (countChannelUsers !== undefined) {
