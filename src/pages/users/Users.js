@@ -53,8 +53,10 @@ export default class Users extends Component {
             totalUsersData = null;
         }
 
-        if (timeZoneUsers.timeZoneUsers.length === 0 || isEmpty(timeZoneUsers.timeZoneUsers)) {
+        if (timeZoneUsers.length === 0 || isEmpty(timeZoneUsers.timeZoneUsers)) {
             timeZoneUsers = null;
+        } else {
+            timeZoneUsers = timeZoneUsers.timeZoneUsers;
         }
 
         await this.setState({
@@ -99,7 +101,7 @@ export default class Users extends Component {
             userTotalContent = <DataList
                 totalUsersData={ this.state.totalUsersData.appUsersTotal[0].ctn }
                 getDailyOverage={ this.getDailyOverage }
-                timeZoneUsers={ this.state.timeZoneUsers.timeZoneUsers }/>
+                timeZoneUsers={ this.state.timeZoneUsers }/>
         }
 
         if (this.state.isTotalUserDataLoading) {
