@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Form from "../../containers/form";
 import { apiFetch } from "../../services/api/Api";
 import DataList from "./components/data-list";
-import Chart from "../../components/chart";
+import UsersData from "./components/users-data";
 import { EmptyContent, DimmyLoader } from "../../components/content-loader";
 
 const isEmpty = (obj) => {
@@ -17,68 +17,73 @@ export default class Users extends Component {
         usersData:null,
         isUserDataLoading: false,
         totalUsersData:null,
-        isTotalUserDataLoading: false
+        isTotalUserDataLoading: false,
+        timeZoneUsers: null,
+        durationChannelsData: null,
+        eventType: 'all'
     };
 
     loadUsersData = async (app, dayBegin, dayEnd, eventType) => {
 
-        await this.setState({
+        this.setState({
             usersData: null,
             isUserDataLoading: true,
             totalUsersData: null,
             isTotalUserDataLoading: true,
-            timeZoneUsers: null
+            timeZoneUsers: null,
+            durationChannelsData: null,
+            eventType: 'all'
         });
 
-        let usersData =  await apiFetch('/api/v1/general/get-app-users', {
-            method: 'POST',
-            body: JSON.stringify({app, dayBegin, dayEnd, eventType})
+        Promise.all([
+            apiFetch('/api/v1/general/get-app-users', {
+                method: 'POST',
+                body: JSON.stringify({app, dayBegin, dayEnd, eventType})
+            }),
+            apiFetch('/api/v1/general/get-app-users-total', {
+                method: 'POST',
+                body: JSON.stringify({app, dayBegin, dayEnd, eventType})
+            }),
+            apiFetch('/api/v1/general/get-time-zone-users', {
+                method: 'POST',
+                body: JSON.stringify({app, dayBegin, dayEnd, eventType})
+            }),
+            apiFetch('/api/v1/general/get-channels-view-duration', {
+                method: 'POST',
+                body: JSON.stringify({app, dayBegin, dayEnd})
+            })
+        ]).then(results => {
+            let usersData = null;
+            let totalUsersData = null;
+            let timeZoneUsers = null;
+            let durationChannelsData = null;
+
+            if (results[0].appUsers.length !== 0 || !isEmpty(results[0].appUsers)) {
+                usersData = results[0];
+            }
+
+            if (results[1].appUsersTotal.length !== 0) {
+                totalUsersData = results[1];
+            }
+
+            if (results[2].length !== 0 || !isEmpty(results[2].timeZoneUsers)) {
+                timeZoneUsers = results[2].timeZoneUsers;
+            }
+
+            if(!isEmpty(results[3].channelsViewDuration)) {
+                durationChannelsData = results[3].channelsViewDuration;
+            }
+
+            this.setState({
+                usersData,
+                totalUsersData,
+                isUserDataLoading: false,
+                isTotalUserDataLoading: false,
+                timeZoneUsers,
+                durationChannelsData,
+                eventType: eventType
+            });
         });
-
-        let totalUsersData =  await apiFetch('/api/v1/general/get-app-users-total', {
-            method: 'POST',
-            body: JSON.stringify({app, dayBegin, dayEnd, eventType})
-        });
-
-        let timeZoneUsers =  await apiFetch('/api/v1/general/get-time-zone-users', {
-            method: 'POST',
-            body: JSON.stringify({app, dayBegin, dayEnd, eventType})
-        });
-
-        if (usersData.appUsers.length === 0 || isEmpty(usersData.appUsers)) {
-            usersData = null;
-        }
-
-        if (totalUsersData.appUsersTotal.length === 0) {
-            totalUsersData = null;
-        }
-
-        if (timeZoneUsers.length === 0 || isEmpty(timeZoneUsers.timeZoneUsers)) {
-            timeZoneUsers = null;
-        } else {
-            timeZoneUsers = timeZoneUsers.timeZoneUsers;
-        }
-
-        await this.setState({
-            usersData,
-            totalUsersData,
-            isUserDataLoading: false,
-            isTotalUserDataLoading: false,
-            timeZoneUsers
-        });
-    };
-
-    getDailyOverage = () => {
-      let total = 0;
-      let count = 0;
-
-        this.state.usersData.appUsers.forEach((element) => {
-            total += +element.ctn;
-            count++;
-        });
-
-        return Math.round(total/count);
-
     };
 
     render() {
@@ -88,20 +93,25 @@ export default class Users extends Component {
         if (this.state.usersData === null) {
             usersContent = <EmptyContent />;
         } else {
-            usersContent = <Chart data={ this.state.usersData.appUsers }/>;
+            usersContent = <UsersData
+                totalUsersData={this.state.totalUsersData}
+                timeZoneUsers={this.state.timeZoneUsers}
+            />;
         }
 
         if (this.state.isUserDataLoading) {
             usersContent = <DimmyLoader />
         }
 
-        if (this.state.totalUsersData === null || this.state.usersData === null) {
+        if (this.state.totalUsersData === null || this.state.usersData === null || this.state.durationChannelsData === null) {
             userTotalContent = <EmptyContent />;
         } else {
             userTotalContent = <DataList
                 totalUsersData={ this.state.totalUsersData.appUsersTotal[0].ctn }
-                getDailyOverage={ this.getDailyOverage }
-                timeZoneUsers={ this.state.timeZoneUsers }/>
+                usersData={ this.state.usersData }
+                durationChannelsData={this.state.durationChannelsData}
+                eventType={this.state.eventType}
+            />
         }
 
         if (this.state.isTotalUserDataLoading) {
@@ -110,22 +120,25 @@ export default class Users extends Component {
 
         return(
             <>
-                <Form loadData={this.loadUsersData} title="Статистика по пользователям"/>
+                <Form
+                    loadData={this.loadUsersData}
+                    title="Статистика по пользователям"
+                    evtp/>
                 <div className="row no-gutters">
-                    <div className="col-md-8 col-sm-12 col mb-4" style={{padding: '5px'}}>
+                    <div className="col-md-4 col-sm-12 col mb-4" style={{padding: '5px'}}>
                         <div className="card card-small" style={{minHeight: '330px'}}>
                             <div className="card-header border-bottom">
-                                <h6 className="m-0">График</h6>
+                                <h6 className="m-0">Пользователи</h6>
                             </div>
                             <div className="card-body">
                                 { usersContent }
                             </div>
                         </div>
                     </div>
-                    <div className="col-md-4 col-sm-12 mb-4" style={{padding: '5px'}}>
+                    <div className="col-md-8 col-sm-12 mb-4" style={{padding: '5px'}}>
                         <div className="card card-small" style={{minHeight: '330px'}}>
                             <div className="card-header border-bottom">
-                                <h6 className="m-0">Общая информация</h6>
+                                <h6 className="m-0">Просмотры</h6>
                             </div>
                             <div className="card-body">
                                 { userTotalContent }
