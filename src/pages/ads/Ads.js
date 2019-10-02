@@ -3,7 +3,6 @@ import DropDownList from "../../components/drop-down-list";
 import { apiFetch } from "../../services/api/Api";
 import CustomDatePicker from "../../components/custom-date-picker";
 import AdsTable from "./components/ads-table";
-import AdsButtons from "../../components/ads-buttons";
 
 const sortAdsst = (adsData) => {
     const adsst = {
@@ -55,12 +54,7 @@ export default class Ads extends Component {
                 isTouch: false,
                 minDate: null,
                 maxDate: null
-            },
-            /*buttons: [
-                {label: 'all', active: true},
-                {label: 'online', active: false},
-                {label: 'archive', active: false},
-            ]*/
+            }
         },
         formValid: false,
         adsData:null,
@@ -129,29 +123,6 @@ export default class Ads extends Component {
         });
     };
 
-    /*onClickButtonsHandler = async (label) => {
-        const newFields = Object.assign({}, this.state.fields);
-        const newButtons = newFields.buttons.map((item) => {
-
-            if(item.label === label) {
-                item.active = true;
-
-                return item;
-            }
-
-            item.active = false;
-
-            return item;
-
-        });
-
-        newFields.buttons = newButtons;
-        await this.setState({
-            fields: newFields
-        });
-
-    };*/
-
     checkFields = async () => {
         const newFields = Object.assign({}, this.state.fields);
         let formValid = true;
@@ -187,15 +158,6 @@ export default class Ads extends Component {
             const app = this.state.fields.dropDownList.value;
             const dayBegin = this.state.fields.datePicker1.value;
             const dayEnd = this.state.fields.datePicker2.value;
-            /*let eventType = this.state.fields.buttons.filter((item) => item.active === true)[0].label;
-
-            if (eventType === 'online') {
-                eventType = 0;
-            }
-
-            if (eventType === 'archive') {
-                eventType = 1;
-            }*/
 
             await this.setState({
                 adsData: null,
@@ -204,7 +166,7 @@ export default class Ads extends Component {
 
             let adsData =  await apiFetch('/api/v1/general/get-ads-data', {
                 method: 'POST',
-                body: JSON.stringify({app, dayBegin, dayEnd/*, eventType*/})
+                body: JSON.stringify({app, dayBegin, dayEnd})
             });
 
             if (adsData.adsData.length === 0) {
@@ -236,7 +198,6 @@ export default class Ads extends Component {
                                 <DropDownList changeInput={ this.onChangeDropDownListHandler } { ...this.state.fields.dropDownList }/>
                                 <CustomDatePicker changeDatePicker={ this.onChangeDatePickerHandler } name={ 'datePicker1' } { ...this.state.fields.datePicker1 }/>
                                 <CustomDatePicker changeDatePicker={ this.onChangeDatePickerHandler } name={ 'datePicker2' } { ...this.state.fields.datePicker2 }/>
-                                {/*<AdsButtons clickButtons={ this.onClickButtonsHandler } buttons={ this.state.fields.buttons } />*/}
                             </div>
                             <button type="submit" className="mb-2 btn btn-sm btn-success mr-1">Применить</button>
                         </form>
