@@ -16,55 +16,65 @@ export default class Channels extends Component{
         durationChannelsData: null,
         openChannelsData: null,
         channelUsers:null,
+        channelUsersWithEvtp: null,
         isLoad: false
     };
 
     loadData = async (app, dayBegin, dayEnd) => {
-        await this.setState({
+        this.setState({
             durationChannelsData: null,
             openChannelsData: null,
             channelUsers: null,
+            channelUsersWithEvtp: null,
             isLoad: true
         });
 
-        let durationChannelsData = await apiFetch('/api/v1/general/get-channels-view-duration', {
-            method: 'POST',
-            body: JSON.stringify({app, dayBegin, dayEnd})
-        });
+        Promise.all([
+            apiFetch('/api/v1/general/get-channels-view-duration', {
+                method: 'POST',
+                body: JSON.stringify({app, dayBegin, dayEnd})
+            }),
+            apiFetch('/api/v1/general/get-start-channels', {
+                method: 'POST',
+                body: JSON.stringify({app, dayBegin, dayEnd})
+            }),
+            apiFetch('/api/v1/general/get-channels-uniq-users', {
+                method: 'POST',
+                body: JSON.stringify({app, dayBegin, dayEnd})
+            }),
+            apiFetch('/api/v1/general/get-channels-uniq-users-with-evtp', {
+                method: 'POST',
+                body: JSON.stringify({app, dayBegin, dayEnd})
+            })
+        ]).then(results => {
+            let channelUsers = null;
+            let durationChannelsData = null;
+            let openChannelsData = null;
+            let channelUsersWithEvtp = null;
 
-        let openChannelsData = await apiFetch('/api/v1/general/get-start-channels', {
-            method: 'POST',
-            body: JSON.stringify({app, dayBegin, dayEnd})
-        });
+            if (!isEmpty(results[2].channelsUniqUsers)) {
+                channelUsers = results[2].channelsUniqUsers;
+            }
 
-        let channelUsers = await apiFetch('/api/v1/general/get-channels-uniq-users', {
-            method: 'POST',
-            body: JSON.stringify({app, dayBegin, dayEnd})
-        });
+            if (!isEmpty(results[0].channelsViewDuration)) {
+                durationChannelsData = results[0].channelsViewDuration;
+            }
 
-        if(isEmpty(channelUsers.channelsUniqUsers)) {
-            channelUsers = null;
-        } else {
-            channelUsers = channelUsers.channelsUniqUsers;
-        }
+            if (!isEmpty(results[1].startChannels)) {
+                openChannelsData = results[1].startChannels;
+            }
 
-        if(isEmpty(durationChannelsData.channelsViewDuration)) {
-            durationChannelsData = null;
-        } else {
-            durationChannelsData = durationChannelsData.channelsViewDuration;
-        }
+            if (!isEmpty(results[3].channelsUniqUsersWithEvtp)) {
+                channelUsersWithEvtp = results[3].channelsUniqUsersWithEvtp;
+            }
 
-        if(isEmpty(openChannelsData.startChannels)) {
-            openChannelsData = null;
-        } else {
-            openChannelsData = openChannelsData.startChannels;
-        }
-
-        await this.setState({
-            durationChannelsData,
-            openChannelsData,
-            channelUsers,
-            isLoad: false
+            this.setState({
+                durationChannelsData,
+                openChannelsData,
+                channelUsers,
+                channelUsersWithEvtp,
+                isLoad: false
+            });
         });
     };
 
@@ -73,7 +83,8 @@ export default class Channels extends Component{
             <ChannelsDataTable
                 durationChannelsData={this.state.durationChannelsData}
                 openChannelsData={this.state.openChannelsData}
-                channelUsers={this.state.channelUsers}/>
+                channelUsers={this.state.channelUsers}
+                channelUsersWithEvtp={this.state.channelUsersWithEvtp}/>
         );
 
         if (this.state.isLoad) {
