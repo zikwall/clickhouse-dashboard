@@ -50,7 +50,23 @@ export default class ChannelsDataTable extends Component{
         },
         {
             name: "channelUsers",
-            label: "Уникальные пользователи",
+            label: "Уникальные пользователи (all)",
+            options: {
+                filter: true,
+                sort: true,
+            }
+        },
+        {
+            name: "channelUsersOnline",
+            label: "Уникальные пользователи (online)",
+            options: {
+                filter: true,
+                sort: true,
+            }
+        },
+        {
+            name: "channelUsersArchive",
+            label: "Уникальные пользователи (archive)",
             options: {
                 filter: true,
                 sort: true,
@@ -79,12 +95,16 @@ export default class ChannelsDataTable extends Component{
                 durationChannelOnline: "Нет данных",
                 durationChannelArchive: "Нет данных",
                 openChannel: "Нет данных",
-                channelUsers: "Нет данных"
+                channelUsers: "Нет данных",
+                channelUsersOnline: "Нет данных",
+                channelUsersArchive: 'Нет данных',
 
             };
             obj.channelsName = data.durationChannelsData[key].name;
             obj.durationChannelOnline = +(data.durationChannelsData[key].online/120).toFixed(2);
             obj.durationChannelArchive = +(data.durationChannelsData[key].archive/120).toFixed(2);
+            obj.channelUsersOnline = +(data.channelUsersWithEvtp[key][0]);
+            obj.channelUsersArchive = +(data.channelUsersWithEvtp[key][1]);
 
             if (data.openChannelsData !== null) {
                 const countOpenChannelObj = data.openChannelsData[key];
@@ -116,7 +136,9 @@ export default class ChannelsDataTable extends Component{
                 durationChannelOnline: "Нет данных",
                 durationChannelArchive: "Нет данных",
                 openChannel: "Нет данных",
-                channelUsers: "Нет данных"
+                channelUsers: "Нет данных",
+                channelUsersOnline: "Нет данных",
+                channelUsersArchive: 'Нет данных',
 
             };
             obj.channelsName = data.openChannelsData[key].name;
