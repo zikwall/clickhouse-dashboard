@@ -30,7 +30,8 @@ A client application written in React for managers of statistics and analytics, 
 
 1. `git clone https://github.com/zikwall/clickhouse-dashboard`
 2. `cd /clickhouse-dashboard`
-3. `npm start`
+3. `npm install`
+4. `npm start`
 
 ### Nginx
 
