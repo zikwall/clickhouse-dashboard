@@ -1,35 +1,28 @@
 import React from 'react';
 
 const DataList = ({ data }) => {
-    let total = 0;
-    let count = 0;
-
-    data.forEach((item, i, arr) => {
-        total += +item.ctn;
-        count++;
+    console.log(data);
+    const items = data.map((item, index) => {
+        return (
+            <tr key={index}>
+                <td>{ item.app }</td>
+                <td>{ item.ctn }</td>
+            </tr>
+        )
     });
 
-    return(
-        <ul className="list-group list-group-small list-group-flush">
-            <li className="list-group-item d-flex px-3">
-                <span className="text-semibold text-fiord-blue">Общее количество запусков приложения</span>
-                <span className="ml-auto text-right text-semibold text-reagent-gray">
-                    { total }
-                </span>
-            </li>
-            <li className="list-group-item d-flex px-3">
-                <span className="text-semibold text-fiord-blue">Среднедневной показатель</span>
-                <span className="ml-auto text-right text-semibold text-reagent-gray">
-                    { (total/count).toFixed(2) }
-                </span>
-            </li>
-            <li className="list-group-item d-flex px-3">
-                <span className="text-semibold text-fiord-blue">Среднее количество пользований приложений в день</span>
-                <span className="ml-auto text-right text-semibold text-reagent-gray">
-                    Данные3
-                </span>
-            </li>
-        </ul>
+    return (
+        <table className="table mb-0">
+            <thead className="bg-light">
+            <tr>
+                <th scope="col" className="border-0">Приложение</th>
+                <th scope="col" className="border-0">Количество запусков</th>
+            </tr>
+            </thead>
+            <tbody>
+            { items }
+            </tbody>
+        </table>
     )
 };
 

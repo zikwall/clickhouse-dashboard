@@ -46,6 +46,13 @@ export default class Form extends Component {
 
         const newFields = Object.assign({}, this.state.fields);
         newFields.dropDownList.options = data.app;
+
+        if (this.props.withoutApp) {
+            newFields.dropDownList.isTouch = true;
+            newFields.dropDownList.isValid = true;
+            newFields.dropDownList.value = 'all';
+        }
+
         newFields.datePicker1.minDate = period.period[0];
         newFields.datePicker1.maxDate = period.period[1];
         newFields.datePicker2.minDate = period.period[0];
@@ -180,7 +187,9 @@ export default class Form extends Component {
                 </div>
                 <form onSubmit={ (e) => this.checkAndSubmit(e)}>
                     <div className="form-row">
-                        <DropDownList changeInput={ this.onChangeDropDownListHandler } { ...this.state.fields.dropDownList }/>
+                        {
+                            !this.props.withoutApp ? <DropDownList changeInput={ this.onChangeDropDownListHandler } { ...this.state.fields.dropDownList }/> : null
+                        }
                         <CustomDatePicker changeDatePicker={ this.onChangeDatePickerHandler } name={ 'datePicker1' } { ...this.state.fields.datePicker1 }/>
                         <CustomDatePicker changeDatePicker={ this.onChangeDatePickerHandler } name={ 'datePicker2' } { ...this.state.fields.datePicker2 }/>
                         {

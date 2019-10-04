@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { apiFetch } from "../../services/api/Api";
 import Form from "../../containers/form";
 import { EmptyContent, DimmyLoader } from "../../components/content-loader";
-import Chart from "../../components/chart";
 import DataList from "./components";
 
 const isEmpty = (obj) => {
@@ -24,7 +23,7 @@ export default class StartApp extends Component{
             isLoad: true
         });
 
-        let startAppData = await apiFetch('/api/v1/general/get-start-app', {
+        let startAppData = await apiFetch('/api/v1/general/get-start-all-app', {
             method: 'POST',
             body: JSON.stringify({app, dayBegin, dayEnd})
         });
@@ -36,40 +35,29 @@ export default class StartApp extends Component{
     };
 
     render() {
-        let chartContent = <EmptyContent />;
         let totalContent = <EmptyContent />;
 
-        if (this.state.startAppData === null || isEmpty(this.state.startAppData.startApp)) {
-            chartContent = <EmptyContent />;
+        if (this.state.startAppData === null || isEmpty(this.state.startAppData.startAllApp)) {
             totalContent = <EmptyContent />;
         } else {
-            chartContent = <Chart data={ this.state.startAppData.startApp }/>;
-            totalContent = <DataList data={ this.state.startAppData.startApp }/>;
+            totalContent = <DataList data={ this.state.startAppData.startAllApp }/>;
         }
 
         if (this.state.isLoad === true) {
-            chartContent = <DimmyLoader />;
             totalContent = <DimmyLoader />;
         }
 
         return (
             <>
-                <Form withoutEvtp loadData={this.loadData} title="Статистика по запускам приложений"/>
+                <Form
+                    withoutEvtp
+                    loadData={this.loadData} title="Статистика по запускам приложений"
+                    withoutApp/>
                 <div className="row no-gutters">
-                    <div className="col-md-8 col-sm-12 col mb-4" style={{padding: '5px'}}>
+                    <div className="col-md-12 col-sm-12 col mb-4" style={{padding: '5px'}}>
                         <div className="card card-small" style={{minHeight: '330px'}}>
                             <div className="card-header border-bottom">
-                                <h6 className="m-0">График</h6>
-                            </div>
-                            <div className="card-body">
-                                { chartContent }
-                            </div>
-                        </div>
-                    </div>
-                    <div className="col-md-4 col-sm-12 mb-4" style={{padding: '5px'}}>
-                        <div className="card card-small" style={{minHeight: '330px'}}>
-                             <div className="card-header border-bottom">
-                                <h6 className="m-0">Общая информация</h6>
+                                <h6 className="m-0">Статистика по стартам приложений</h6>
                             </div>
                             <div className="card-body">
                                 { totalContent }
