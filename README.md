@@ -25,3 +25,31 @@ A client application written in React for managers of statistics and analytics, 
     - [ ] Various user session repositories
 - [x] Chart.js 
 - [ ] Creating [tabbix](https://tabix.io)-like functionality
+
+## Install & Run
+
+1. `git clone https://github.com/zikwall/clickhouse-dashboard`
+2. `cd /clickhouse-dashboard`
+3. `npm install`
+4. `npm start`
+
+### Nginx
+
+1. `npm build`
+
+```bash
+
+server {
+  listen 82;
+  server_name clickhouse-dashboard.local;
+  root /path/to/clickhouse-dashboard/build;
+  index index.html;
+  
+  access_log /var/log/nginx/clikhouse-dashboard.access.log;
+  error_log /var/log/nginx/clikhouse-dashboard.error.log;
+  location / {
+    try_files $uri /index.html =404;
+  }
+}
+
+```
