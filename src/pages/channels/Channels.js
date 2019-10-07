@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { apiFetch } from "../../services/api/Api";
 import { DimmyLoader } from "../../components/content-loader";
-import { Object } from '../../utils'
+import { BaseObject } from '../../utils'
 import Form from "../../containers/form";
 import ChannelsDataTable from "./components/channels-data-table";
 
@@ -47,19 +47,19 @@ export default class Channels extends Component{
             let openChannelsData = null;
             let channelUsersWithEvtp = null;
 
-            if (!Object.isEmpty(results[2].channelsUniqUsers)) {
+            if (!BaseObject.isEmpty(results[2].channelsUniqUsers)) {
                 channelUsers = results[2].channelsUniqUsers;
             }
 
-            if (!Object.isEmpty(results[0].channelsViewDuration)) {
+            if (!BaseObject.isEmpty(results[0].channelsViewDuration)) {
                 durationChannelsData = results[0].channelsViewDuration;
             }
 
-            if (!Object.isEmpty(results[1].startChannels)) {
+            if (!BaseObject.isEmpty(results[1].startChannels)) {
                 openChannelsData = results[1].startChannels;
             }
 
-            if (!Object.isEmpty(results[3].channelsUniqUsersWithEvtp)) {
+            if (!BaseObject.isEmpty(results[3].channelsUniqUsersWithEvtp)) {
                 channelUsersWithEvtp = results[3].channelsUniqUsersWithEvtp;
             }
 

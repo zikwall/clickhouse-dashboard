@@ -1,11 +1,5 @@
 import React from 'react';
-import { Object } from "../../../../utils";
-
-const filter = (arr) => {
-    return arr.sort((a,b) => {
-        return a.tz - b.tz;
-    })
-};
+import { BaseObject } from "../../../../utils";
 
 const DataList = ({ totalUsersData, usersData, durationChannelsData, eventType }) => {
     let duration = 0;
@@ -30,7 +24,7 @@ const DataList = ({ totalUsersData, usersData, durationChannelsData, eventType }
 
     let quantityForAllDays = 0;
 
-    if (!Object.isEmpty(usersData.appUsers)) {
+    if (!BaseObject.isEmpty(usersData.appUsers)) {
         usersData.appUsers.forEach((element) => {
             quantityForAllDays += +element.ctn;
         });

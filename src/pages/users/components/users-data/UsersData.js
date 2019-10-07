@@ -1,10 +1,8 @@
 import React from "react";
-import { Object } from "../../../../utils";
+import { BaseObject } from "../../../../utils";
 
-const filter = (arr) => {
-    return arr.sort((a,b) => {
-        return a.tz - b.tz;
-    })
+const tzSort = (a, b, arr) => {
+    return a.tz - b.tz;
 };
 
 const  UsersData = ({totalUsersData = null, timeZoneUsers = null}) => {
@@ -24,8 +22,8 @@ const  UsersData = ({totalUsersData = null, timeZoneUsers = null}) => {
 
     let index = 0;
 
-    if (timeZoneUsers !== null && !Object.isEmpty(timeZoneUsers)) {
-        tzUsers = filter(timeZoneUsers).map((item) => {
+    if (timeZoneUsers !== null && !BaseObject.isEmpty(timeZoneUsers)) {
+        tzUsers = BaseObject.sort(timeZoneUsers, tzSort).map((item) => {
             index++;
 
             return (

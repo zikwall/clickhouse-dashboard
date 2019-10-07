@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import DropDownList from "../../components/drop-down-list";
 import { apiFetch } from "../../services/api/Api";
+import { BaseObject } from '../../utils';
+import DropDownList from "../../components/drop-down-list";
 import CustomDatePicker from "../../components/custom-date-picker";
 import AdsTable from "./components/ads-table";
 
@@ -172,7 +173,7 @@ export default class Ads extends Component {
             if (adsData.adsData.length === 0) {
                 adsData = null;
             } else {
-                adsData = sortAdsst(adsData);
+                adsData = BaseObject.sort(adsData, sortAdsst, true);
             }
 
             await this.setState({
