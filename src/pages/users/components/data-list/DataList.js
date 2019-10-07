@@ -6,6 +6,13 @@ const filter = (arr) => {
     })
 };
 
+const isEmpty = (obj) => {
+    for (let key in obj) {
+        return false;
+    }
+    return true;
+};
+
 const DataList = ({ totalUsersData, usersData, durationChannelsData, eventType }) => {
     let duration = 0;
 
@@ -29,9 +36,11 @@ const DataList = ({ totalUsersData, usersData, durationChannelsData, eventType }
 
     let quantityForAllDays = 0;
 
-    usersData.appUsers.forEach((element) => {
-        quantityForAllDays += +element.ctn;
-    });
+    if (!isEmpty(usersData.appUsers)) {
+        usersData.appUsers.forEach((element) => {
+            quantityForAllDays += +element.ctn;
+        });
+    }
 
     return(
         <>
@@ -45,7 +54,7 @@ const DataList = ({ totalUsersData, usersData, durationChannelsData, eventType }
                 <li className="list-group-item d-flex px-3">
                     <span className="text-semibold text-fiord-blue">Среднее количество дней пользования на одного пользователя</span>
                     <span className="ml-auto text-right text-semibold text-reagent-gray">
-                        { (quantityForAllDays/totalUsersData).toFixed(5) }
+                        { isNaN((quantityForAllDays/totalUsersData).toFixed(5)) ? 0 : (quantityForAllDays/totalUsersData).toFixed(5)}
                     </span>
                 </li>
             </ul>

@@ -6,17 +6,23 @@ const filter = (arr) => {
     })
 };
 
-const  UsersData = ({totalUsersData = null, timeZoneUsers = null}) => {
+const isEmpty = (obj) => {
+    for (let key in obj) {
+        return false;
+    }
+    return true;
+};
 
+const  UsersData = ({totalUsersData = null, timeZoneUsers = null}) => {
     let tzUsers = [(
-        <tr>
+        <tr key="noData">
             <td>Нет данных</td>
             <td>Нет данных</td>
         </tr>
     )];
 
     let total = (
-        <tr>
+        <tr key="noTotalData">
             <td>всего</td>
             <td>Нет данных</td>
         </tr>
@@ -24,7 +30,7 @@ const  UsersData = ({totalUsersData = null, timeZoneUsers = null}) => {
 
     let index = 0;
 
-    if (timeZoneUsers !== null) {
+    if (timeZoneUsers !== null && !isEmpty(timeZoneUsers)) {
         tzUsers = filter(timeZoneUsers).map((item) => {
             index++;
 
