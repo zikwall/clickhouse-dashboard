@@ -1,16 +1,10 @@
 import React from "react";
+import { Object } from "../../../../utils";
 
 const filter = (arr) => {
     return arr.sort((a,b) => {
         return a.tz - b.tz;
     })
-};
-
-const isEmpty = (obj) => {
-    for (let key in obj) {
-        return false;
-    }
-    return true;
 };
 
 const  UsersData = ({totalUsersData = null, timeZoneUsers = null}) => {
@@ -30,7 +24,7 @@ const  UsersData = ({totalUsersData = null, timeZoneUsers = null}) => {
 
     let index = 0;
 
-    if (timeZoneUsers !== null && !isEmpty(timeZoneUsers)) {
+    if (timeZoneUsers !== null && !Object.isEmpty(timeZoneUsers)) {
         tzUsers = filter(timeZoneUsers).map((item) => {
             index++;
 

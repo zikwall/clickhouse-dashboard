@@ -1,15 +1,9 @@
 import React, { Component } from 'react';
 import { apiFetch } from "../../services/api/Api";
-import Form from "../../containers/form";
+import { Object } from '../../utils';
 import { EmptyContent, DimmyLoader } from "../../components/content-loader";
+import Form from "../../containers/form";
 import DataList from "./components";
-
-const isEmpty = (obj) => {
-    for (let key in obj) {
-        return false;
-    }
-    return true;
-};
 
 export default class StartApp extends Component{
     state = {
@@ -37,7 +31,7 @@ export default class StartApp extends Component{
     render() {
         let totalContent = <EmptyContent />;
 
-        if (this.state.startAppData === null || isEmpty(this.state.startAppData.startAllApp)) {
+        if (this.state.startAppData === null || Object.isEmpty(this.state.startAppData.startAllApp)) {
             totalContent = <EmptyContent />;
         } else {
             totalContent = <DataList data={ this.state.startAppData.startAllApp }/>;

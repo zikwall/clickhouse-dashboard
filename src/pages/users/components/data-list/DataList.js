@@ -1,16 +1,10 @@
 import React from 'react';
+import { Object } from "../../../../utils";
 
 const filter = (arr) => {
     return arr.sort((a,b) => {
         return a.tz - b.tz;
     })
-};
-
-const isEmpty = (obj) => {
-    for (let key in obj) {
-        return false;
-    }
-    return true;
 };
 
 const DataList = ({ totalUsersData, usersData, durationChannelsData, eventType }) => {
@@ -36,7 +30,7 @@ const DataList = ({ totalUsersData, usersData, durationChannelsData, eventType }
 
     let quantityForAllDays = 0;
 
-    if (!isEmpty(usersData.appUsers)) {
+    if (!Object.isEmpty(usersData.appUsers)) {
         usersData.appUsers.forEach((element) => {
             quantityForAllDays += +element.ctn;
         });

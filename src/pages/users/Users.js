@@ -1,16 +1,10 @@
 import React, { Component } from 'react';
-import Form from "../../containers/form";
 import { apiFetch } from "../../services/api/Api";
+import { EmptyContent, DimmyLoader } from "../../components/content-loader";
+import { Object } from "../../utils";
+import Form from "../../containers/form";
 import DataList from "./components/data-list";
 import UsersData from "./components/users-data";
-import { EmptyContent, DimmyLoader } from "../../components/content-loader";
-
-const isEmpty = (obj) => {
-    for (let key in obj) {
-        return false;
-    }
-    return true;
-};
 
 export default class Users extends Component {
     state = {
@@ -58,7 +52,7 @@ export default class Users extends Component {
             let timeZoneUsers = null;
             let durationChannelsData = null;
 
-            if (results[0].appUsers.length !== 0 || !isEmpty(results[0].appUsers)) {
+            if (results[0].appUsers.length !== 0 || !Object.isEmpty(results[0].appUsers)) {
                 usersData = results[0];
             }
 
@@ -66,11 +60,11 @@ export default class Users extends Component {
                 totalUsersData = results[1];
             }
 
-            if (results[2].length !== 0 || !isEmpty(results[2].timeZoneUsers)) {
+            if (results[2].length !== 0 || !Object.isEmpty(results[2].timeZoneUsers)) {
                 timeZoneUsers = results[2].timeZoneUsers;
             }
 
-            if(!isEmpty(results[3].channelsViewDuration)) {
+            if(!Object.isEmpty(results[3].channelsViewDuration)) {
                 durationChannelsData = results[3].channelsViewDuration;
             }
 
