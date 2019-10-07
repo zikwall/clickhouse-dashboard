@@ -1,22 +1,22 @@
 import React from 'react';
-import { BaseObject } from "../../../../utils";
+import { BaseObject, ClickHouse } from "../../../../utils";
 
 const DataList = ({ totalUsersData, usersData, durationChannelsData, eventType }) => {
     let duration = 0;
 
-    if (eventType == 'all') {
+    if (ClickHouse.isAll(eventType)) {
         for (let key in durationChannelsData) {
             duration += +durationChannelsData[key].archive + +durationChannelsData[key].online;
         }
     }
 
-    if (eventType == 0) {
+    if (ClickHouse.isOnline(eventType)) {
         for (let key in durationChannelsData) {
             duration += +durationChannelsData[key].online;
         }
     }
 
-    if (eventType == 1) {
+    if (ClickHouse.isArchive(eventType)) {
         for (let key in durationChannelsData) {
             duration += +durationChannelsData[key].archive;
         }
