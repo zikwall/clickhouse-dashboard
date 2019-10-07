@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import MUIDataTable from 'mui-datatables';
+import { Math } from '../../../../utils';
 
 export default class ChannelsDataTable extends Component{
 
@@ -101,10 +102,10 @@ export default class ChannelsDataTable extends Component{
 
             };
             obj.channelsName = data.durationChannelsData[key].name;
-            obj.durationChannelOnline = +(data.durationChannelsData[key].online/120).toFixed(2);
-            obj.durationChannelArchive = +(data.durationChannelsData[key].archive/120).toFixed(2);
-            obj.channelUsersOnline = +(data.channelUsersWithEvtp[key][0]);
-            obj.channelUsersArchive = +(data.channelUsersWithEvtp[key][1]);
+            obj.durationChannelOnline = + Math.seconds30toMars(data.durationChannelsData[key].online);
+            obj.durationChannelArchive = + Math.seconds30toMars(data.durationChannelsData[key].archive);
+            obj.channelUsersOnline = + (data.channelUsersWithEvtp[key][0]);
+            obj.channelUsersArchive = + (data.channelUsersWithEvtp[key][1]);
 
             if (data.openChannelsData !== null) {
                 const countOpenChannelObj = data.openChannelsData[key];
@@ -145,11 +146,11 @@ export default class ChannelsDataTable extends Component{
             obj.openChannel = +data.openChannelsData[key].ctn;
 
             if (data.durationChannelsData[key] !== undefined) {
-                obj.durationChannelOnline = +(data.durationChannelsData[key].online/120).toFixed(2);
+                obj.durationChannelOnline = + Math.seconds30toMars(data.durationChannelsData[key].online);
             }
 
             if (data.durationChannelsData[key] !== undefined) {
-                obj.durationChannelArchive = +(data.durationChannelsData[key].archive/120).toFixed(2);
+                obj.durationChannelArchive = + Math.seconds30toMars(data.durationChannelsData[key].archive);
             }
 
             if (data.channelUsers !== null && data.durationChannelsData[key]) {

@@ -1,5 +1,5 @@
 import React from 'react';
-import { BaseObject, ClickHouse } from "../../../../utils";
+import { BaseObject, ClickHouse, Math } from "../../../../utils";
 
 const DataList = ({ totalUsersData, usersData, durationChannelsData, eventType }) => {
     let duration = 0;
@@ -36,7 +36,7 @@ const DataList = ({ totalUsersData, usersData, durationChannelsData, eventType }
                 <li className="list-group-item d-flex px-3">
                     <span className="text-semibold text-fiord-blue">Общее время просмотра</span>
                     <span className="ml-auto text-right text-semibold text-reagent-gray">
-                        { (duration/120).toFixed(2) } часов
+                        { Math.seconds30toMars(duration) } часов
                     </span>
                 </li>
                 <li className="list-group-item d-flex px-3">
