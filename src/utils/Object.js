@@ -1,5 +1,11 @@
 export const isEmpty = (object) => {
-    return Object.entries(object) === 0 && object.constructor === Object;
+    for (let key in object) {
+        return false;
+    }
+
+    return true;
+
+    //return Object.entries(object) === 0 && object.constructor === Object;
 };
 
 export const sort = (array, callback, useCustom = false) => {

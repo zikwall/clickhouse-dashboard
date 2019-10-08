@@ -57,11 +57,16 @@ export default class Users extends Component {
             }
 
             if (results[1].appUsersTotal.length !== 0) {
-                totalUsersData = results[1];
+                totalUsersData = results[1].appUsersTotal[0].ctn;
             }
 
-            if (results[2].length !== 0 || !BaseObject.isEmpty(results[2].timeZoneUsers)) {
+            if (!BaseObject.isEmpty(results[2].timeZoneUsers)) {
                 timeZoneUsers = results[2].timeZoneUsers;
+                totalUsersData = 0;
+
+                timeZoneUsers.forEach(function(item, i, arr) {
+                    totalUsersData += +item.ctn;
+                });
             }
 
             if(!BaseObject.isEmpty(results[3].channelsViewDuration)) {
@@ -101,7 +106,7 @@ export default class Users extends Component {
             userTotalContent = <EmptyContent />;
         } else {
             userTotalContent = <DataList
-                totalUsersData={ this.state.totalUsersData.appUsersTotal[0].ctn }
+                totalUsersData={ this.state.totalUsersData }
                 usersData={ this.state.usersData }
                 durationChannelsData={this.state.durationChannelsData}
                 eventType={this.state.eventType}

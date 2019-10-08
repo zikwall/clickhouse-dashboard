@@ -1,7 +1,12 @@
 import React from 'react';
 
 const DataList = ({ data }) => {
-    console.log(data);
+    let total = 0;
+
+    data.forEach(function(item, i, arr) {
+        total += +item.ctn;
+    });
+
     const items = data.map((item, index) => {
         return (
             <tr key={index}>
@@ -10,6 +15,15 @@ const DataList = ({ data }) => {
             </tr>
         )
     });
+
+    const totalItem = (
+        <tr key="total">
+            <td style={{fontWeight: "bold"}}>total</td>
+            <td style={{fontWeight: "bold"}}>{ total }</td>
+        </tr>
+    );
+
+    items.push(totalItem);
 
     return (
         <table className="table mb-0">
