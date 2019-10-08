@@ -8,10 +8,7 @@ import ErrorLayout from "./ErrorLayout";
 import { ProfileSubLayout, DashboardSubLayout } from '../pages/layouts';
 
 class ProtectedLayout extends React.Component {
-    componentDidUpdate (e) {}
-
     render() {
-
         return (
             <>
                 <div className="container-fluid">
@@ -21,7 +18,7 @@ class ProtectedLayout extends React.Component {
 
                             <div className="main-content-container container">
                                 <Switch>
-                                    <Route exact path="/" component={DashboardSubLayout} />
+                                    <Route exact path="/" component={ DashboardSubLayout } />
 
                                     <Route path="/dashboard" component={ DashboardSubLayout } />
                                     <Route path="/profile" component={ ProfileSubLayout } />

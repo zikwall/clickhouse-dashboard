@@ -1,5 +1,5 @@
 import Identity from "../auth/Identity";
-import {API_DOMAIN} from "../../constants";
+import { API_DOMAIN } from "../../constants";
 import {
     UnauthorizedException,
     ForbiddenHttpException,

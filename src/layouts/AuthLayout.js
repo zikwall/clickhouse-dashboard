@@ -6,8 +6,6 @@ import { Login } from "../pages/login";
 import { Signup } from "../pages/signup";
 
 class Auth extends React.Component {
-    componentDidMount() {}
-
     render() {
         return (
             <>
