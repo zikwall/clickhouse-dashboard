@@ -15,8 +15,8 @@ const  UsersData = ({totalUsersData = null, timeZoneUsers = null}) => {
 
     let total = (
         <tr key="noTotalData">
-            <td>всего</td>
-            <td>Нет данных</td>
+            <td style={{fontWeight: "bold"}}>всего</td>
+            <td style={{fontWeight: "bold"}}>Нет данных</td>
         </tr>
     );
 
@@ -40,8 +40,8 @@ const  UsersData = ({totalUsersData = null, timeZoneUsers = null}) => {
 
         total = (
             <tr key={ index }>
-                <td>всего</td>
-                <td>{ totalUsersData.appUsersTotal[0].ctn }</td>
+                <td style={{fontWeight: "bold"}}>всего</td>
+                <td style={{fontWeight: "bold"}}>{ totalUsersData/*.appUsersTotal[0].ctn*/ }</td>
             </tr>
         );
     }
