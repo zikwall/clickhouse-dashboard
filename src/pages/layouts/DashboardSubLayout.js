@@ -4,10 +4,10 @@ import ErrorLayout from "../../layouts/ErrorLayout";
 import { Dashboard } from "../dashboard";
 import { Clickhouse } from "../clickhouse";
 import { AutonomousSystems } from "../autonomous-systems";
-import { Ads } from "../ads";
-import { Users } from "../users";
-import { Channels } from "../channels";
-import { StartApp } from "../start-app";
+import Ads  from "../ads";
+import Users from "../users";
+import Channels from "../channels";
+import StartApp from "../start-app";
 
 const DashboardSubLayout = ({ match }) => {
     return (
