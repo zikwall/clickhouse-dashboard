@@ -43,4 +43,22 @@ export default class AuthService {
         let answer = decode(Identity.getAccessToken());
         return answer;
     };
+
+    signup(username, email, password) {
+        return apiFetch('/api/v1/auth/register', {
+            method: "POST",
+            mode: 'cors',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            withCredentials: true,
+            body: JSON.stringify({
+                username,
+                password,
+                email
+            })
+        }).then((response) => {
+            return response.status;
+        });
+    }
 }

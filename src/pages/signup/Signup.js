@@ -7,6 +7,10 @@ class Signup extends React.Component {
     state = {
         username: '',
         password: '',
+        repeatPassword: '',
+        email: '',
+        agreeCheck: false,
+
     };
 
     _handleChange = (e) => {
@@ -19,6 +23,22 @@ class Signup extends React.Component {
 
     handleFormSubmit = (e) => {
         e.preventDefault();
+
+        if (this.state.password != this.state.repeatPassword) {
+            return alert("check correctness passwords");
+        }
+
+        this.Auth.signup(this.state.username, this.state.email, this.state.password)
+            .then(res => {
+                if (res === false) {
+                    return alert("An error has occurred");
+                }
+
+                this.props.history.replace('/');
+            })
+            .catch(err =>  {
+                alert(err);
+            })
     };
 
     componentWillMount() {
@@ -39,28 +59,48 @@ class Signup extends React.Component {
                             <h5 className="auth-form__title text-center mb-4">Create New Account</h5>
                             <form>
                                 <div className="form-group">
+                                    <label htmlFor="exampleInputUsername1">Username</label>
+                                    <input type="text" className="form-control" id="exampleInputUsername1"
+                                            placeholder="Enter username"
+                                            name="username"
+                                            onChange={this._handleChange}
+                                    />
+                                </div>
+                                <div className="form-group">
                                     <label htmlFor="exampleInputEmail1">Email address</label>
                                     <input type="email" className="form-control" id="exampleInputEmail1"
-                                           aria-describedby="emailHelp" placeholder="Enter email" />
+                                           aria-describedby="emailHelp" placeholder="Enter email"
+                                           name="email"
+                                           onChange={this._handleChange}
+                                    />
                                 </div>
                                 <div className="form-group">
                                     <label htmlFor="exampleInputPassword1">Password</label>
                                     <input type="password" className="form-control" id="exampleInputPassword1"
-                                           placeholder="Password" />
+                                           placeholder="Password"
+                                           name="password"
+                                           onChange={this._handleChange}
+                                    />
                                 </div>
                                 <div className="form-group">
                                     <label htmlFor="exampleInputPassword2">Repeat Password</label>
                                     <input type="password" className="form-control" id="exampleInputPassword2"
-                                           placeholder="Repeat Password" />
+                                           placeholder="Repeat Password"
+                                           name="repeatPassword"
+                                           onChange={this._handleChange}
+                                    />
                                 </div>
                                 <div className="form-group mb-3 d-table mx-auto">
                                     <div className="custom-control custom-checkbox mb-1">
-                                        <input type="checkbox" className="custom-control-input" id="customCheck2" />
+                                        <input type="checkbox" className="custom-control-input" id="customCheck2" 
+                                            name="agreeCheck"
+                                            onChange={this._handleChange}
+                                        />
                                         <label className="custom-control-label" htmlFor="customCheck2">
                                             I agree with the <a href="#">Terms &amp; Conditions</a>.</label>
                                     </div>
                                 </div>
-                                <button type="submit" className="btn btn-pill btn-accent d-table mx-auto">Create
+                                <button type="submit" className="btn btn-pill btn-accent d-table mx-auto" onClick={this.handleFormSubmit}>Create
                                     Account
                                 </button>
                             </form>
