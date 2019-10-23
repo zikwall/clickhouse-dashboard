@@ -8,6 +8,7 @@ import Ads from "../ads";
 import Users from "../users";
 import Channels from "../channels";
 import StartApp from "../start-app";
+import RegistrationRequests from "../registration-requests";
 
 const ProfileSubLayout = ({ match }) => {
     return (
@@ -27,6 +28,8 @@ const ProfileSubLayout = ({ match }) => {
             <Route path={`${match.url}/channels`} component={ Channels }/>
 
             <Route path={`${match.url}/start-app`} component={ StartApp }/>
+
+            <Route path={`${match.url}/registration-requests`} component={ RegistrationRequests }/>
 
             <Route render={ ( props ) => <ErrorLayout errorCode={404} {...props}/> }  />
         </Switch>

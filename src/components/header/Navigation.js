@@ -92,6 +92,13 @@ class Navigation extends React.Component {
             icon: 'extension',
             sort: 5,
             isVisible: Identity.can('canViewDashboard')
+        },
+        {
+            title: 'Пользователи',
+            url: '/dashboard/registration-requests',
+            icon: 'extension',
+            sort: 6,
+            isVisible: Identity.can('canViewDashboard')
         }
     ];
 
