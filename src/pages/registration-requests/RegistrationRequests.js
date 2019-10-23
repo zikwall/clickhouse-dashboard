@@ -117,7 +117,7 @@ export default class RegistrationRequests extends Component {
                                         <td>{user.email}</td>
                                         <td>{this.unixTimeToDate(user.created_at)}</td>
                                         <td>
-                                            <div class="btn-group btn-group-sm btn-group-toggle d-inline-flex mb-4 mb-sm-0 mx-auto">
+                                            <div className="btn-group btn-group-sm btn-group-toggle d-inline-flex mb-4 mb-sm-0 mx-auto">
                                             <button className="btn btn-success" onClick={ () => this.confirmUser(user.id, index) }><i className="material-icons">check</i></button>
                                             <button className="btn btn-danger" onClick={ () => this.unconfirmUser(user.id, index) }><i className="material-icons">delete</i></button>
                                             </div>
