@@ -7,13 +7,18 @@ import {
     NotFoundHttpException,
     Exception
 } from "../../exceptions";
+import { History } from "../../components/history";
 
-export const apiFetch = (url, options) => {
+export const apiFetch = (url, options, useAuth = true) => {
 
     let headers = {
         'Accept': "application/json",
         "Content-Type": "application/json",
     };
+
+    if (useAuth && Identity.isGuest()) {
+        History.rememberAndRedirect(window.location.pathname, '/auth/login');
+    }
 
     if (!Identity.isGuest()) {
         headers = {...headers, ...{"Authorization": getAuthorizationHeader()}}

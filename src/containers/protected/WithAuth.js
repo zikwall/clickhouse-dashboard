@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { AuthService, Identity } from "../../services/auth";
+import { History } from "../../components/history";
 
 export default function withAuth(AuthComponent) {
     const Auth = new AuthService();
@@ -12,7 +13,7 @@ export default function withAuth(AuthComponent) {
 
         componentDidMount() {
             if (Identity.isGuest()) {
-                this.props.history.replace("/auth/login");
+                History.rememberAndRedirect(this.props.location.pathname, '/auth/login');
             } else {
                 try {
                     const confirm = Auth.getConfirm();
@@ -30,9 +31,8 @@ export default function withAuth(AuthComponent) {
                     });
 
                 } catch (err) {
-                    console.log(err);
                     Identity.logout();
-                    this.props.history.replace("/auth/login");
+                    History.rememberAndRedirect(this.props.location.pathname, '/auth/login');
                 }
             }
         }

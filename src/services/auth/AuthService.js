@@ -1,6 +1,7 @@
 import decode from "jwt-decode";
 import Identity from "./Identity";
 import { apiFetch } from "../api/Api";
+import { History } from "../../components/history";
 
 export default class AuthService {
 
@@ -16,13 +17,18 @@ export default class AuthService {
                 username,
                 password
             })
-        }).then((response) => {
+        }, false).then((response) => {
 
             /**
              * todo создать автопродлевание жизни токена при remember me
              */
             if(rememberMe) {
-                Identity.login(response)
+                Identity.login(response);
+
+                if (History.hasReturned()) {
+                    alert(11);
+                    History.redirectToRemember();
+                }
             }
 
             return Promise.resolve(response);
