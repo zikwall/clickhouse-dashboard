@@ -9,6 +9,7 @@ import Users from "../users";
 import Channels from "../channels";
 import StartApp from "../start-app";
 import RegistrationRequests from "../registration-requests";
+import ChannelsLink from "../channels-link";
 
 const ProfileSubLayout = ({ match }) => {
     return (
