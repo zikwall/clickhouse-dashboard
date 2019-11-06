@@ -3,6 +3,7 @@ import { pureFetch } from "../../services/api/Api";
 import { Scrollbars } from "react-custom-scrollbars";
 import { useInterval } from "../../hooks";
 import { ContentLoaderWrapper } from "../content-loader";
+import CountUp from 'react-countup';
 
 const CurrentOnline = () => {
 
@@ -74,7 +75,7 @@ const CurrentOnline = () => {
                     <div className="d-flex px-3">
                         <div className="stats-small__data">
                             <span className="stats-small__label mb-1 text-uppercase">Users</span>
-                            <h6 className="stats-small__value count m-0">{ online == null ? 0 : online }</h6>
+                            <h6 className="stats-small__value count m-0">{ online == null ? 0 : <CountUp end={ online }/> }</h6>
                             <br />
                         </div>
                     </div>
