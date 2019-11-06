@@ -5,6 +5,7 @@ import {Bar, Line, Doughnut} from "./components";
 import { Identity } from "../../services/auth";
 import { withTitle } from "../../components/document-title";
 import { Col, Row } from "../../components/ui/container";
+import {CurrentOnline} from "../../components/current-online";
 
 /**
  * Example simple RBAC, пока что сравнивается username пользователя,
@@ -89,7 +90,7 @@ class DasboardPage extends React.Component {
                             <Col className="col col-lg-8 col-md-12 col-sm-12 mb-4">
                                 <div className="card card-small h-100">
                                     <div className="card-header border-bottom">
-                                        <h6 className="m-0">Sessions</h6>
+                                        <h6 className="m-0">Current Total Online</h6>
                                     </div>
                                     <div className="card-body pt-0">
                                         <Line />
@@ -97,30 +98,7 @@ class DasboardPage extends React.Component {
                                 </div>
                             </Col>
                             <Col className="col-lg-4 col-md-6 col-sm-6 mb-4">
-                                <div className="card card-small h-100">
-                                    <div className="card-header border-bottom">
-                                        <h6 className="m-0">Users by device</h6>
-                                    </div>
-                                    <div className="card-body d-flex flex-column">
-                                        <Doughnut />
-                                    </div>
-
-                                    <div className="card-footer border-top">
-                                        <div className="row">
-                                            <div className="col">
-                                                <select defaultValue="0" className="custom-select custom-select-sm">
-                                                    <option value="0">Last Week</option>
-                                                    <option value="1">Today</option>
-                                                    <option value="2">Last Month</option>
-                                                    <option value="3">Last Year</option>
-                                                </select>
-                                            </div>
-                                            <div className="col text-right view-report">
-                                                <a href="#">View full report →</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                <CurrentOnline />
                             </Col>
                         </Row>
                     </CanViewDashboard>

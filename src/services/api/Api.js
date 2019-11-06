@@ -10,11 +10,7 @@ import {
 import { History } from "../../components/history";
 
 export const apiFetch = (url, options, useAuth = true) => {
-
-    let headers = {
-        'Accept': "application/json",
-        "Content-Type": "application/json",
-    };
+    let headers = {};
 
     if (useAuth && Identity.isGuest()) {
         History.rememberAndRedirect(window.location.pathname, '/auth/login');
@@ -24,7 +20,16 @@ export const apiFetch = (url, options, useAuth = true) => {
         headers = {...headers, ...{"Authorization": getAuthorizationHeader()}}
     }
 
-    return fetch(apiUrl(url), {
+    return pureFetch(apiUrl(url), options, headers);
+};
+
+export const pureFetch = (url, options, headers) => {
+    headers = {...headers, ...{
+        'Accept': "application/json",
+        "Content-Type": "application/json",
+    }};
+
+    return fetch(url, {
         headers: headers,
         ...options
     })
