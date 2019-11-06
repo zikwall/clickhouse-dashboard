@@ -26,7 +26,6 @@ export default class AuthService {
                 Identity.login(response);
 
                 if (History.hasReturned()) {
-                    alert(11);
                     History.redirectToRemember();
                 }
             }
