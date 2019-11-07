@@ -1,7 +1,14 @@
 
 export const isEmpty = (object) => Object.entries(object) == 0 && object.constructor === Object;
 
-export const sortable = (obj, reverse) => {
+export const sortable = (obj, options = {}) => {
+    options = {
+        ...{
+            reverse: false,
+            isNumericSort: true
+        }, ...options
+    };
+
     let sortable = [];
 
     for(let key in obj) {
@@ -10,11 +17,19 @@ export const sortable = (obj, reverse) => {
         }
     }
 
-    let reversed = (reverse) ? -1 : 1;
+    let reversed = (options.reverse) ? -1 : 1;
 
-    sortable.sort((a, b) => {
-        return reversed * (a[1] - b[1]);
-    });
+    if (options.isNumericSort) {
+        sortable.sort((a, b) => {
+            return reversed * (a[1] - b[1]);
+        });
+    } else {
+        sortable.sort((a, b) => {
+            var x = a[1].toLowerCase(),
+                y = b[1].toLowerCase();
+            return x < y ? reversed * -1 : x > y ? reversed : 0;
+        });
+    }
 
     let newObj = {};
 
