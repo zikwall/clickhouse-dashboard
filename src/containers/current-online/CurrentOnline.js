@@ -18,7 +18,7 @@ const CurrentOnline = () => {
 
     useInterval(() => {
        fetchOnline();
-    }, 50000);
+    }, 300000);
 
     const resolveOnline = (onlines = []) => {
         let ch = {};
