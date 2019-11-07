@@ -97,7 +97,8 @@ export default class ChannelsLink extends React.Component {
 
     }
 
-    checkedDoHandler(channelId, name) {
+    checkedDoHandler(name, e) {
+        let channelId = e.target.value;
         let channels = this.state[name];
         let isChecked = channels[channelId].checked ? false : true;
         channels[channelId].checked = isChecked;
