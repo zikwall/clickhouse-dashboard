@@ -61,8 +61,8 @@ class DasboardPage extends React.Component {
                         <div className="col-12 col-sm-4 d-flex align-items-center">
                             <div className="btn-group btn-group-sm btn-group-toggle d-inline-flex mb-4 mb-sm-0 mx-auto"
                                  role="group" aria-label="Page actions">
-                                <a href="?index" className="btn btn-white active"> Трафик </a>
-                                <a href="?online" className="btn btn-white"> Онлайн </a>
+                                <a href="?index" className="btn btn-white active"> Онлайн </a>
+                                <a href="?online" className="btn btn-white"> Трафик </a>
                             </div>
                         </div>
 
