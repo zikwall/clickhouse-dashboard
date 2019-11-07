@@ -4,6 +4,7 @@ import { Scrollbars } from "react-custom-scrollbars";
 import { useInterval } from "../../hooks";
 import { ContentLoaderWrapper } from "../content-loader";
 import CountUp from 'react-countup';
+import { BaseObject } from "../../utils";
 
 const CurrentOnline = () => {
 
@@ -33,7 +34,7 @@ const CurrentOnline = () => {
 
                 total += +counter;
 
-                if (ch.hasOwnProperty(channel)) {
+                if (ch.hasOwnProperty(channelName)) {
                     ch[channelName] += +counter;
 
                     continue;
@@ -43,7 +44,10 @@ const CurrentOnline = () => {
             }
         }
 
-        return [total, ch];
+        return [total, BaseObject.sortable(ch, {
+                reverse: true
+            })
+        ];
     };
 
     const fetchOnline = async () => {
@@ -62,8 +66,8 @@ const CurrentOnline = () => {
             setOnlines(onlines);
             setOnline(total);
 
-        }).catch(() => {
-            console.log('Opps..')
+        }).catch((err) => {
+            console.log(err)
         });
     };
 
