@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import { pureFetch } from "../../services/api/Api";
 import { Scrollbars } from "react-custom-scrollbars";
 import { useInterval } from "../../hooks";
-import { ContentLoaderWrapper } from "../content-loader";
+import { ContentLoaderWrapper } from "../../components/content-loader";
 import CountUp from 'react-countup';
 import { BaseObject } from "../../utils";
 

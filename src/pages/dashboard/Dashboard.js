@@ -5,7 +5,7 @@ import {Bar, Line, Doughnut} from "./components";
 import { Identity } from "../../services/auth";
 import { withTitle } from "../../components/document-title";
 import { Col, Row } from "../../components/ui/container";
-import {CurrentOnline} from "../../components/current-online";
+import {CurrentOnline} from "../../containers/current-online";
 
 /**
  * Example simple RBAC, пока что сравнивается username пользователя,
