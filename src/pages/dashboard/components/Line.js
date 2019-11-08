@@ -1,35 +1,107 @@
 import React from 'react';
-import {Line} from "react-chartjs-2";
+import { Line } from "react-chartjs-2";
 import ContentLoader from "../../../components/content-loader/ContentLoader";
+import {apiFetch, pureFetch} from "../../../services/api/Api";
+import { Color, Data } from '../../../utils';
 
 export default class extends React.Component {
-    sessionData = {
-        labels:[
-            "09:00 PM", "10:00 PM", "11:00 PM", "12:00 PM", "13:00 PM", "14:00 PM", "15:00 PM", "16:00 PM", "17:00 PM"
-        ],
-        datasets:[{
-            label: "Today", fill: "start", data: [5, 5, 10, 30, 10, 42, 5, 15, 5],
-            backgroundColor: 'rgba(0, 184, 216, 0.1)', borderColor: 'rgb(0, 184, 216)',
-            pointBackgroundColor: '#ffffff', pointHoverBackgroundColor: 'rgba(0, 184, 216, 0.1)',
-            borderWidth: 1.5
-        }, {
-            label: "Yesterday", fill: "start", data: ["", 23, 5, 10, 5, 5, 30, 2, 10],
-            backgroundColor: 'rgba(23,198,113,0.1)', borderColor: 'rgba(23,198,113,0.1)',
-            pointBackgroundColor: '#ffffff', pointHoverBackgroundColor: 'rgba(23,198,113,0.1)',
-            borderDash: [5, 5], borderWidth: 1.5, pointRadius: 0, pointBorderColor: 'rgba(23,198,113,0.1)'
-        }]
-    };
 
     state = {
-        loaded: false
+        loaded: false,
+        channels: {},
+        dataset: {}
     };
 
-    componentDidMount() {
-        setTimeout(() => {
-            this.setState({
-                loaded: true
+    dataset = async (channels) => {
+        let groupByUrl = [];
+
+        for (let key in channels) {
+            let channel = channels[key];
+
+            if (typeof groupByUrl[channel.url_protocol] === 'undefined') {
+                groupByUrl[channel.url_protocol] = [];
+            }
+
+            groupByUrl[channel.url_protocol].push(channel);
+        }
+
+        let dataset = [];
+
+        for (let key in groupByUrl) {
+            let groupChannels = groupByUrl[key];
+            let RGBA = Color.randomRGBA();
+
+            let channelName = key;
+
+            if (this.state.channels.hasOwnProperty(key)) {
+                channelName = this.state.channels[key].name;
+            }
+
+            let createData = {
+                // chart props
+                label: channelName, fill: "start",
+                backgroundColor: `rgba(${RGBA[0]}, ${RGBA[1]}, ${RGBA[2]}, 0.1)`,
+                borderColor: `rgba(${RGBA[0]}, ${RGBA[1]}, ${RGBA[2]}, 0.7)`,
+                pointBackgroundColor: '#ffffff',
+                pointHoverBackgroundColor: `rgba(${RGBA[0]}, ${RGBA[1]}, ${RGBA[2]}, 0.1)`,
+                borderWidth: 1.5,
+
+                // other
+                loadHourTotal: 0
+            };
+
+            let realViewHours = groupChannels.length;
+
+            // generate 24 hour
+            createData['data'] = [...new Array(24)].map(() => {
+                return 0;
             });
-        }, 2000)
+
+            for (let k in groupChannels) {
+                let channel = groupChannels[k];
+                let hourNumber = (new Date(channel.hour_begin * 1000)).getHours();
+
+                // среднечасовая нагрузка на канал
+                let sumAvgFiveMinuts = +channel.sumHour / channel.countRealFive;
+                createData.data[hourNumber] = +sumAvgFiveMinuts;
+                createData.loadHourTotal += sumAvgFiveMinuts;
+            }
+
+            // среднедневная нагрузка на канал
+            createData.loadHourTotal = createData.loadHourTotal / realViewHours;
+            dataset.push(createData);
+        }
+
+        dataset.sort((a, b) => {
+            return -1 * (a.loadHourTotal - b.loadHourTotal);
+        });
+
+        this.setState({
+            dataset: {
+                labels: Data.HourLabels,
+                datasets: dataset.splice(0, 10) // only TOP 10
+            }
+        });
+    };
+
+    setLoaded() {
+        this.setState({
+            loaded: !this.state.loaded
+        });
+    }
+
+    async componentDidMount() {
+        Promise.all([
+            pureFetch('https://pl.iptv2021.com/api/v1/channels?access_token=r0ynhfybabufythekbn&key=url_protocol'),
+            apiFetch('/api/v1/channels/load')
+        ]).then(async (response) => {
+            await this.setState({
+                channels: response[0]
+            });
+
+            await this.dataset(response[1]);
+            this.setLoaded();
+        });
     }
 
     render() {
@@ -40,28 +112,6 @@ export default class extends React.Component {
         return (
             <>
                 <div className="row border-bottom py-2 bg-light">
-                    <div className="col-12 col-sm-6 d-flex mb-2 mb-sm-0">
-                        <div
-                            className="btn-group btn-group-sm btn-group-toggle d-flex my-auto mx-auto mx-sm-0"
-                            data-toggle="buttons">
-                            <label className="btn btn-white active">
-                                <input type="radio" name="options" id="option1" autoComplete="off"/> Hour
-                            </label>
-                            <label className="btn btn-white">
-                                <input type="radio" name="options" id="option2" autoComplete="off"/> Day
-                            </label>
-                            <label className="btn btn-white">
-                                <input type="radio" name="options" id="option3" autoComplete="off"/> Week
-                            </label>
-                            <label className="btn btn-white">
-                                <input type="radio" name="options" id="option4"
-                                       autoComplete="off"
-                                />
-
-                                Month
-                            </label>
-                        </div>
-                    </div>
                     <div className="col-12 col-sm-6">
                         <div id="sessions-overview-date-range"
                              className="input-daterange input-group input-group-sm my-auto ml-auto mr-auto ml-sm-auto mr-sm-0">
@@ -82,7 +132,7 @@ export default class extends React.Component {
                     </div>
                 </div>
 
-                <Line data={this.sessionData} />
+                <Line data={this.state.dataset} />
             </>
         );
     }
