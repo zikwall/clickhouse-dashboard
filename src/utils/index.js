@@ -4,6 +4,7 @@ import * as Math from "./Math";
 import * as Node from "./Node";
 import * as BaseObject from './Object';
 import * as ClickHouse from './ClickHouse';
+import * as Data from './Data';
 
 export {
     Color,
@@ -11,5 +12,6 @@ export {
     Math,
     Node,
     BaseObject,
-    ClickHouse
+    ClickHouse,
+    Data
 }
