@@ -107,7 +107,7 @@ class DasboardPage extends React.Component {
                         <div className="col col-lg-12 col-md-12 mb-4">
                             <div className="card card-small h-100">
                                 <div className="card-header border-bottom">
-                                    <h6 className="m-0">Sales report</h6>
+                                    <h6 className="m-0">Online/Archive by months</h6>
                                 </div>
                                 <div className="card-body pt-0">
                                     <Bar />

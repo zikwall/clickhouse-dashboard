@@ -91,10 +91,10 @@ const CurrentOnline = () => {
                 <div className="card-header border-bottom">
                     <h6 className="m-0">Current <strong>Online</strong></h6>
                 </div>
-                <div className="card-body p-0">
+                <div className="card-body p-0" style={{height: '310px' }}>
                     <ContentLoaderWrapper loaded={online != null} >
                         <ul className="list-group list-group-small list-group-flush">
-                            <Scrollbars style={{height: '300px' }}>
+                            <Scrollbars style={{height: '310px' }}>
                                 <Channels onlines={ onlines } />
                             </Scrollbars>
                         </ul>
