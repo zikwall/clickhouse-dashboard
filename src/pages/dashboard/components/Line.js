@@ -1,15 +1,44 @@
 import React from 'react';
-import { Line } from "react-chartjs-2";
 import ContentLoader from "../../../components/content-loader/ContentLoader";
-import {apiFetch, pureFetch} from "../../../services/api/Api";
-import { Color, Data } from '../../../utils';
+import DatePicker from "react-datepicker";
+import { Line } from "react-chartjs-2";
+import { apiFetch, pureFetch } from "../../../services/api/Api";
+import { Color, Data, DateTime } from '../../../utils';
 
 export default class extends React.Component {
 
     state = {
         loaded: false,
         channels: {},
-        dataset: {}
+        dataset: {},
+
+        isChangeDatepcker: false,
+        datepickerValue: null
+    };
+
+    handleFormSubmit = async (e) => {
+        e.preventDefault();
+
+        if (this.state.datepickerValue === null) {
+            return;
+        }
+
+        let range = DateTime.RangeOfDate(this.state.datepickerValue);
+        let time = DateTime.toTimestamp(range.begin);
+
+        let options = {
+            method: 'POST',
+            body: JSON.stringify({time})
+        };
+
+        await this.setLoaded();
+        this.init(options, false);
+    };
+
+    handleDatepickerChange = (date) => {
+        this.setState({
+            datepickerValue: date
+        })
     };
 
     dataset = async (channels) => {
@@ -91,18 +120,31 @@ export default class extends React.Component {
     }
 
     async componentDidMount() {
-        Promise.all([
-            pureFetch('https://pl.iptv2021.com/api/v1/channels?access_token=r0ynhfybabufythekbn&key=url_protocol'),
-            apiFetch('/api/v1/channels/load')
-        ]).then(async (response) => {
-            await this.setState({
-                channels: response[0]
-            });
-
-            await this.dataset(response[1]);
-            this.setLoaded();
-        });
+       this.init();
     }
+
+    init = (options = {}, withChannels = true) => {
+        let promisses = [
+            apiFetch('/api/v1/channels/load', options)
+        ];
+
+        if (withChannels) {
+            promisses.push(pureFetch('https://pl.iptv2021.com/api/v1/channels?access_token=r0ynhfybabufythekbn&key=url_protocol'))
+        }
+
+        Promise.all(promisses).then(async (response) => {
+            if (withChannels) {
+                await this.setState({
+                    channels: response[1]
+                });
+            }
+
+            await this.dataset(response[0]);
+            await this.setLoaded();
+        }).catch((err) => {
+            console.log(err);
+        });
+    };
 
     render() {
         if (this.state.loaded === false) {
@@ -115,19 +157,26 @@ export default class extends React.Component {
                     <div className="col-12 col-sm-6">
                         <div id="sessions-overview-date-range"
                              className="input-daterange input-group input-group-sm my-auto ml-auto mr-auto ml-sm-auto mr-sm-0">
-                            <input type="text" className="input-sm form-control" name="start"
-                                   placeholder="Start Date"
-                                   id="analytics-overview-sessions-date-range-1"
-                            />
-                            <input type="text" className="input-sm form-control" name="end"
-                                   placeholder="End Date"
-                                   id="analytics-overview-sessions-date-range-2"
-                            />
-                            <span className="input-group-append">
-                                 <span className="input-group-text">
-                                      <i className="material-icons"></i>
-                                 </span>
-                            </span>
+                            <form onSubmit={ this.handleFormSubmit }>
+                                <div className="row">
+                                    <div className="col-md-8">
+                                        <DatePicker
+                                            className=""
+                                            placeholderText='Выбрать период'
+                                            dateFormat = 'dd-MM-yyyy'
+                                            selected={ this.state.datepickerValue !== null
+                                                ? new Date(this.state.datepickerValue)
+                                                : DateTime.CurrentDayTimestamp(true) }
+                                            onChange={ (date) => this.handleDatepickerChange(Date.parse(date))}
+                                            minDate={ DateTime.BeginOfLoadChannelTimestamp(true) }
+                                            maxDate={ DateTime.TomorrowTimestamp(true) }
+                                        />
+                                    </div>
+                                    <div className="col-md-4 float-right">
+                                        <button type="submit" className="mb-2 btn btn-sm btn-success mr-1">Применить</button>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
