@@ -10,6 +10,8 @@ const App = () =>  {
         <div className="application">
             <BrowserRouter>
                 <Switch>
+                    <Route exact path="/" render={props => <ProtectedLayout {...props} />} />
+
                     <Route path="/auth" render={props => <AuthLayout {...props} />} />
                     <Route path="/" render={props => <ProtectedLayout {...props} />} />
 
