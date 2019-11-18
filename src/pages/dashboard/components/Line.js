@@ -4,6 +4,7 @@ import DatePicker from "react-datepicker";
 import { Line } from "react-chartjs-2";
 import { apiFetch, pureFetch } from "../../../services/api/Api";
 import { Color, Data, DateTime } from '../../../utils';
+import cn from 'classnames';
 
 export default class extends React.Component {
 
@@ -13,14 +14,21 @@ export default class extends React.Component {
         dataset: {},
 
         isChangeDatepcker: false,
-        datepickerValue: null
+        datepickerValue: null,
+        isInvalid: false
     };
 
     handleFormSubmit = async (e) => {
         e.preventDefault();
 
         if (this.state.datepickerValue === null) {
+            this.setInvalid();
+
             return;
+        }
+
+        if (this.state.isInvalid === true) {
+            this.setValid()
         }
 
         let range = DateTime.RangeOfDate(this.state.datepickerValue);
@@ -119,6 +127,18 @@ export default class extends React.Component {
         });
     }
 
+    setInvalid() {
+        this.setState({
+            isInvalid: true
+        })
+    }
+
+    setValid() {
+        this.setState({
+            isInvalid: false
+        })
+    }
+
     componentDidMount() {
        this.init();
     }
@@ -157,7 +177,7 @@ export default class extends React.Component {
 
                         <div className="col-12 col-sm-6 d-flex mb-2 mb-sm-0">
                             <DatePicker
-                                className=""
+                                className={cn({"form-control": true, "is-invalid": this.state.isInvalid})}
                                 placeholderText='Выбрать период'
                                 dateFormat = 'dd-MM-yyyy'
                                 selected={ this.state.datepickerValue !== null
@@ -169,8 +189,8 @@ export default class extends React.Component {
                             />
                         </div>
                         <div className="col-md-6 col-sm-6 float-right">
-                            <div className="btn-group btn-group-sm btn-group-toggle d-flex my-auto mx-auto mx-sm-0">
-                                <button type="submit" className="mb-2 btn btn-sm btn-success">Применить</button>
+                            <div className="btn-group btn-group-sm btn-group-toggle d-flex my-auto mx-auto mx-sm-0" style={{paddingTop: '2px'}}>
+                                <button type="submit" className="mb-2 btn btn-sm btn-outline-success">Применить</button>
                             </div>
                         </div>
 
