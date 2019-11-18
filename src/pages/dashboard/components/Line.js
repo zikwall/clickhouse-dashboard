@@ -4,6 +4,7 @@ import DatePicker from "react-datepicker";
 import { Line } from "react-chartjs-2";
 import { apiFetch, pureFetch } from "../../../services/api/Api";
 import { Color, Data, DateTime } from '../../../utils';
+import { Cache } from "../../../services/cache";
 import cn from 'classnames';
 
 export default class extends React.Component {
@@ -17,6 +18,14 @@ export default class extends React.Component {
         datepickerValue: null,
         isInvalid: false
     };
+
+    cache;
+
+    constructor(props) {
+        super(props);
+
+        this.cache = new Cache('load_channels', true)
+    }
 
     handleFormSubmit = async (e) => {
         e.preventDefault();
@@ -141,11 +150,20 @@ export default class extends React.Component {
         })
     }
 
-    componentDidMount() {
+    async componentDidMount() {
        this.init();
     }
 
-    init = (options = {}, withChannels = true) => {
+    init = async (options = {}, withChannels = true) => {
+        if (this.state.datepickerValue === null) {
+            if (this.cache.exist(this.state.datepickerValue)) {
+                await this.dataset(this.cache.get(this.state.datepickerValue));
+                this.setLoaded();
+
+                return;
+            }
+        }
+
         let promisses = [
             apiFetch('/api/v1/channels/load', options)
         ];
@@ -162,6 +180,8 @@ export default class extends React.Component {
             }
 
             await this.dataset(response[0]);
+
+            this.cache.set(this.state.datepickerValue, this.state.dataset);
             this.setLoaded();
         });
     };
