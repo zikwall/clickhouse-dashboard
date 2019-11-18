@@ -119,7 +119,7 @@ export default class extends React.Component {
         });
     }
 
-    async componentDidMount() {
+    componentDidMount() {
        this.init();
     }
 
@@ -140,9 +140,7 @@ export default class extends React.Component {
             }
 
             await this.dataset(response[0]);
-            await this.setLoaded();
-        }).catch((err) => {
-            console.log(err);
+            this.setLoaded();
         });
     };
 
@@ -153,33 +151,31 @@ export default class extends React.Component {
 
         return (
             <>
-                <div className="row border-bottom py-2 bg-light">
-                    <div className="col-12 col-sm-6">
-                        <div id="sessions-overview-date-range"
-                             className="input-daterange input-group input-group-sm my-auto ml-auto mr-auto ml-sm-auto mr-sm-0">
-                            <form onSubmit={ this.handleFormSubmit }>
-                                <div className="row">
-                                    <div className="col-md-8">
-                                        <DatePicker
-                                            className=""
-                                            placeholderText='Выбрать период'
-                                            dateFormat = 'dd-MM-yyyy'
-                                            selected={ this.state.datepickerValue !== null
-                                                ? new Date(this.state.datepickerValue)
-                                                : DateTime.CurrentDayTimestamp(true) }
-                                            onChange={ (date) => this.handleDatepickerChange(Date.parse(date))}
-                                            minDate={ DateTime.BeginOfLoadChannelTimestamp(true) }
-                                            maxDate={ DateTime.TomorrowTimestamp(true) }
-                                        />
-                                    </div>
-                                    <div className="col-md-4 float-right">
-                                        <button type="submit" className="mb-2 btn btn-sm btn-success mr-1">Применить</button>
-                                    </div>
-                                </div>
-                            </form>
+                <form onSubmit={ this.handleFormSubmit }>
+                    <div className="row border-bottom py-2 bg-light">
+
+
+                        <div className="col-12 col-sm-6 d-flex mb-2 mb-sm-0">
+                            <DatePicker
+                                className=""
+                                placeholderText='Выбрать период'
+                                dateFormat = 'dd-MM-yyyy'
+                                selected={ this.state.datepickerValue !== null
+                                    ? new Date(this.state.datepickerValue)
+                                    : DateTime.CurrentDayTimestamp(true) }
+                                onChange={ (date) => this.handleDatepickerChange(Date.parse(date))}
+                                minDate={ DateTime.BeginOfLoadChannelTimestamp(true) }
+                                maxDate={ DateTime.TomorrowTimestamp(true) }
+                            />
                         </div>
+                        <div className="col-md-6 col-sm-6 float-right">
+                            <div className="btn-group btn-group-sm btn-group-toggle d-flex my-auto mx-auto mx-sm-0">
+                                <button type="submit" className="mb-2 btn btn-sm btn-success">Применить</button>
+                            </div>
+                        </div>
+
                     </div>
-                </div>
+                </form>
 
                 <Line data={this.state.dataset} />
             </>
