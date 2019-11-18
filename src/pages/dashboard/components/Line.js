@@ -21,6 +21,14 @@ export default class extends React.Component {
     handleFormSubmit = async (e) => {
         e.preventDefault();
 
+        // deprecated
+    };
+
+    handleDatepickerChange = async (date) => {
+        await this.setState({
+            datepickerValue: date
+        });
+
         if (this.state.datepickerValue === null) {
             this.setInvalid();
 
@@ -41,12 +49,6 @@ export default class extends React.Component {
 
         await this.setLoaded();
         this.init(options, false);
-    };
-
-    handleDatepickerChange = (date) => {
-        this.setState({
-            datepickerValue: date
-        })
     };
 
     dataset = async (channels) => {
@@ -171,31 +173,21 @@ export default class extends React.Component {
 
         return (
             <>
-                <form onSubmit={ this.handleFormSubmit }>
-                    <div className="row border-bottom py-2 bg-light">
-
-
-                        <div className="col-12 col-sm-6 d-flex mb-2 mb-sm-0">
-                            <DatePicker
-                                className={cn({"form-control": true, "is-invalid": this.state.isInvalid})}
-                                placeholderText='Выбрать период'
-                                dateFormat = 'dd-MM-yyyy'
-                                selected={ this.state.datepickerValue !== null
-                                    ? new Date(this.state.datepickerValue)
-                                    : DateTime.CurrentDayTimestamp(true) }
-                                onChange={ (date) => this.handleDatepickerChange(Date.parse(date))}
-                                minDate={ DateTime.BeginOfLoadChannelTimestamp(true) }
-                                maxDate={ DateTime.TomorrowTimestamp(true) }
-                            />
-                        </div>
-                        <div className="col-md-6 col-sm-6 float-right">
-                            <div className="btn-group btn-group-sm btn-group-toggle d-flex my-auto mx-auto mx-sm-0" style={{paddingTop: '2px'}}>
-                                <button type="submit" className="mb-2 btn btn-sm btn-outline-success">Применить</button>
-                            </div>
-                        </div>
-
+                <div className="row border-bottom py-2 bg-light">
+                    <div className="col-12 col-sm-6 d-flex mb-2 mb-sm-0">
+                        <DatePicker
+                            className={cn({"form-control": true, "is-invalid": this.state.isInvalid})}
+                            placeholderText='Выбрать период'
+                            dateFormat = 'dd-MM-yyyy'
+                            selected={ this.state.datepickerValue !== null
+                                ? new Date(this.state.datepickerValue)
+                                : DateTime.CurrentDayTimestamp(true) }
+                            onChange={ (date) => this.handleDatepickerChange(Date.parse(date))}
+                            minDate={ DateTime.BeginOfLoadChannelTimestamp(true) }
+                            maxDate={ DateTime.TomorrowTimestamp(true) }
+                        />
                     </div>
-                </form>
+                </div>
 
                 <Line data={this.state.dataset} />
             </>
