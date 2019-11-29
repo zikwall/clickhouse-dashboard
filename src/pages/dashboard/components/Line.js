@@ -4,7 +4,6 @@ import DatePicker from "react-datepicker";
 import { Line } from "react-chartjs-2";
 import { apiFetch, pureFetch } from "../../../services/api/Api";
 import { Color, Data, DateTime } from '../../../utils';
-import { Cache } from "../../../services/cache";
 import cn from 'classnames';
 
 export default class extends React.Component {
@@ -19,14 +18,6 @@ export default class extends React.Component {
         isInvalid: false
     };
 
-    cache;
-
-    constructor(props) {
-        super(props);
-
-        this.cache = new Cache('load_channels', true)
-    }
-
     handleFormSubmit = async (e) => {
         e.preventDefault();
 
@@ -39,13 +30,13 @@ export default class extends React.Component {
         });
 
         if (this.state.datepickerValue === null) {
-            this.setInvalid();
+            this.setValid(false);
 
             return;
         }
 
         if (this.state.isInvalid === true) {
-            this.setValid()
+            this.setValid(true)
         }
 
         let range = DateTime.RangeOfDate(this.state.datepickerValue);
@@ -56,7 +47,6 @@ export default class extends React.Component {
             body: JSON.stringify({time})
         };
 
-        await this.setLoaded();
         this.init(options, false);
     };
 
@@ -132,37 +122,24 @@ export default class extends React.Component {
         });
     };
 
-    setLoaded() {
+    setLoaded(status) {
         this.setState({
-            loaded: !this.state.loaded
+            loaded: status
         });
     }
 
-    setInvalid() {
+    setValid(status) {
         this.setState({
-            isInvalid: true
-        })
-    }
-
-    setValid() {
-        this.setState({
-            isInvalid: false
+            isInvalid: status
         })
     }
 
     async componentDidMount() {
-       this.init();
+       await this.init();
     }
 
     init = async (options = {}, withChannels = true) => {
-        if (this.state.datepickerValue === null) {
-            if (this.cache.exist(this.state.datepickerValue)) {
-                await this.dataset(this.cache.get(this.state.datepickerValue));
-                this.setLoaded();
-
-                return;
-            }
-        }
+        await this.setLoaded(false);
 
         let promisses = [
             apiFetch('/api/v1/channels/load', options)
@@ -181,7 +158,6 @@ export default class extends React.Component {
 
             await this.dataset(response[0]);
 
-            this.cache.set(this.state.datepickerValue, this.state.dataset);
             this.setLoaded();
         });
     };
