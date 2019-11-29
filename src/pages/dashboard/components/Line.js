@@ -18,12 +18,6 @@ export default class extends React.Component {
         isInvalid: false
     };
 
-    handleFormSubmit = async (e) => {
-        e.preventDefault();
-
-        // deprecated
-    };
-
     handleDatepickerChange = async (date) => {
         await this.setState({
             datepickerValue: date
