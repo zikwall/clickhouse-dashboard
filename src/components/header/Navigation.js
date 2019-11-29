@@ -111,6 +111,11 @@ class Navigation extends React.Component {
                     title: 'Уникальные пользователи',
                     url: '/user-channels',
                     sort: 1
+                },
+                {
+                    title: 'Просмотров онлайн/архив',
+                    url: '/user-views',
+                    sort: 2
                 }
             ]
         }

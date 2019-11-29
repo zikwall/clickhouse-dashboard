@@ -10,6 +10,7 @@ import Channels from "../channels";
 import StartApp from "../start-app";
 import RegistrationRequests from "../registration-requests";
 import UserChannels from "../user-channels";
+import UserViews from "../user-views";
 
 
 const ProfileSubLayout = ({ match }) => {
@@ -34,6 +35,8 @@ const ProfileSubLayout = ({ match }) => {
             <Route path={`${match.url}/registration-requests`} component={ RegistrationRequests }/>
 
             <Route path={`${match.url}/user-channels`} component={ UserChannels } />
+
+            <Route path={`${match.url}/user-views`} component={ UserViews }/>
 
             <Route render={ ( props ) => <ErrorLayout errorCode={404} {...props}/> }  />
         </Switch>
