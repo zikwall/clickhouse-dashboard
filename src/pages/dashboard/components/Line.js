@@ -44,7 +44,7 @@ export default class extends React.Component {
         this.init(options, false);
     };
 
-    dataset = async (channels) => {
+    createDataset = async (channels) => {
         let groupByUrl = [];
 
         for (let key in channels) {
@@ -150,7 +150,7 @@ export default class extends React.Component {
                 });
             }
 
-            await this.dataset(response[0]);
+            await this.createDataset(response[0]);
 
             this.setLoaded();
         });
