@@ -99,6 +99,20 @@ class Navigation extends React.Component {
             icon: 'extension',
             sort: 6,
             isVisible: Identity.can('canViewDashboard')
+        },
+        {
+            title: 'Private',
+            url: '/dashboard',
+            icon: 'extension',
+            sort: 7,
+            isVisible: Identity.can('canViewDashboard'),
+            childs: [
+                {
+                    title: 'Уникальные пользователи',
+                    url: '/user-channels',
+                    sort: 1
+                }
+            ]
         }
     ];
 
