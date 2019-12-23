@@ -113,19 +113,12 @@ export default class UserViews extends React.Component {
                 isDataLoading: true
             });
 
-            /*let statistic = await apiFetch('/api/v1/general/get-channels-uniq-users-by-account',{
+            let statistic = await apiFetch('/api/v1/general/get-channels-view-duration-with-channels-id',{
                 method: 'POST',
                 body: JSON.stringify({dayBegin,dayEnd, userChannels}),
-            });*/
-            let statistic = [
-                {
-                    name: "test",
-                    online: "123",
-                    archive: "12",
-                }
-            ];
+            });
 
-            statistic = null;
+            statistic = Object.values(statistic[0]);
 
             await this.setState({
                 statistic,

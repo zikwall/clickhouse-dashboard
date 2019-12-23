@@ -27,7 +27,7 @@ const UserViewsTable = ({data, isDataLoading}) => {
         });
 
         return (
-            <table className="table mb-0">
+            <table className="table table-sm table-striped mb-0">
                 <thead className="bg-light">
                     <tr>
                         <th scope="col" className="border-0">Телеканал</th>

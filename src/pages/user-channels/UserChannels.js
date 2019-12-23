@@ -118,6 +118,8 @@ export default class UserChannels extends React.Component {
                 body: JSON.stringify({dayBegin,dayEnd, userChannels}),
             });
 
+            uniqueUsersData = Object.values(uniqueUsersData[0]);
+
             await this.setState({
                 uniqueUsersData,
                 isDataLoading: false
