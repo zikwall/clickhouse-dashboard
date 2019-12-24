@@ -42,6 +42,12 @@ export default class RegistrationRequests extends Component {
     }
 
     confirmUser(userId, index) {
+        let confirmed = this.state.userList.find(confirm => confirm.id === userId).confirmed_at;
+        
+        if (confirmed !== null) {
+            return;
+        }
+
         return apiFetch('/api/v1/auth/register/confirm?id=' + userId, {
             method: "GET",
             mode: 'cors',
@@ -90,10 +96,10 @@ export default class RegistrationRequests extends Component {
 
     isConfirmedUserStyle(unixtime) {
         if (!unixtime) {
-            return "table-warning";
+            return "false";
         }
 
-        return "table-success";
+        return "true";
     }
 
     render() {
@@ -101,21 +107,23 @@ export default class RegistrationRequests extends Component {
             <>
                 <div className="row">
                     <div className="col-md-12">
-                        <table className="table mb-0">
+                        <table className="table table-stripped table-sm mb-0">
                             <thead className="bg-light">
                                 <tr>
                                     <th scope="col" className="border-0">Login</th>
                                     <th scope="col" className="border-0">Email</th>
                                     <th scope="col" className="border-0">Created Date</th>
+                                    <th scope="col" className="border-0">Status</th>
                                     <th scope="col" className="border-0">Control</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {this.state.userList.map((user, index) => {
-                                return <tr key={index} className={this.isConfirmedUserStyle(user.confirmed_at)}>
+                                return <tr key={index}>
                                         <td>{user.username}</td>
                                         <td>{user.email}</td>
                                         <td>{this.unixTimeToDate(user.created_at)}</td>
+                                        <td>{this.isConfirmedUserStyle(user.confirmed_at)}</td>
                                         <td>
                                             <div className="btn-group btn-group-sm btn-group-toggle d-inline-flex mb-4 mb-sm-0 mx-auto">
                                             <button className="btn btn-success" onClick={ () => this.confirmUser(user.id, index) }><i className="material-icons">check</i></button>

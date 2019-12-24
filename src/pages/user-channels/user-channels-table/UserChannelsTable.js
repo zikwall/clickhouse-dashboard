@@ -1,7 +1,5 @@
 import React from "react";
 import LoadORNotData from "../load-or-not-data/LoadOrNotData";
-//import NotLoadedContent from "../../../components/content-loader/NotLoadedContent";
-//import DimmyLoader from "../../../components/content-loader/DimmyLoader";
 
 const UserChannelsTable = ({data, isDataLoading}) => {
     if (data !== null) {
@@ -32,16 +30,6 @@ const UserChannelsTable = ({data, isDataLoading}) => {
             </table>
         );
     }
-
-    /*if (!isDataLoading) {
-        return(
-            <NotLoadedContent/>
-        )
-    }
-
-    return (
-        <DimmyLoader/>
-    )*/
 
     return(
         <LoadORNotData isDataLoading={isDataLoading}/>

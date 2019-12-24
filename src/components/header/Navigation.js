@@ -105,7 +105,6 @@ class Navigation extends React.Component {
             url: '/dashboard',
             icon: 'extension',
             sort: 7,
-            isVisible: Identity.can('canViewChannels'),
             childs: [
                 {
                     title: 'Уникальные пользователи',

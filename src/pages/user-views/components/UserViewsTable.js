@@ -1,5 +1,4 @@
 import React from "react";
-//import LoadORNotData from "../load-or-not-data/LoadOrNotData";
 import { DimmyLoader, EmptyContent } from "../../../components/content-loader";
 
 const UserViewsTable = ({data, isDataLoading}) => {
