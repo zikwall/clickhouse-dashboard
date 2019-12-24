@@ -1,7 +1,13 @@
 import React from "react";
-import LoadORNotData from "../load-or-not-data/LoadOrNotData";
+import { DimmyLoader, EmptyContent } from "../../../components/content-loader";
 
-const UserChannelsTable = ({data, isDataLoading}) => {
+const UserViewsTable = ({data, isDataLoading}) => {
+    
+    let content = <EmptyContent />;
+    if (isDataLoading) {
+        content = <DimmyLoader />;
+    }
+
     if (data !== null) {
         const items = data.map((item, index) => {
             return(
@@ -10,18 +16,22 @@ const UserChannelsTable = ({data, isDataLoading}) => {
                         {item.name}
                     </td>
                     <td>
-                        {item.cnt}
+                        {item.online}
+                    </td>
+                    <td> 
+                        {item.archive}
                     </td>
                 </tr>
             )
         });
 
         return (
-            <table className="table table-sm teble-striped mb-0">
+            <table className="table table-sm table-striped mb-0">
                 <thead className="bg-light">
                     <tr>
                         <th scope="col" className="border-0">Телеканал</th>
-                        <th scope="col" className="border-0">Уникальные пользователи</th>
+                        <th scope="col" className="border-0">Онлайн</th>
+                        <th scope="col" className="border-0">Архив</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -31,9 +41,11 @@ const UserChannelsTable = ({data, isDataLoading}) => {
         );
     }
 
+    
+
     return(
-        <LoadORNotData isDataLoading={isDataLoading}/>
-    )
+    <div>{content}</div>
+    );
 };
 
-export default UserChannelsTable;
+export default UserViewsTable;

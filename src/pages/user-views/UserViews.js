@@ -1,9 +1,9 @@
 import React from "react";
 import CustomDatePicker from "../../components/custom-date-picker";
 import { apiFetch } from "../../services/api/Api";
-import UserChannelsTable from "./user-channels-table/UserChannelsTable";
+import UserViewsTable from "./components/UserViewsTable";
 
-export default class UserChannels extends React.Component {
+export default class UserViews extends React.Component {
 
     state = {
         fields: {
@@ -25,7 +25,7 @@ export default class UserChannels extends React.Component {
             }
         },
         formValid: false,
-        uniqueUsersData:null,
+        statistic:null,
         isDataLoading: false,
     };
 
@@ -109,23 +109,23 @@ export default class UserChannels extends React.Component {
             }
 
             await this.setState({
-                uniqueUsersData: null,
+                statistic: null,
                 isDataLoading: true
             });
 
-            let uniqueUsersData = await apiFetch('/api/v1/general/get-channels-uniq-users-by-account',{
+            let statistic = await apiFetch('/api/v1/general/get-channels-view-duration-with-channels-id',{
                 method: 'POST',
                 body: JSON.stringify({dayBegin,dayEnd, userChannels}),
             });
 
-            uniqueUsersData = Object.values(uniqueUsersData[0]);
+            statistic = Object.values(statistic[0]);
 
             await this.setState({
-                uniqueUsersData,
+                statistic,
                 isDataLoading: false
             });
         }
-    };
+    }
 
     render() {
         return (
@@ -133,7 +133,7 @@ export default class UserChannels extends React.Component {
                 <div className="page-header row no-gutters py-4">
                     <div className="col-12 col-sm-4 text-center text-sm-left mb-4 mb-sm-0">
                         <span className="text-uppercase page-subtitle">Обзор</span>
-                        <h3 className="page-title">Уникальные пользователи</h3>
+                        <h3 className="page-title">Статистика просмотра онлайн/архив</h3>
                     </div>
                 </div>
                 <div className="row">
@@ -148,7 +148,7 @@ export default class UserChannels extends React.Component {
                     </div>
                 </div>
                 <div className="row no-gutters">
-                    <UserChannelsTable data={this.state.uniqueUsersData} isDataLoading={this.state.isDataLoading}/>
+                    <UserViewsTable data={this.state.statistic} isDataLoading={this.state.isDataLoading}/>
                 </div>
             </>
         );
