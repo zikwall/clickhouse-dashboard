@@ -2,8 +2,14 @@ import React from "react";
 import LoadORNotData from "../load-or-not-data/LoadOrNotData";
 
 const UserChannelsTable = ({data, isDataLoading}) => {
-    if (data !== null) {
-        const items = data.map((item, index) => {
+    
+    if (data === null) {
+        return(
+            <LoadORNotData isDataLoading={isDataLoading}/>
+        );
+    }
+
+    const items = data.map((item, index) => {
             return(
                 <tr key={index}>
                     <td>
@@ -28,12 +34,7 @@ const UserChannelsTable = ({data, isDataLoading}) => {
                     {items}
                 </tbody>
             </table>
-        );
-    }
-
-    return(
-        <LoadORNotData isDataLoading={isDataLoading}/>
-    )
+        );     
 };
 
 export default UserChannelsTable;
