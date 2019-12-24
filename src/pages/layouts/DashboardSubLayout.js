@@ -8,6 +8,10 @@ import Ads  from "../ads";
 import Users from "../users";
 import Channels from "../channels";
 import StartApp from "../start-app";
+import RegistrationRequests from "../registration-requests";
+import UserChannels from "../user-channels";
+import UserViews from "../user-views";
+
 
 const DashboardSubLayout = ({ match }) => {
     return (
@@ -50,6 +54,21 @@ const DashboardSubLayout = ({ match }) => {
             <Route
                 path={`${match.url}/start-app`}
                 component={ StartApp }
+            />
+
+            <Route 
+                path={`${match.url}/registration-requests`}
+                component={ RegistrationRequests }
+            />
+
+            <Route 
+                path={`${match.url}/user-channels`}
+                component={ UserChannels }
+            />
+
+            <Route 
+                path={`${match.url}/user-views`}
+                component={ UserViews }
             />
 
             <Route

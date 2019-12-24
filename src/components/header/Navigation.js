@@ -92,6 +92,31 @@ const Navigation = () => {
             icon: 'extension',
             sort: 5,
             isVisible: Identity.can('canViewDashboard')
+        },
+        {
+            title: 'Пользователи',
+            url: '/dashboard/registration-requests',
+            icon: 'extension',
+            sort: 6,
+            isVisible: Identity.can('canViewDashboard')
+        },
+        {
+            title: 'Private',
+            url: '/dashboard',
+            icon: 'extension',
+            sort: 7,
+            childs: [
+                {
+                    title: 'Уникальные пользователи',
+                    url: '/user-channels',
+                    sort: 1
+                },
+                {
+                    title: 'Просмотров онлайн/архив',
+                    url: '/user-views',
+                    sort: 2
+                }
+            ]
         }
     ];
 
