@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { apiFetch } from "../../services/api/Api";
 import { Identity } from "../../services/auth";
+import CreateUserForm from "./create-user-form";
 
 export default class RegistrationRequests extends Component {
     state = {
@@ -15,7 +16,8 @@ export default class RegistrationRequests extends Component {
                 created_at: '',
                 updated_at: ''
             }
-        ]
+        ],
+        createUser: false,
     }
 
     async componentDidMount() {
@@ -94,6 +96,12 @@ export default class RegistrationRequests extends Component {
         });
     }
 
+    showCreateUserForm() {
+        this.setState({
+            createUser: true
+        });
+    }
+
     isConfirmedUserStyle(unixtime) {
         if (!unixtime) {
             return "false";
@@ -103,10 +111,26 @@ export default class RegistrationRequests extends Component {
     }
 
     render() {
+        const available = this.state.createUser;
+        let createUserForm = '';
+
+        if (available) {
+            createUserForm = <CreateUserForm></CreateUserForm>;
+        }
+        
+
         return (
             <>
                 <div className="row">
                     <div className="col-md-12">
+                        <div>
+                            <button className="btn btn-primary btn-sm" onClick={ () => this.showCreateUserForm()}>
+                                Добавить
+                            </button>
+                        </div>
+                        <div>
+                            {createUserForm}
+                        </div>
                         <table className="table table-stripped table-sm mb-0">
                             <thead className="bg-light">
                                 <tr>

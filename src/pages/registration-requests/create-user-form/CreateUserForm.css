@@ -1,0 +1,19 @@
+.create-user {
+    z-index: 100;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    background-color: whitesmoke;
+
+    position: absolute;
+    top: 30%;
+    right: 30%;
+    left: 30%;
+    margin: auto;
+    padding: 5%;
+}
+
+.close-btn {
+    position:absolute;
+    top: 1%;
+    right: 2%;
+}
