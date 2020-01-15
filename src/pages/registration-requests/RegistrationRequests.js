@@ -21,8 +21,11 @@ export default class RegistrationRequests extends Component {
     }
 
     async componentDidMount() {
+        await this.loadUserList();
+    }
+
+    loadUserList = async () =>  {
         const data = await apiFetch('/api/v1/user/list');
-        let userList = [];
 
         this.setState({
             userList: data
@@ -34,7 +37,7 @@ export default class RegistrationRequests extends Component {
         let confirmDate = new Date(unixtime * 1000);
         
         let day = "0" + confirmDate.getDay();
-        let month = "0" + confirmDate.getMonth();
+        let month = "0" + (confirmDate.getMonth() + 1);
         let year = confirmDate.getFullYear();
         let hour = confirmDate.getHours();
         let minute = "0" + confirmDate.getMinutes();
@@ -96,18 +99,24 @@ export default class RegistrationRequests extends Component {
         });
     }
 
-    showCreateUserForm() {
-        this.setState({
-            createUser: true
-        });
-    }
-
     isConfirmedUserStyle(unixtime) {
         if (!unixtime) {
             return "false";
         }
 
         return "true";
+    }
+
+    showCreateUserForm() {
+        this.setState({
+            createUser: true
+        });
+    }
+
+    closeCreateUserForm = () => {
+        this.setState({
+            createUser: false
+        });
     }
 
     render() {
@@ -129,7 +138,11 @@ export default class RegistrationRequests extends Component {
                             </button>
                         </div>
                         <div>
-                            {createUserForm}
+                            <CreateUserForm
+                                available ={this.state.createUser} 
+                                closeCreateUserForm={this.closeCreateUserForm}
+                                loadUserList={this.loadUserList}
+                            />
                         </div>
                         <table className="table table-stripped table-sm mb-0">
                             <thead className="bg-light">
