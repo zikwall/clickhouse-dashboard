@@ -13,6 +13,7 @@ export default class RegistrationRequests extends Component {
                 confirmed_at: '',
                 blocked_at: null,
                 registration_ip: null,
+                description: '',
                 created_at: '',
                 updated_at: ''
             }
@@ -101,10 +102,10 @@ export default class RegistrationRequests extends Component {
 
     isConfirmedUserStyle(unixtime) {
         if (!unixtime) {
-            return "false";
+            return "неактивый";
         }
 
-        return "true";
+        return "активный";
     }
 
     showCreateUserForm() {
@@ -152,11 +153,12 @@ export default class RegistrationRequests extends Component {
                         <table className="table table-stripped table-sm mb-0">
                             <thead className="bg-light">
                                 <tr>
-                                    <th scope="col" className="border-0">Login</th>
+                                    <th scope="col" className="border-0">Логин</th>
                                     <th scope="col" className="border-0">Email</th>
-                                    <th scope="col" className="border-0">Created Date</th>
-                                    <th scope="col" className="border-0">Status</th>
-                                    <th scope="col" className="border-0">Control</th>
+                                    <th scope="col" className="border-0">Дата создания</th>
+                                    <th scope="col" className="border-0">Описание</th>
+                                    <th scope="col" className="border-0">Статус</th>
+                                    <th scope="col" className="border-0">Управление</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -165,6 +167,7 @@ export default class RegistrationRequests extends Component {
                                         <td>{user.username}</td>
                                         <td>{user.email}</td>
                                         <td>{this.unixTimeToDate(user.created_at)}</td>
+                                        <td><textarea rows="1" readonly="readonly">{user.description}</textarea></td>
                                         <td>{this.isConfirmedUserStyle(user.confirmed_at)}</td>
                                         <td>
                                             <div className="btn-group btn-group-sm btn-group-toggle d-inline-flex mb-4 mb-sm-0 mx-auto">

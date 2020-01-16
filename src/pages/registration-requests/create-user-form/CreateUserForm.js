@@ -71,7 +71,6 @@ export default class CreateUserForm extends Component {
                                 id="username" 
                                 placeholder="Введите логин" 
                                 onChange={this.handleChange}
-                                onChange={this.usernameValidate}
                                 name="username"
                                 required
                             />
