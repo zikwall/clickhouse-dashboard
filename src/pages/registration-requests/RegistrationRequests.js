@@ -130,6 +130,11 @@ export default class RegistrationRequests extends Component {
 
         return (
             <>
+                <div className="page-header row no-gutters py-4">
+                    <div className="col-12 col-sm-4 text-center text-sm-left mb-4 mb-sm-0">
+                        <h3 className="page-title">Пользователи</h3>
+                    </div>
+                </div>
                 <div className="row">
                     <div className="col-md-12">
                         <div>

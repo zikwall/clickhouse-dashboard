@@ -10,7 +10,7 @@ export default class CreateUserForm extends Component {
     }
 
     state = {
-        login: '',
+        username: '',
         email: '',
         password: '',
         description: ''
@@ -66,12 +66,14 @@ export default class CreateUserForm extends Component {
                 <div className="col-md-12">
                     <div>
                         <div className="form-group">
-                            <label htmlFor="login">Логин</label>
+                            <label htmlFor="username">Логин</label>
                             <input type="text" className="form-control form-control-sm" 
                                 id="username" 
                                 placeholder="Введите логин" 
                                 onChange={this.handleChange}
+                                onChange={this.usernameValidate}
                                 name="username"
+                                required
                             />
                         </div>
                         <div className="form-group">
@@ -82,6 +84,7 @@ export default class CreateUserForm extends Component {
                                 placeholder="Введите email"
                                 onChange={this.handleChange}
                                 name="email"
+                                required
                             />
                         </div>
                         <div className="form-group">
@@ -91,6 +94,7 @@ export default class CreateUserForm extends Component {
                                 placeholder="Введите пароль"
                                 onChange={this.handleChange}
                                 name="password"
+                                required
                             />
                         </div>
                         <div className="form-group">
