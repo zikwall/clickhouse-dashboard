@@ -27,9 +27,7 @@ export default (props) => {
                 <a className="dropdown-item" href="/profile/edit"><i
                     className="material-icons"></i> Edit Profile
                 </a>
-                <a className="dropdown-item" href="/profile/channels-link"><i
-                    className="material-icons"></i> Телеканалы
-                </a>
+                
                 <div className="dropdown-divider"></div>
                 <a className="dropdown-item text-danger" onClick={ logout }>
                     <i className="material-icons text-danger"></i> Logout

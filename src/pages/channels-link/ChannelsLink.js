@@ -4,6 +4,7 @@ import { Identity } from "../../services/auth";
 import ChannelList from "./components/channels-list";
 import { Col, Row } from "../../components/ui/container";
 import { Button } from "../../components/ui/button";
+import "./ChannelsLink.css";
 
 export default class ChannelsLink extends React.Component {
     constructor(props) {
@@ -14,6 +15,8 @@ export default class ChannelsLink extends React.Component {
     state = {
         userChannels: [],
         channels: [],
+        isVisible: true,
+        isCreateUser: true,
     }
 
     componentDidMount() {
@@ -31,8 +34,8 @@ export default class ChannelsLink extends React.Component {
         });
     }
 
-    getUserChannelsList() {
-        return apiFetch('/api/v1/user/channels/list').then(response => {
+    getUserChannelsList = () => {
+        return apiFetch('/api/v1/user/channels/list?id=' + this.props.userId).then(response => {
             return response;
         });
     }
@@ -82,7 +85,7 @@ export default class ChannelsLink extends React.Component {
                 'Content-Type': 'application/json',
                 'Authorization': 'Bearer ' + Identity.getAccessToken()
             },
-            body: JSON.stringify({channels: checkedIdChannels}),
+            body: JSON.stringify({channels: checkedIdChannels, user: this.props.userId}),
             withCredentials: true,
         }).then(response => {
             if (!response.result) {
@@ -109,12 +112,21 @@ export default class ChannelsLink extends React.Component {
 
     render() {
         let checkedDoHandler  = this.checkedDoHandler;
+        
+        if (!this.props.isVisible) {
+            return (
+                null
+            );
+        }
+        
         return (
             <>
-                <div>
+                <div className={`${this.state.isCreateUser ? "channels-link" : ""}`}>
+                    <div className="close-btn">
+                        <button className="btn btn-link" onClick={ () => {this.props.closeChannelsLinkForm()}}>X</button>
+                    </div>
                     <div className="page-header row no-gutters py-4">
                         <div className="col-12 col-sm-4 text-center text-sm-left mb-4 mb-sm-0">
-                            <span className="text-uppercase page-subtitle">Обзор</span>
                             <h3 className="page-title">Телеканалы</h3>
                         </div>
                     </div>

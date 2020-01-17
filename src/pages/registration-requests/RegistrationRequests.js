@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { apiFetch } from "../../services/api/Api";
 import { Identity } from "../../services/auth";
 import CreateUserForm from "./create-user-form";
+import ChannelsLink from "../channels-link";
 
 export default class RegistrationRequests extends Component {
     state = {
@@ -19,6 +20,8 @@ export default class RegistrationRequests extends Component {
             }
         ],
         createUser: false,
+        channelsLinkVisible: false,
+        tmpUserId: null,
     }
 
     async componentDidMount() {
@@ -120,14 +123,21 @@ export default class RegistrationRequests extends Component {
         });
     }
 
-    render() {
-        const available = this.state.createUser;
-        let createUserForm = '';
+    showChannelsLinkFrom = (userId) => {
+        this.setState({
+            channelsLinkVisible: true,
+            tmpUserId: userId,
+        });
+    }
 
-        if (available) {
-            createUserForm = <CreateUserForm></CreateUserForm>;
-        }
-        
+    closeChannelsLinkForm = () => {
+        this.setState({
+            channelsLinkVisible: false,
+            tmpUserId: null,
+        });
+    }
+
+    render() {
 
         return (
             <>
@@ -145,10 +155,18 @@ export default class RegistrationRequests extends Component {
                         </div>
                         <div>
                             <CreateUserForm
-                                available ={this.state.createUser} 
+                                available ={this.state.createUser}
                                 closeCreateUserForm={this.closeCreateUserForm}
                                 loadUserList={this.loadUserList}
                             />
+                        </div>
+                        <div>
+                            { this.state.channelsLinkVisible === true ?
+                            (<ChannelsLink
+                                isVisible={this.state.channelsLinkVisible}
+                                userId={this.state.tmpUserId}
+                                closeChannelsLinkForm={this.closeChannelsLinkForm}
+                            />) : null}
                         </div>
                         <table className="table table-stripped table-sm mb-0">
                             <thead className="bg-light">
@@ -167,12 +185,13 @@ export default class RegistrationRequests extends Component {
                                         <td>{user.username}</td>
                                         <td>{user.email}</td>
                                         <td>{this.unixTimeToDate(user.created_at)}</td>
-                                        <td><textarea rows="1" readonly="readonly">{user.description}</textarea></td>
+                                        <td><textarea rows="1" readOnly="readonly" value="">{user.description}</textarea></td>
                                         <td>{this.isConfirmedUserStyle(user.confirmed_at)}</td>
                                         <td>
                                             <div className="btn-group btn-group-sm btn-group-toggle d-inline-flex mb-4 mb-sm-0 mx-auto">
-                                            <button className="btn btn-success" onClick={ () => this.confirmUser(user.id, index) }><i className="material-icons">check</i></button>
-                                            <button className="btn btn-danger" onClick={ () => this.unconfirmUser(user.id, index) }><i className="material-icons">delete</i></button>
+                                                <button className="btn btn-link" onClick={ () => this.confirmUser(user.id, index) } title="Активировать"><i className="material-icons">check</i></button>
+                                                <button className="btn btn-link" onClick={ () => this.unconfirmUser(user.id, index) } title="Отключить"><i className="material-icons">power_settings_new</i></button>
+                                                <button className="btn btn-link" onClick={ () => this.showChannelsLinkFrom(user.id) }><i className="material-icons" title="прикрепить телеканалы">settings_applications</i></button>
                                             </div>
                                         </td>
                                     </tr>
