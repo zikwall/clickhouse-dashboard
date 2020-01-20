@@ -1,5 +1,6 @@
 import React from "react";
 import { DimmyLoader, EmptyContent } from "../../../components/content-loader";
+import { Math } from '../../../utils';
 
 const UserViewsTable = ({data, isDataLoading}) => {
     
@@ -16,10 +17,10 @@ const UserViewsTable = ({data, isDataLoading}) => {
                         {item.name}
                     </td>
                     <td>
-                        {item.online}
+                        { item.online != 0 ? Math.seconds30toMars(item.online) : item.online}
                     </td>
                     <td> 
-                        {item.archive}
+                        { item.archive != 0 ? Math.seconds30toMars(item.archive) : item.archive}
                     </td>
                 </tr>
             )
