@@ -117,7 +117,7 @@ export default class ChannelsStartOnlineArchive extends React.Component {
                 method: 'POST',
                 body: JSON.stringify({dayBegin,dayEnd, userChannels}),
             });
-
+            
             statistic = Object.values(statistic);
 
             await this.setState({
