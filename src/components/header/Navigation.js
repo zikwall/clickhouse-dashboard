@@ -118,6 +118,11 @@ const Navigation = () => {
                     title: 'Просмотров онлайн/архив',
                     url: '/user-views',
                     sort: 2
+                },
+                {
+                    title: 'Переходы по каналам онлайн',
+                    url: '/channels-start-online-archive',
+                    sort: 3,
                 }
             ]
         }
