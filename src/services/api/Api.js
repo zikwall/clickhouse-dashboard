@@ -5,6 +5,7 @@ import {
     ForbiddenHttpException,
     InternalServerErrorException,
     NotFoundHttpException,
+    BadRequestException,
     Exception
 } from "../../exceptions";
 import { History } from "../../components/history";
@@ -50,6 +51,10 @@ export const handleAuntification = (response) => {
 export const handleResponse = (response) => {
     if (response.status >= 200 && response.status < 300) {
         return response;
+    }
+
+    if (response.status === 400) {
+        throw (new BadRequestException(response));
     }
 
     if (response.status === 401) {

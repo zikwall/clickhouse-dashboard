@@ -10,6 +10,7 @@ const Navigation = () => {
             url: '/dashboard',
             title: 'Dashboard',
             icon: '',
+            isVisible: Identity.can('canViewDashboard'),
             childs: [
                {
                     title: 'Analytics',
@@ -33,6 +34,7 @@ const Navigation = () => {
             title: 'Autonomous Systems',
             url: '/dashboard/autonomous-systems',
             icon: 'view_module',
+            isVisible: Identity.can('canViewDashboard'),
             childs: [
                 {
                     title: 'Generral Information',
@@ -57,6 +59,7 @@ const Navigation = () => {
             url: '/dashboard',
             icon: '',
             sort: 3,
+            isVisible: Identity.can('canViewDashboard'),
             childs: [
                 {
                     title: 'Рекламные площадки',
@@ -91,7 +94,7 @@ const Navigation = () => {
             url: '/dashboard/clickhouse',
             icon: 'extension',
             sort: 5,
-            isVisible: Identity.can('canViewDashboard')
+            isVisible: Identity.can('canViewDashboard'),
         },
         {
             title: 'Пользователи',
@@ -115,6 +118,11 @@ const Navigation = () => {
                     title: 'Просмотров онлайн/архив',
                     url: '/user-views',
                     sort: 2
+                },
+                {
+                    title: 'Переходы по каналам онлайн',
+                    url: '/channels-start-online-archive',
+                    sort: 3,
                 }
             ]
         }

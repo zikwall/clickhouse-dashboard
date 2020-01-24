@@ -1,0 +1,3 @@
+import ChannelsStartOnlineArchiveDataTable from './ChannelsStartOnlineArchiveDataTable';
+
+export default ChannelsStartOnlineArchiveDataTable

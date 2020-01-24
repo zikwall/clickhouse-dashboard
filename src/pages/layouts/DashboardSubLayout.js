@@ -11,6 +11,7 @@ import StartApp from "../start-app";
 import RegistrationRequests from "../registration-requests";
 import UserChannels from "../user-channels";
 import UserViews from "../user-views";
+import ChannelsStartOnlineArchive from "../channels-start-online-archive";
 
 
 const DashboardSubLayout = ({ match }) => {
@@ -69,6 +70,11 @@ const DashboardSubLayout = ({ match }) => {
             <Route 
                 path={`${match.url}/user-views`}
                 component={ UserViews }
+            />
+
+            <Route
+                path={`${match.url}/channels-start-online-archive`}
+                component={ ChannelsStartOnlineArchive }
             />
 
             <Route

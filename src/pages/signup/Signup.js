@@ -22,6 +22,7 @@ class Signup extends React.Component {
     };
 
     handleFormSubmit = (e) => {
+        return alert("Для регистрации обращаться к менеджеру");
         e.preventDefault();
 
         if (this.state.password != this.state.repeatPassword) {
