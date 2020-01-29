@@ -123,6 +123,11 @@ const Navigation = () => {
                     title: 'Переходы по каналам онлайн',
                     url: '/channels-start-online-archive',
                     sort: 3,
+                },
+                {
+                    title: "Показ рекламы на каналах",
+                    url: '/channels-ads',
+                    sort: 4,
                 }
             ]
         }
