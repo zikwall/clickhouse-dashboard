@@ -2,7 +2,32 @@ import React from "react";
 import CustomDatePicker from "../../components/custom-date-picker";
 import { apiFetch } from "../../services/api/Api";
 import ChannelsAdsTable from './components/ChannelsAdsTable';
-import Channels from "../channels";
+import { BaseObject } from "../../utils";
+
+const sortAdsst = (statistic) => {
+    const adsst = {
+        request: 0,
+        answer: 1,
+        show: 2,
+        skip: 3,
+        complete: 4,
+        complete_url: 5
+    };
+    
+    for (let index = 0; index < statistic.adsData.length; ++index) {
+        const arr = statistic.adsData[index].groupData;
+        let newArr = [];
+        
+        arr.forEach((element) => {
+            newArr[adsst[element[0]]] = element;
+        });
+
+        newArr = newArr.filter(val => val);
+        statistic.adsData[index].groupData = newArr;
+    }
+
+    return statistic
+};
 
 export default class ChannelsAds  extends React.Component {
     state = {
@@ -113,13 +138,16 @@ export default class ChannelsAds  extends React.Component {
                 isDataLoading: true
             });
 
-            /*let statistic = await apiFetch('/api/v1/general/get-channels-view-duration-with-channels-id',{
+            let statistic = await apiFetch('/api/v1/general/get-ads-data-of-partner-channels',{
                 method: 'POST',
                 body: JSON.stringify({dayBegin,dayEnd, userChannels}),
-            });*/
+            });
 
-            
-            let statistic = null;
+            if (statistic.adsData.length === 0) {
+                statistic = null;
+            } else {
+                statistic = BaseObject.sort(statistic, sortAdsst, true);
+            }
 
             await this.setState({
                 statistic,

@@ -1,23 +1,30 @@
 import React from "react";
 import { DimmyLoader, EmptyContent } from "../../../components/content-loader";
+import AdsstItem from "../../ads/components/adsstItem/AdsstItem";
 
-const ChannelsAdsTable = (data, isDataLoading) => {
+const ChannelsAdsTable = ({data, isDataLoading}) => {
+    
     let content = <EmptyContent />;
     if (isDataLoading) {
         content = <DimmyLoader />;
     }
     
-    if (Object.keys(data).length == 0) {
-        const items = data.map((item, index) => {
+    if (data !== null) {
+        const items = data.adsData.map((item, index) => {
             return(
                 <tr key={index}>
                     <td>
                         {item.name}
                     </td>
                     <td>
+                        {item.adsid}
                     </td>
-                    <td> 
-                    </td>
+                    <AdsstItem adsst={"request"} data={item.groupData}/>
+                    <AdsstItem adsst={"answer"} data={item.groupData}/>
+                    <AdsstItem adsst={"show"} data={item.groupData}/>
+                    <AdsstItem adsst={"skip"} data={item.groupData}/>
+                    <AdsstItem adsst={"complete"} data={item.groupData}/>
+                    <AdsstItem adsst={"complete_url"} data={item.groupData}/>
                 </tr>
             )
         });
@@ -27,8 +34,13 @@ const ChannelsAdsTable = (data, isDataLoading) => {
                 <thead className="bg-light">
                     <tr>
                         <th scope="col" className="border-0">Телеканал</th>
-                        <th scope="col" className="border-0">Онлайн</th>
-                        <th scope="col" className="border-0">Архив</th>
+                        <th scope="col" className="border-0">Площадка</th>
+                        <th scope="col" className="border-0">request</th>
+                        <th scope="col" className="border-0">answer</th>
+                        <th scope="col" className="border-0">show</th>
+                        <th scope="col" className="border-0">skip</th>
+                        <th scope="col" className="border-0">complete</th>
+                        <th scope="col" className="border-0">complete_url</th>
                     </tr>
                 </thead>
                 <tbody>
