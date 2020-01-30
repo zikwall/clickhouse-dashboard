@@ -128,7 +128,12 @@ const Navigation = () => {
                     title: "Показ рекламы на каналах",
                     url: '/channels-ads',
                     sort: 4,
-                }
+                },
+                {
+                    title: "Детализация по типам устройствам",
+                    url: '/channels-by-gadget',
+                    sort: 5,
+                },
             ]
         }
     ];
