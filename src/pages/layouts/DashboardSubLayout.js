@@ -13,6 +13,7 @@ import UserChannels from "../user-channels";
 import UserViews from "../user-views";
 import ChannelsStartOnlineArchive from "../channels-start-online-archive";
 import ChannelsAds from "../channels-ads";
+import ChannelsByGadget from "../channels-by-gadget";
 
 
 const DashboardSubLayout = ({ match }) => {
@@ -81,6 +82,11 @@ const DashboardSubLayout = ({ match }) => {
             <Route
                 path={`${match.url}/channels-ads`}
                 component={ ChannelsAds }
+            />
+
+            <Route
+                path={`${match.url}/channels-by-gadget`}
+                component={ ChannelsByGadget }
             />
 
             <Route
