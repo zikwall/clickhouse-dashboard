@@ -15,8 +15,13 @@ const ChannelsByGadgetTable = ({data, isDataLoading}) => {
                         {item.name}
                     </td>
                     <td>
+                        {item.mobile}
                     </td>
-                    <td> 
+                    <td>
+                        {item.smarttv}
+                    </td>
+                    <td>
+                        {item.web}
                     </td>
                 </tr>
             )
@@ -27,6 +32,9 @@ const ChannelsByGadgetTable = ({data, isDataLoading}) => {
                 <thead className="bg-light">
                     <tr>
                         <th scope="col" className="border-0">Телеканал</th>
+                        <th scope="col" className="border-0">Смартфоны</th>
+                        <th scope="col" className="border-0">Смарт ТВ</th>
+                        <th scope="col" className="border-0">Веб-сайт</th>
                     </tr>
                 </thead>
                 <tbody>

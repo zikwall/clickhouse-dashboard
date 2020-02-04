@@ -1,6 +1,7 @@
 import React from "react";
 import CustomDatePicker from "../../components/custom-date-picker";
 import { apiFetch } from "../../services/api/Api";
+import ChannelsByGadgetTable from "./components/ChannelsByGadgetTable";
 
 export default class ChannelsByGadget extends React.Component {
     state = {
@@ -111,12 +112,12 @@ export default class ChannelsByGadget extends React.Component {
                 isDataLoading: true
             });
 
-            let statistic = await apiFetch('/api/v1/general/get-channels-view-duration-with-channels-id',{
+            let statistic = await apiFetch('/api/v1/general/get-channels-by-gadget-types',{
                 method: 'POST',
                 body: JSON.stringify({dayBegin,dayEnd, userChannels}),
             });
 
-            statistic = Object.values(statistic[0]);
+            statistic = Object.values(statistic);
 
             await this.setState({
                 statistic,
@@ -146,6 +147,7 @@ export default class ChannelsByGadget extends React.Component {
                     </div>
                 </div>
                 <div className="row no-gutters">
+                    <ChannelsByGadgetTable  data={this.state.statistic} isDataLoading={this.state.isDataLoading}/>
                 </div>
             </>
         );
