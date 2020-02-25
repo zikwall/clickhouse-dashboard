@@ -1,5 +1,6 @@
 import React from 'react';
 import { NavLink } from "react-router-dom";
+import { Identity } from "../../services/auth";
 
 export default class extends React.Component {
     state = {
@@ -38,6 +39,8 @@ export default class extends React.Component {
 
         if (!item.hasOwnProperty('isVisible')) {
             item.isVisible = true;
+        } else {
+            item.isVisible = Identity.can(item.isVisible)
         }
 
         /*if (item.hasOwnProperty('childs')) {
@@ -91,7 +94,7 @@ export default class extends React.Component {
                     <NavLink
                         className={ 'nav-link' + (isActive ? ' active' : '') }
                         data-toggle={ isDropdown ? "dropdown" : ''}
-                        to={!isDropdown ? item.url : ''}>
+                        to={item.url}>
 
                         {
                             item.icon && <i className={ 'material-icons' + (item.iconClassName ? ' ' + item.iconClassName : '') }>{ item.icon }</i>
