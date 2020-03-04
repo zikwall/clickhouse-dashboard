@@ -60,5 +60,8 @@ export const detectLang = () => {
         window.navigator.systemLanguage ||
         window.navigator.userLanguage) : "ru";
     language = language.substr(0, 2).toLowerCase();
+    if (language != "ru") {
+        language = "en";
+    }
     return language;
 }
