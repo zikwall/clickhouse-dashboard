@@ -22,7 +22,8 @@ export default class ChannelsLink extends React.Component {
     componentDidMount() {
         Promise.all([
             this.getChannelsList(),
-            this.getUserChannelsList()
+            this.getUserChannelsList(),
+            this.getChannelsListMejor(),
         ]).then(result => {
             let channels = result[0].filter(item1 => !result[1].some(item2 => item2.id == item1.id ));
             let userChannels = result[1];
@@ -50,11 +51,31 @@ export default class ChannelsLink extends React.Component {
            data.push({
                id: key,
                name: channels[key],
-               checked: false, 
+               checked: false,
+               lable: 'lime',
            });
         }
 
         return data;
+    }
+
+    async getChannelsListMejor() {
+        const channelsMejor = await  fetch('https://vls.iptv2022.com/api/v1/channels?access_token=r0ynhfybabufythekbn').then(response => {
+            return response.json();
+        });
+        
+        let data = [];
+
+        for (const key in channelsMejor) {
+            data.push({
+                id: key,
+                name: channelsMejor[key],
+                checked: false,
+                lable: 'mejor',
+            });
+         }
+
+         return data;
     }
 
     transferChannels(from , to) {
