@@ -1,9 +1,11 @@
 import React from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import './CustomDatePicker.css'
+import './CustomDatePicker.css';
+import { Translator } from 'eo-locale';
+import { LOCALES } from "./../../constants";
 
-const CustomDatePicker = ({ label, minDate, maxDate, changeDatePicker, value, isValid, isTouch, name}) => {
+const CustomDatePicker = ({ label, minDate, maxDate, changeDatePicker, value, isValid, isTouch, name, lang}) => {
     let classes = [];
     let start = false;
     let end = false;
@@ -12,13 +14,14 @@ const CustomDatePicker = ({ label, minDate, maxDate, changeDatePicker, value, is
     if(!isValid && isTouch) {
         classes.push('errorDatePicker');
     }
-
+    const translate = new Translator(lang, LOCALES);
+    
     return(
         <div className="form-group col-md-3">
             <label htmlFor="feInputState">{ label }</label>
             <DatePicker
                 className={ classes.join(' ') }
-                placeholderText='Выбрать период'
+                placeholderText={translate.messages.choosePeriod}
                 dateFormat = 'dd-MM-yyyy'
                 selected={ value !== null ? new Date(value * 1000): null }
                 onChange={ (date)=>changeDatePicker(Date.parse(date) / 1000, name) }

@@ -2,9 +2,12 @@ import React from "react";
 import CustomDatePicker from "../../components/custom-date-picker";
 import { apiFetch } from "../../services/api/Api";
 import UserChannelsTable from "./user-channels-table/UserChannelsTable";
+import { EOLocale, Translator } from "eo-locale";
+import { LOCALES } from "./../../constants";
 
+const tr = new Translator('en', LOCALES);
 export default class UserChannels extends React.Component {
-
+    
     state = {
         fields: {
             datePicker1: {
@@ -27,6 +30,7 @@ export default class UserChannels extends React.Component {
         formValid: false,
         uniqueUsersData:null,
         isDataLoading: false,
+        lang: 'en',
     };
 
     async componentDidMount() {
@@ -37,9 +41,15 @@ export default class UserChannels extends React.Component {
         newFields.datePicker1.maxDate = period.period[1];
         newFields.datePicker2.minDate = period.period[0];
         newFields.datePicker2.maxDate = period.period[1];
+        newFields.datePicker1.label = tr.messages.startPeriod;
+        newFields.datePicker2.label = tr.messages.endPeriod;
+
+
+        const lang = this.detectLang();
 
         await this.setState({
-            fields: newFields
+            fields: newFields,
+            lang: lang,
         });
     }
 
@@ -127,28 +137,49 @@ export default class UserChannels extends React.Component {
         }
     };
 
+    detectLang() {
+        var language = window.navigator ? (window.navigator.language ||
+            window.navigator.systemLanguage ||
+            window.navigator.userLanguage) : "ru";
+        language = language.substr(0, 2).toLowerCase();
+        return language;
+    }
+
     render() {
         return (
             <>
                 <div className="page-header row no-gutters py-4">
                     <div className="col-12 col-sm-4 text-center text-sm-left mb-4 mb-sm-0">
-                        <span className="text-uppercase page-subtitle">Обзор</span>
-                        <h3 className="page-title">Уникальные пользователи</h3>
+                        
+                            <EOLocale.Provider language={this.state.lang} locales={LOCALES}>
+                                <span className="text-uppercase page-subtitle">
+                                    <EOLocale.Text id="observe"></EOLocale.Text>
+                                </span>
+                            </EOLocale.Provider>
+                            <EOLocale.Provider language={this.state.lang} locales={LOCALES}>
+                                <h3 className="page-title">
+                                    <EOLocale.Text id="uniqueUsers"></EOLocale.Text>
+                                </h3>
+                            </EOLocale.Provider>
                     </div>
                 </div>
                 <div className="row">
                     <div className="col-md-12">
                         <form onSubmit={ (e) => this.checkAndSubmit(e)}>
                             <div className="form-row">
-                                <CustomDatePicker changeDatePicker={ this.onChangeDatePickerHandler } name={ 'datePicker1' } { ...this.state.fields.datePicker1 }/>
-                                <CustomDatePicker changeDatePicker={ this.onChangeDatePickerHandler } name={ 'datePicker2' } { ...this.state.fields.datePicker2 }/>
+                                <CustomDatePicker changeDatePicker={ this.onChangeDatePickerHandler } name={ 'datePicker1' } { ...this.state.fields.datePicker1 } lang={this.state.lang}/>
+                                <CustomDatePicker changeDatePicker={ this.onChangeDatePickerHandler } name={ 'datePicker2' } { ...this.state.fields.datePicker2 } lang={this.state.lang}/>
                             </div>
-                            <button type="submit" className="mb-2 btn btn-sm btn-success mr-1">Применить</button>
+                            <button type="submit" className="mb-2 btn btn-sm btn-success mr-1">
+                                <EOLocale.Provider language={this.state.lang} locales={LOCALES}>
+                                    <EOLocale.Text id="apply"></EOLocale.Text>
+                                </EOLocale.Provider>
+                            </button>
                         </form>
                     </div>
                 </div>
                 <div className="row no-gutters">
-                    <UserChannelsTable data={this.state.uniqueUsersData} isDataLoading={this.state.isDataLoading}/>
+                    <UserChannelsTable data={this.state.uniqueUsersData} isDataLoading={this.state.isDataLoading} lang={this.state.lang}/>
                 </div>
             </>
         );
