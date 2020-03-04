@@ -21,6 +21,7 @@ export const LOCALES =  [
             smartphones: 'Smartphones',
             smartTV: 'Smart TV',
             web: 'Site',
+            noData: 'No data',
         }
     },
     {
@@ -45,6 +46,7 @@ export const LOCALES =  [
             smartphones: 'Смартфоны',
             smartTV: 'Смарт ТВ',
             web: 'Веб-сайт',
+            noData: 'Нет данных',
         }
     }
 ];
