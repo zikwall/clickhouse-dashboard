@@ -22,6 +22,8 @@ export const LOCALES =  [
             smartTV: 'Smart TV',
             web: 'Site',
             noData: 'No data',
+            analitycs: 'Analitycs',
+            traffic: 'Traffic',
         }
     },
     {
@@ -47,6 +49,8 @@ export const LOCALES =  [
             smartTV: 'Смарт ТВ',
             web: 'Веб-сайт',
             noData: 'Нет данных',
+            analitycs: 'Аналитика',
+            traffic: 'Трафик',
         }
     }
 ];
