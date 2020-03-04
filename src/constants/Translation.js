@@ -5,7 +5,7 @@ export const LOCALES =  [
             observe: 'Observe',
             uniqueUsers: 'Unique users',
             viewsOnlineArchive: 'Views online and archive',
-            channelTransitions: 'Channel transitions',
+            channelTransitions: 'Channels start',
             showAds: 'Show Ads',
             detailsDevice: 'Details by device type',
             startPeriod: 'Beginning of period',
