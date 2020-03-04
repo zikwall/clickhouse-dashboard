@@ -2,6 +2,8 @@ import React from "react";
 import CustomDatePicker from "../../components/custom-date-picker";
 import { apiFetch } from "../../services/api/Api";
 import UserViewsTable from "./components/UserViewsTable";
+import { Translator } from "eo-locale";
+import { LOCALES, detectLang } from "./../constants";
 
 export default class UserViews extends React.Component {
 

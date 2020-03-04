@@ -12,6 +12,13 @@ import ChannelsStartOnlineArchive from "../pages/channels-start-online-archive";
 import Clickhouse from "../pages/clickhouse/Clickhouse";
 import ChannelsAds from "../pages/channels-ads";
 
+import { EOLocale, Translator } from "eo-locale";
+import { LOCALES, detectLang } from "./../constants";
+
+
+
+const tr = new Translator(detectLang(), LOCALES);
+
 // потом поменяю
 const NavigationRoutes = [
     {
@@ -131,31 +138,31 @@ const NavigationRoutes = [
         sort: 7,
         childs: [
             {
-                title: 'Уникальные пользователи',
+                title: tr.messages.uniqueUsers,
                 url: '/user-channels',
                 sort: 1,
                 component: UserChannels
             },
             {
-                title: 'Просмотров онлайн/архив',
+                title: tr.messages.viewsOnlineArchive,
                 url: '/user-views',
                 sort: 2,
                 component: UserViews
             },
             {
-                title: 'Переходы по каналам онлайн',
+                title: tr.messages.channelTransitions,
                 url: '/channels-start-online-archive',
                 sort: 3,
                 component: ChannelsStartOnlineArchive
             },
             {
-                title: "Показ рекламы на каналах",
+                title: tr.messages.showAds,
                 url: '/channels-ads',
                 sort: 4,
                 component: ChannelsAds
             },
             {
-                title: "Детализация по типам устройствам",
+                title: tr.messages.detailsDevice,
                 url: '/channels-by-gadget',
                 sort: 5,
                 component: ChannelsByGadget

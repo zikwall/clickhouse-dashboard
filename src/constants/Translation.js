@@ -4,6 +4,10 @@ export const LOCALES =  [
         messages: {
             observe: 'Observe',
             uniqueUsers: 'Unique users',
+            viewsOnlineArchive: 'Views online and archive',
+            channelTransitions: 'Channel transitions',
+            showAds: 'Show Ads',
+            detailsDevice: 'Details by device type',
             startPeriod: 'Beginning of period',
             endPeriod: 'End of period',
             apply: 'Apply',
@@ -18,6 +22,10 @@ export const LOCALES =  [
         messages: {
             observe: 'Обзор',
             uniqueUsers: 'Уникальные пользователи',
+            viewsOnlineArchive: 'Просмотры онлайн/архив',
+            channelTransitions: 'Переходы по каналам онлайн',
+            showAds: 'Показ рекламы на каналах',
+            detailsDevice: 'Детализация по типам устройств',
             start_period: 'Начало периода',
             endPeriod: 'Конец периода',
             apply: 'Применить',
@@ -28,3 +36,11 @@ export const LOCALES =  [
         }
     }
 ];
+
+export const detectLang = () => {
+    var language = window.navigator ? (window.navigator.language ||
+        window.navigator.systemLanguage ||
+        window.navigator.userLanguage) : "ru";
+    language = language.substr(0, 2).toLowerCase();
+    return language;
+}
