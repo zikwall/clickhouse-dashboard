@@ -2,12 +2,16 @@ import React from "react";
 import CustomDatePicker from "../../components/custom-date-picker";
 import { apiFetch } from "../../services/api/Api";
 import ChannelsByGadgetTable from "./components/ChannelsByGadgetTable";
+import { Translator } from "eo-locale";
+import { LOCALES, detectLang } from "./../../constants";
+
+const tr = new Translator(detectLang(), LOCALES);
 
 export default class ChannelsByGadget extends React.Component {
     state = {
         fields: {
             datePicker1: {
-                label: "Начало периода",
+                label: tr.messages.startPeriod,
                 value: null,
                 isValid: false,
                 isTouch: false,
@@ -15,7 +19,7 @@ export default class ChannelsByGadget extends React.Component {
                 maxDate: null
             },
             datePicker2: {
-                label: "Конец периода",
+                label: tr.messages.endPeriod,
                 value: null,
                 isValid: false,
                 isTouch: false,
@@ -131,8 +135,8 @@ export default class ChannelsByGadget extends React.Component {
             <>
                 <div className="page-header row no-gutters py-4">
                     <div className="col-12 col-sm-4 text-center text-sm-left mb-4 mb-sm-0">
-                        <span className="text-uppercase page-subtitle">Обзор</span>
-                        <h3 className="page-title">Детализация по типам устройств</h3>
+                        <span className="text-uppercase page-subtitle">{tr.messages.observe}</span>
+                        <h3 className="page-title">{tr.messages.detailsDevice}</h3>
                     </div>
                 </div>
                 <div className="row">
@@ -142,7 +146,7 @@ export default class ChannelsByGadget extends React.Component {
                                 <CustomDatePicker changeDatePicker={ this.onChangeDatePickerHandler } name={ 'datePicker1' } { ...this.state.fields.datePicker1 }/>
                                 <CustomDatePicker changeDatePicker={ this.onChangeDatePickerHandler } name={ 'datePicker2' } { ...this.state.fields.datePicker2 }/>
                             </div>
-                            <button type="submit" className="mb-2 btn btn-sm btn-success mr-1">Применить</button>
+                            <button type="submit" className="mb-2 btn btn-sm btn-success mr-1">{tr.messages.apply}</button>
                         </form>
                     </div>
                 </div>

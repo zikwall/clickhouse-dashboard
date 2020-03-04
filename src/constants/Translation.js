@@ -18,6 +18,9 @@ export const LOCALES =  [
             online: 'Online',
             archive: 'Archive',
             area: 'Area',
+            smartphones: 'Smartphones',
+            smartTV: 'Smart TV',
+            web: 'Site',
         }
     },
     {
@@ -39,6 +42,9 @@ export const LOCALES =  [
             online: 'Онлайн',
             archive: 'Архив',
             area: 'Площадка',
+            smartphones: 'Смартфоны',
+            smartTV: 'Смарт ТВ',
+            web: 'Веб-сайт',
         }
     }
 ];
