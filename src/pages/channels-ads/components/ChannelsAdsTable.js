@@ -1,6 +1,10 @@
 import React from "react";
 import { DimmyLoader, EmptyContent } from "../../../components/content-loader";
 import AdsstItem from "../../ads/components/adsstItem/AdsstItem";
+import { Translator } from "eo-locale";
+import { LOCALES, detectLang } from "./../../../constants";
+
+const tr = new Translator(detectLang(), LOCALES);
 
 const ChannelsAdsTable = ({data, isDataLoading}) => {
     
@@ -33,8 +37,8 @@ const ChannelsAdsTable = ({data, isDataLoading}) => {
             <table className="table table-sm table-striped mb-0">
                 <thead className="bg-light">
                     <tr>
-                        <th scope="col" className="border-0">Телеканал</th>
-                        <th scope="col" className="border-0">Площадка</th>
+                        <th scope="col" className="border-0">{tr.messages.channel}</th>
+                        <th scope="col" className="border-0">{tr.messages.area}</th>
                         <th scope="col" className="border-0">request</th>
                         <th scope="col" className="border-0">answer</th>
                         <th scope="col" className="border-0">show</th>
@@ -56,7 +60,7 @@ const ChannelsAdsTable = ({data, isDataLoading}) => {
         <div className="col-md-12 col-sm-12 col mb-4" style={{padding: '5px'}}>
             <div className="card card-small"  style={{minHeight: '330px'}}>
                 <div className="card-header border-bottom">
-                    <h6 className="m-0">Реклама на каналах</h6>
+                    <h6 className="m-0">{tr.messages.showAds}</h6>
                 </div>
                 <div className="card-body" style={{textAlign: 'center'}}>
                     { content }

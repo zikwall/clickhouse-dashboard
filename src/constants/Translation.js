@@ -17,6 +17,7 @@ export const LOCALES =  [
             dataLoading: 'Data loading',
             online: 'Online',
             archive: 'Archive',
+            area: 'Area',
         }
     },
     {
@@ -37,6 +38,7 @@ export const LOCALES =  [
             dataLoading: 'Идет загрузка данных',
             online: 'Онлайн',
             archive: 'Архив',
+            area: 'Площадка',
         }
     }
 ];
