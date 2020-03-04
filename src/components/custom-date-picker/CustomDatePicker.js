@@ -3,9 +3,9 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import './CustomDatePicker.css';
 import { Translator } from 'eo-locale';
-import { LOCALES } from "./../../constants";
+import { LOCALES, detectLang } from "./../../constants";
 
-const CustomDatePicker = ({ label, minDate, maxDate, changeDatePicker, value, isValid, isTouch, name, lang}) => {
+const CustomDatePicker = ({ label, minDate, maxDate, changeDatePicker, value, isValid, isTouch, name}) => {
     let classes = [];
     let start = false;
     let end = false;
@@ -14,7 +14,7 @@ const CustomDatePicker = ({ label, minDate, maxDate, changeDatePicker, value, is
     if(!isValid && isTouch) {
         classes.push('errorDatePicker');
     }
-    const translate = new Translator(lang, LOCALES);
+    const translate = new Translator(detectLang(), LOCALES);
     
     return(
         <div className="form-group col-md-3">

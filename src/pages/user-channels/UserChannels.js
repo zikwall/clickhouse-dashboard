@@ -3,9 +3,9 @@ import CustomDatePicker from "../../components/custom-date-picker";
 import { apiFetch } from "../../services/api/Api";
 import UserChannelsTable from "./user-channels-table/UserChannelsTable";
 import { EOLocale, Translator } from "eo-locale";
-import { LOCALES } from "./../../constants";
+import { LOCALES, detectLang } from "./../../constants";
 
-const tr = new Translator('en', LOCALES);
+const tr = new Translator(detectLang(), LOCALES);
 export default class UserChannels extends React.Component {
     
     state = {

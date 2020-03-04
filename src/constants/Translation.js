@@ -15,6 +15,8 @@ export const LOCALES =  [
             channel: 'TV channel',
             dataNotYet: 'No data yet',
             dataLoading: 'Data loading',
+            online: 'Online',
+            archive: 'Archive',
         }
     },
     {
@@ -26,13 +28,15 @@ export const LOCALES =  [
             channelTransitions: 'Переходы по каналам онлайн',
             showAds: 'Показ рекламы на каналах',
             detailsDevice: 'Детализация по типам устройств',
-            start_period: 'Начало периода',
+            startPeriod: 'Начало периода',
             endPeriod: 'Конец периода',
             apply: 'Применить',
             choosePeriod: 'Выбрать период',
             channel: 'канал',
             dataNotYet: 'Данных пока нет',
             dataLoading: 'Идет загрузка данных',
+            online: 'Онлайн',
+            archive: 'Архив',
         }
     }
 ];
