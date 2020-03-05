@@ -29,7 +29,7 @@ export default class ChannelsLink extends React.Component {
             let userChannels = result[1];
             let channelsMejor = result[2];
             channels = channels.concat(channelsMejor);
-            
+
             this.setState({
                 channels: channels,
                 userChannels: userChannels,
@@ -54,7 +54,7 @@ export default class ChannelsLink extends React.Component {
                id: key,
                name: channels[key],
                checked: false,
-               lable: 'lime',
+               label: 'lime',
            });
         }
 
@@ -75,7 +75,7 @@ export default class ChannelsLink extends React.Component {
                 id: key,
                 name: channelsMejor[key],
                 checked: false,
-                lable: 'mejor',
+                label: 'mejor',
             });
          }
 
@@ -86,7 +86,7 @@ export default class ChannelsLink extends React.Component {
         let fromChannels = this.state[from];
         let toChannels = this.state[to];
         let checkedIdChannels = [];
-
+        console.log(toChannels);
         for (let key = 0; key < fromChannels.length; key++) {
             if (fromChannels[key].checked == false) {
                 continue;
@@ -98,7 +98,13 @@ export default class ChannelsLink extends React.Component {
 
             fromChannels[key].checked = false;
             toChannels.unshift(fromChannels[key]);
-            checkedIdChannels.push(fromChannels[key].id);
+            
+            let ch = {
+                id: fromChannels[key].id,
+                label: fromChannels[key].label,
+            };
+
+            checkedIdChannels.push(ch);
             fromChannels.splice(key, 1);
             key--;
         }
