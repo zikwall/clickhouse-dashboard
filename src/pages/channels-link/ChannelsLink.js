@@ -27,6 +27,8 @@ export default class ChannelsLink extends React.Component {
         ]).then(result => {
             let channels = result[0].filter(item1 => !result[1].some(item2 => item2.id == item1.id ));
             let userChannels = result[1];
+            let channelsMejor = result[2];
+            channels = channels.concat(channelsMejor);
             
             this.setState({
                 channels: channels,
@@ -60,7 +62,9 @@ export default class ChannelsLink extends React.Component {
     }
 
     async getChannelsListMejor() {
-        const channelsMejor = await  fetch('https://vls.iptv2022.com/api/v1/channels?access_token=r0ynhfybabufythekbn').then(response => {
+        const channelsMejor = await  fetch('https://vls.iptv2022.com/api/v1/channels?access_token=r0ynhfybabufythekbn', {
+            mode: 'cors'
+        }).then(response => {
             return response.json();
         });
         
