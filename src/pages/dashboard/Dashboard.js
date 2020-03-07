@@ -7,6 +7,11 @@ import { withTitle } from "../../components/document-title";
 import { Col, Row } from "../../components/ui/container";
 import {CurrentOnline} from "../../containers/current-online";
 
+import {Translator } from "eo-locale";
+import { LOCALES, detectLang } from "./../../constants";
+
+const tr = new Translator(detectLang(), LOCALES);
+
 /**
  * Example simple RBAC, пока что сравнивается username пользователя,
  * а так думается передавать role или permissions array
@@ -54,15 +59,15 @@ class DasboardPage extends React.Component {
                     <div className="page-header row no-gutters py-4">
 
                         <div className="col-12 col-sm-4 text-center text-sm-left mb-4 mb-sm-0">
-                            <span className="text-uppercase page-subtitle">Обзор</span>
-                            <h3 className="page-title">Аналитика</h3>
+                            <span className="text-uppercase page-subtitle">{tr.messages.observe}</span>
+                            <h3 className="page-title">{tr.messages.analitycs}</h3>
                         </div>
 
                         <div className="col-12 col-sm-4 d-flex align-items-center">
                             <div className="btn-group btn-group-sm btn-group-toggle d-inline-flex mb-4 mb-sm-0 mx-auto"
                                  role="group" aria-label="Page actions">
-                                <a href="?index" className="btn btn-white active"> Онлайн </a>
-                                <a href="?online" className="btn btn-white"> Трафик </a>
+                                <a href="?index" className="btn btn-white active"> {tr.messages.online} </a>
+                                <a href="?online" className="btn btn-white"> {tr.messages.traffic} </a>
                             </div>
                         </div>
 
