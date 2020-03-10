@@ -3,9 +3,9 @@ import { Requirement, guardFactory, CredentialProvider } from "../../containers/
 import {Bar, Line, Doughnut} from "./components";
 
 import { Identity } from "../../services/auth";
-import { withTitle } from "../../components/document-title";
-import { Col, Row } from "../../components/ui/container";
-import {CurrentOnline} from "../../containers/current-online";
+import { withTitle } from "@components/document-title";
+import { Col, Row } from "@components/ui/container";
+import {CurrentOnline} from "@containers/current-online";
 
 /**
  * Example simple RBAC, пока что сравнивается username пользователя,

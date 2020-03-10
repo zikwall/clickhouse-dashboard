@@ -2,8 +2,8 @@ import React from "react";
 import { Route, Switch } from "react-router-dom";
 
 import ErrorLayout from "./ErrorLayout";
-import { Login } from "../pages/login";
-import { Signup } from "../pages/signup";
+import { Login } from "@pages/login";
+import { Signup } from "@pages/signup";
 
 const Auth = (props) => {
     return (
