@@ -22,11 +22,14 @@ export default class ChannelsLink extends React.Component {
     componentDidMount() {
         Promise.all([
             this.getChannelsList(),
-            this.getUserChannelsList()
+            this.getUserChannelsList(),
+            this.getChannelsListMejor(),
         ]).then(result => {
             let channels = result[0].filter(item1 => !result[1].some(item2 => item2.id == item1.id ));
             let userChannels = result[1];
-            
+            let channelsMejor = result[2];
+            channels = channels.concat(channelsMejor);
+
             this.setState({
                 channels: channels,
                 userChannels: userChannels,
@@ -50,18 +53,40 @@ export default class ChannelsLink extends React.Component {
            data.push({
                id: key,
                name: channels[key],
-               checked: false, 
+               checked: false,
+               label: 'lime',
            });
         }
 
         return data;
     }
 
+    async getChannelsListMejor() {
+        const channelsMejor = await  fetch('https://vls.iptv2022.com/api/v1/channels?access_token=r0ynhfybabufythekbn', {
+            mode: 'cors'
+        }).then(response => {
+            return response.json();
+        });
+        
+        let data = [];
+
+        for (const key in channelsMejor) {
+            data.push({
+                id: key,
+                name: channelsMejor[key],
+                checked: false,
+                label: 'mejor',
+            });
+         }
+
+         return data;
+    }
+
     transferChannels(from , to) {
         let fromChannels = this.state[from];
         let toChannels = this.state[to];
         let checkedIdChannels = [];
-
+        console.log(toChannels);
         for (let key = 0; key < fromChannels.length; key++) {
             if (fromChannels[key].checked == false) {
                 continue;
@@ -73,7 +98,13 @@ export default class ChannelsLink extends React.Component {
 
             fromChannels[key].checked = false;
             toChannels.unshift(fromChannels[key]);
-            checkedIdChannels.push(fromChannels[key].id);
+            
+            let ch = {
+                id: fromChannels[key].id,
+                label: fromChannels[key].label,
+            };
+
+            checkedIdChannels.push(ch);
             fromChannels.splice(key, 1);
             key--;
         }
