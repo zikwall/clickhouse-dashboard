@@ -2,6 +2,7 @@ import React from "react";
 import CustomDatePicker from "../../components/custom-date-picker";
 import { apiFetch } from "../../services/api/Api";
 import UserChannelsTable from "./user-channels-table/UserChannelsTable";
+import ReportsButton from "../../components/reports-button";
 import { EOLocale, Translator } from "eo-locale";
 import { LOCALES, detectLang } from "./../../constants";
 
@@ -175,6 +176,7 @@ export default class UserChannels extends React.Component {
                                     <EOLocale.Text id="apply"></EOLocale.Text>
                                 </EOLocale.Provider>
                             </button>
+                            <ReportsButton></ReportsButton>
                         </form>
                     </div>
                 </div>
