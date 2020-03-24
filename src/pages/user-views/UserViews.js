@@ -2,6 +2,7 @@ import React from "react";
 import CustomDatePicker from "../../components/custom-date-picker";
 import { apiFetch } from "../../services/api/Api";
 import UserViewsTable from "./components/UserViewsTable";
+import ReportsButton from "../../components/reports-button";
 import { Translator } from "eo-locale";
 import { LOCALES, detectLang } from "./../../constants";
 
@@ -149,6 +150,7 @@ export default class UserViews extends React.Component {
                                 <CustomDatePicker changeDatePicker={ this.onChangeDatePickerHandler } name={ 'datePicker2' } { ...this.state.fields.datePicker2 }/>
                             </div>
                             <button type="submit" className="mb-2 btn btn-sm btn-success mr-1">{tr.messages.apply}</button>
+                            <ReportsButton  type={'channelsByGadget'} datePicker1={this.state.fields.datePicker1.value} datePicker2={this.state.fields.datePicker2.value}></ReportsButton>
                         </form>
                     </div>
                 </div>
