@@ -176,7 +176,7 @@ export default class UserChannels extends React.Component {
                                     <EOLocale.Text id="apply"></EOLocale.Text>
                                 </EOLocale.Provider>
                             </button>
-                            <ReportsButton></ReportsButton>
+                            <ReportsButton  type={'channelsByGadget'} datePicker1={this.state.fields.datePicker1.value} datePicker2={this.state.fields.datePicker2.value}></ReportsButton>
                         </form>
                     </div>
                 </div>
